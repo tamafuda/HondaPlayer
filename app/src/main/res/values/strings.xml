@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">HondaPlayer</string>
+    <string name="title_home">ホーム</string>
+    <string name="title_control">コントローラー</string>
+    <string name="txt_controller">コントローラー</string>
+    <string name="txt_play">プレー</string>
+    <string name="txt_fm_am">FM・AM</string>
+    <string name="txt_car_music">Car music</string>
+    <string name="txt_android_music">Android music</string>
+    <string name="txt_internet_audio">Internet Audio</string>
+</resources>
