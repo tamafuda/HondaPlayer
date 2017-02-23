@@ -16,9 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ControllerActivity" />
+        <activity android:name=".ControllerActivity"
+                  android:parentActivityName=".MainActivity"/>
         <activity android:name=".MusicPlayActivity" />
-        <activity android:name=".PlayScreenActivity" />
+        <activity android:name=".PlayScreenActivity"
+                  android:parentActivityName=".MainActivity"/>
         <activity android:name=".RadioPlayer"></activity>
     </application>
 
