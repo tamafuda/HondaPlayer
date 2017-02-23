@@ -24,9 +24,7 @@ public class MainActivity extends AppCompatActivity {
         // Change title
         getSupportActionBar().setDisplayOptions(android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
-        View view =getSupportActionBar().getCustomView();
-
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar_text);
 
         mController = (Button) findViewById(R.id.bt_controller);
         mPlay = (Button) findViewById(R.id.btn_play);
@@ -52,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(iController);
                     break;
                 case R.id.btn_play:
-                    // your code for button2 here
+                    Intent iPlay = new Intent(getBaseContext(), PlayScreenActivity.class);
+                    iPlay.putExtra("MainActivity", true);
+                    startActivity(iPlay);
                     break;
                 // even more buttons here
             }

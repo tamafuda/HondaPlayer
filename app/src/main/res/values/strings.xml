@@ -8,4 +8,7 @@
     <string name="txt_car_music">Car music</string>
     <string name="txt_android_music">Android music</string>
     <string name="txt_internet_audio">Internet Audio</string>
+    <string name="txt_music_arrange">musicをアレンジ</string>
+    <string name="txt_music_drop">musicを拾う</string>
+    <string name="txt_music_ai_recommend">AI レコメンド</string>
 </resources>
