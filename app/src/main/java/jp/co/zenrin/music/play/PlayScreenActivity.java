@@ -1,12 +1,15 @@
 package jp.co.zenrin.music.play;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
-public class PlayScreenActivity extends AppCompatActivity {
-
+public class PlayScreenActivity extends AppCompatActivity implements View.OnClickListener{
+    private static final String TAG = "PlayScreenActivity";
+    private Button mBtnArrange;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,5 +21,26 @@ public class PlayScreenActivity extends AppCompatActivity {
         View view =getSupportActionBar().getCustomView();
         TextView txtView = (TextView) view.findViewById(R.id.title_action_bar);
         txtView.setText(getResources().getString(R.string.txt_play));
+
+        mBtnArrange = (Button) findViewById(R.id.btn_arrange);
+        mBtnArrange.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+
+        Intent intent = null;
+        switch (id) {
+            case R.id.btn_arrange:
+                intent = new Intent(PlayScreenActivity.this, MusicArrangeActivity.class);
+                intent.putExtra(TAG,true);
+                break;
+        }
+
+        if (intent != null) {
+            startActivity(intent);
+        }
+
     }
 }

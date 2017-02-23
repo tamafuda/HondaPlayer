@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="bg_player_controller">#000</color>
+    <color name="bg_list_view">#484848</color>
+    <color name="bg_thin_line">#339900</color>
+    <color name="color_text_white">#fff</color>
 </resources>

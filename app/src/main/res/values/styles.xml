@@ -12,4 +12,15 @@
         <item name="contentInsetEnd">0dp</item>
     </style>
 
+    <style name="layout_list_item_normal">
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="style_title_item">
+        <item name="android:textColor">@color/color_text_white</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

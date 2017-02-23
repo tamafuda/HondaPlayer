@@ -22,6 +22,9 @@
         <activity android:name=".PlayScreenActivity"
                   android:parentActivityName=".MainActivity"/>
         <activity android:name=".RadioPlayer"></activity>
+        
+        <activity android:name=".MusicArrangeActivity"
+            android:parentActivityName=".PlayScreenActivity"></activity>
     </application>
 
 </manifest>
