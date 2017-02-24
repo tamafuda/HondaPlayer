@@ -1,15 +1,25 @@
 package jp.co.zenrin.music.play;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import jp.co.zenrin.music.Utils.CheckSystemPermissions;
+import jp.co.zenrin.music.Utils.HondaConstants;
+
 public class PlayScreenActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "PlayScreenActivity";
     private Button mBtnArrange;
+    private Button mAIRecommend;
+    private View mView;
+    private boolean isPermission = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,12 +32,20 @@ public class PlayScreenActivity extends AppCompatActivity implements View.OnClic
         TextView txtView = (TextView) view.findViewById(R.id.title_action_bar);
         txtView.setText(getResources().getString(R.string.txt_play));
 
+        // Arrange button
         mBtnArrange = (Button) findViewById(R.id.btn_arrange);
         mBtnArrange.setOnClickListener(this);
+
+        // AI recommend button
+        mAIRecommend = (Button) findViewById(R.id.btn_ai_recommend);
+        mAIRecommend.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View view) {
+
+        mView = view;
         int id = view.getId();
 
         Intent intent = null;
@@ -36,11 +54,41 @@ public class PlayScreenActivity extends AppCompatActivity implements View.OnClic
                 intent = new Intent(PlayScreenActivity.this, MusicArrangeActivity.class);
                 intent.putExtra(TAG,true);
                 break;
+            case R.id.btn_ai_recommend:
+                if (CheckSystemPermissions.checkPermission(getApplicationContext(), HondaConstants.READ_EXTERNAL_STORAGE)) {
+                    isPermission = true;
+                    Snackbar.make(mView, "Permission already granted.", Snackbar.LENGTH_INDEFINITE).show();
+                }else {
+                    CheckSystemPermissions.requestPermission(this,getApplicationContext(),HondaConstants.READ_EXTERNAL_STORAGE);
+                }
+                if (isPermission) {
+                    intent = new Intent(PlayScreenActivity.this, MusicPlayActivity.class);
+                    intent.putExtra(TAG, true);
+                    break;
+                }
         }
 
         if (intent != null) {
             startActivity(intent);
         }
 
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        switch (requestCode) {
+            case HondaConstants.PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Snackbar.make(mView,"Permission Granted, Now you can access location data.", Snackbar.LENGTH_LONG).show();
+                    isPermission = true;
+
+                } else {
+                    isPermission = false;
+                    Snackbar.make(mView,"Permission Denied, You cannot access location data.",Snackbar.LENGTH_LONG).show();
+                }
+                break;
+        }
     }
 }

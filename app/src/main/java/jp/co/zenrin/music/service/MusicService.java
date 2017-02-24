@@ -74,7 +74,7 @@ public class MusicService extends Service implements
 
     //binder
     public class MusicBinder extends Binder {
-        MusicService getService() {
+        public MusicService getService() {
             return MusicService.this;
         }
     }

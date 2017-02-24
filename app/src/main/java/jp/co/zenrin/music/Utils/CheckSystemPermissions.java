@@ -1,0 +1,55 @@
+package jp.co.zenrin.music.Utils;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.widget.Toast;
+
+/**
+ * Created by v_hoang@zenrin-datacom.net on 2017/02/24.
+ * Android Marshmallow 6.0 final stable version is released a few weeks back.
+ * Android Marshmallow brought some new API changes
+ * and one of the most important API change is the addition of new granular permissions.
+ * Let’s dive into the new permission system
+ */
+
+public final class CheckSystemPermissions {
+
+    private static final int PERMISSION_REQUEST_CODE = 1;
+
+    /**
+     *
+     * @param context
+     * @param permissionName
+     * @return true OR false
+     *
+     * Example : If we want to check " Manifest.permission.ACCESS_FINE_LOCATION", set parameter is that string
+     * Only check on SDK >=23 - Please read google document in this case
+     */
+    public static boolean checkPermission(Context context, String permissionName) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            int result = ContextCompat.checkSelfPermission(context, permissionName);
+            if (result == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    public static void requestPermission(Activity activity, Context context, String permissionName){
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permissionName)){
+
+            Toast.makeText(context,"GPS permission allows us to access location data. Please allow in App Settings for additional functionality.",Toast.LENGTH_LONG).show();
+
+        } else {
+            ActivityCompat.requestPermissions(activity,new String[]{permissionName},PERMISSION_REQUEST_CODE);
+        }
+    }
+}
