@@ -1,19 +1,13 @@
 package jp.co.zenrin.music.player;
 
-import android.content.ComponentName;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.ListView;
-import android.widget.MediaController;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,7 +24,7 @@ import jp.co.zenrin.music.zdccore.Track;
  */
 
 
-public class MusicPlayActivity extends AppCompatActivity implements MediaController.MediaPlayerControl{
+public class MusicPlayActivity extends AppCompatActivity {
 
     // Track list variables
     private ArrayList<Track> trackList;
@@ -80,44 +74,13 @@ public class MusicPlayActivity extends AppCompatActivity implements MediaControl
 
     }
 
-    //connect to the service
-    private ServiceConnection musicConnection = new ServiceConnection(){
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            MediaPlayerService.MusicBinder binder = (MediaPlayerService.MusicBinder)service;
-            //get service
-            mediaPlayerService = binder.getService();
-            serviceBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            serviceBound = false;
-        }
-    };
-
-
-
-    //user song select
-    public void songPicked(View view){
-        mediaPlayerService.setSong(Integer.parseInt(view.getTag().toString()));
-        mediaPlayerService.playSong();
-        if(playBackPause){
-            setController();
-            playBackPause=false;
-        }
-        controller.show(0);
-    }
-
-
     //method to retrieve song info from device
     public void getSongList(){
         //query external audio
         ContentResolver musicResolver = getContentResolver();
         Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String selection = MediaStore.Audio.Media.IS_MUSIC + "!= 0";
-        String sortOrder = MediaStore.Audio.Media.TITLE + "ASC";
+        String sortOrder = MediaStore.Audio.Media.TITLE + " ASC";
         Cursor musicCursor = musicResolver.query(musicUri, null, selection, null, sortOrder);
 
         //iterate over results if valid
@@ -132,7 +95,7 @@ public class MusicPlayActivity extends AppCompatActivity implements MediaControl
             int artistColumn = musicCursor.getColumnIndex
                     (android.provider.MediaStore.Audio.Media.ARTIST);
             int albumColumn = musicCursor.getColumnIndex
-                    (MediaStore.Audio.Media.ALBUM;
+                    (MediaStore.Audio.Media.ALBUM);
             int durationColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
 
             //add songs to list
@@ -148,121 +111,5 @@ public class MusicPlayActivity extends AppCompatActivity implements MediaControl
             while (musicCursor.moveToNext());
         }
     }
-
-
-    //set the controller up
-    private void setController(){
-        controller = new MusicController(this);
-        //set previous and next button listeners
-        controller.setPrevNextListeners(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                playNext();
-            }
-        }, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                playPrev();
-            }
-        });
-        //set and show
-        controller.setMediaPlayer(this);
-        controller.setAnchorView(findViewById(R.id.song_list));
-        controller.setEnabled(true);
-    }
-
-    private void playNext(){
-        mediaPlayerService.playNext();
-        if(playBackPause){
-            setController();
-            playBackPause=false;
-        }
-        controller.show(0);
-    }
-
-    private void playPrev(){
-        mediaPlayerService.playPrev();
-        if(playBackPause){
-            setController();
-            playBackPause=false;
-        }
-        controller.show(0);
-    }
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public int getDuration() {
-        return 0;
-    }
-
-    @Override
-    public int getCurrentPosition() {
-        return 0;
-    }
-
-    @Override
-    public void seekTo(int pos) {
-
-    }
-
-    @Override
-    public boolean isPlaying() {
-        return false;
-    }
-
-    @Override
-    public int getBufferPercentage() {
-        return 0;
-    }
-
-    @Override
-    public boolean canPause() {
-        return false;
-    }
-
-    @Override
-    public boolean canSeekBackward() {
-        return false;
-    }
-
-    @Override
-    public boolean canSeekForward() {
-        return false;
-    }
-
-    @Override
-    public int getAudioSessionId() {
-        return 0;
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if(playIntent == null) {
-            playIntent = new Intent(this, MediaPlayerService.class);
-            bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
-            startService(playIntent);
-        }
-    }
-
 
 }
