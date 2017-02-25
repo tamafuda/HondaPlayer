@@ -3,13 +3,14 @@
 	android:layout_height="wrap_content"
 	android:onClick="songPicked"
 	android:orientation="vertical"
-	android:padding="5dp" >
+	android:padding="5dp"
+	android:background="@android:drawable/screen_background_dark">
 
 	<TextView
 		android:id="@+id/song_title"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:textColor="#FFFFFF99"
+		android:textColor="@android:color/holo_green_dark"
 		android:textSize="20sp"
 		android:textStyle="bold"
 		android:text="music title"/>
@@ -18,7 +19,7 @@
 		android:id="@+id/song_artist"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:textColor="#FFFFFF99"
+		android:textColor="@android:color/holo_orange_dark"
 		android:textSize="18sp"
 		android:text="artist name"/>
 
