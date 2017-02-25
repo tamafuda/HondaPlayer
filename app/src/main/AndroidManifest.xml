@@ -21,6 +21,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/CustomTheme">
+
+        <!-- Service register-->
+        <service android:name="jp.co.zenrin.music.service.MediaPlayerService"/>
+
+        <!-- Activity register-->
         <activity android:name="jp.co.zenrin.music.player.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
