@@ -600,12 +600,14 @@ public class MediaPlayerService extends Service implements
 
     @Override
     public void onCompletion(MediaPlayer mp) {
+        // After play done, play to next track
+        skipToNext();
         // Invoked when playback of a media has completed
-        stopMedia();
+        //stopMedia();
 
-        removeNotification();
+        //removeNotification();
         // Stop service
-        stopSelf();
+        //stopSelf();
     }
 
     @Override
