@@ -1,6 +1,7 @@
 package jp.co.zenrin.music.zdccore;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import jp.co.zenrin.music.player.AIMixAudio;
 import jp.co.zenrin.music.player.R;
 import jp.co.zenrin.music.util.TrackUtil;
 
@@ -40,13 +42,16 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
     @Override
     public void onClick(View v) {
         int position = (Integer) v.getTag();
-        Track track = getItem(position);
+        Track track = trackList.get(position);
         switch (v.getId()) {
             case R.id.btn_share:
                 Toast.makeText(context,"Share button", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_arrange:
                 Toast.makeText(context,"Arrange button", Toast.LENGTH_SHORT).show();
+                Intent iController = new Intent(context, AIMixAudio.class);
+                iController.putExtra("AIMixAudio", true);
+                context.startActivity(iController);
                 break;
         }
 
@@ -63,8 +68,8 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(layoutResourceId, parent, false);
-            viewHolder.trackTitle = (TextView) convertView.findViewById(R.id.track_title);
-            viewHolder.trackDuration = (TextView) convertView.findViewById(R.id.track_duration);
+            viewHolder.trackTitle = (TextView) convertView.findViewById(R.id.song_title);
+            viewHolder.trackDuration = (TextView) convertView.findViewById(R.id.song_artist);
             viewHolder.share = (Button) convertView.findViewById(R.id.btn_share);
             viewHolder.arrange = (Button) convertView.findViewById(R.id.btn_arrange);
 
