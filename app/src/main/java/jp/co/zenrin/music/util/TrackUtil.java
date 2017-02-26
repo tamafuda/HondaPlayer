@@ -3,11 +3,13 @@ package jp.co.zenrin.music.util;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
 
 import java.util.ArrayList;
 
+import jp.co.zenrin.music.player.R;
 import jp.co.zenrin.music.zdccore.Track;
 
 /**
@@ -17,7 +19,7 @@ import jp.co.zenrin.music.zdccore.Track;
 
 public final class TrackUtil {
 
-    public  static ArrayList<Track> getTrackList(Context context){
+    public static ArrayList<Track> getTrackList(Context context) {
         ArrayList<Track> trackList = new ArrayList<Track>();
         //query external audio
         ContentResolver musicResolver = context.getContentResolver();
@@ -27,7 +29,7 @@ public final class TrackUtil {
         Cursor musicCursor = musicResolver.query(musicUri, null, selection, null, sortOrder);
 
         //iterate over results if valid
-        if(musicCursor!=null && musicCursor.moveToFirst()){
+        if (musicCursor != null && musicCursor.moveToFirst()) {
             //get columns
             int idColumn = musicCursor.getColumnIndex
                     (android.provider.MediaStore.Audio.Media._ID);
@@ -58,10 +60,16 @@ public final class TrackUtil {
         return trackList;
     }
 
+    /**
+     * Convert duration long to time
+     *
+     * @param duration
+     * @return
+     */
     public static String covertDuration(long duration) {
 
         String out = null;
-        long hours=0;
+        long hours = 0;
         try {
             hours = (duration / 3600000);
         } catch (Exception e) {
@@ -88,5 +96,72 @@ public final class TrackUtil {
         }
 
         return out;
+    }
+
+    public static ArrayList<Track> getRawMediaList(Context context) {
+        ArrayList<MediaMetadataRetriever> metadataRetrievers = new ArrayList<MediaMetadataRetriever>();
+        Uri mediaPath = null;
+        MediaMetadataRetriever mmr = null;
+        // Hard code
+
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a01);
+        mmr = new MediaMetadataRetriever();
+        mmr.setDataSource(context,mediaPath);
+        metadataRetrievers.add(mmr);
+
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a02);
+        mmr = new MediaMetadataRetriever();
+        mmr.setDataSource(context,mediaPath);
+        metadataRetrievers.add(mmr);
+
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a03);
+        mmr = new MediaMetadataRetriever();
+        mmr.setDataSource(context,mediaPath);
+        metadataRetrievers.add(mmr);
+
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a04);
+        mmr = new MediaMetadataRetriever();
+        mmr.setDataSource(context,mediaPath);
+        metadataRetrievers.add(mmr);
+
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a05);
+        mmr = new MediaMetadataRetriever();
+        mmr.setDataSource(context,mediaPath);
+        metadataRetrievers.add(mmr);
+
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a05);
+        mmr = new MediaMetadataRetriever();
+        mmr.setDataSource(context,mediaPath);
+        metadataRetrievers.add(mmr);
+
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a06);
+        mmr = new MediaMetadataRetriever();
+        mmr.setDataSource(context,mediaPath);
+        metadataRetrievers.add(mmr);
+
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a07);
+        mmr = new MediaMetadataRetriever();
+        mmr.setDataSource(context,mediaPath);
+        metadataRetrievers.add(mmr);
+
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a08);
+        mmr = new MediaMetadataRetriever();
+        mmr.setDataSource(context,mediaPath);
+        metadataRetrievers.add(mmr);
+
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a09);
+        mmr = new MediaMetadataRetriever();
+        mmr.setDataSource(context,mediaPath);
+        metadataRetrievers.add(mmr);
+
+        ArrayList<Track> trackList = new ArrayList<Track>();
+        for (MediaMetadataRetriever obj:metadataRetrievers) {
+            String title = obj.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+            String duration = obj.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+            Track track = new Track(1, "", title, "","",Long.valueOf(duration));
+            trackList.add(track);
+        }
+
+        return trackList;
     }
 }

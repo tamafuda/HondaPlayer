@@ -3,16 +3,15 @@ package jp.co.zenrin.music.player;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import jp.co.zenrin.music.zdccore.Track;
+import jp.co.zenrin.music.util.TrackUtil;
 import jp.co.zenrin.music.zdccore.SongAdapter;
+import jp.co.zenrin.music.zdccore.Track;
 
 /**
  * Created by nguyenngocbinh on 2/23/17.
@@ -40,19 +39,20 @@ public class MusicArrangeActivity extends ListActivity {
 
     private ArrayList<Track> getAllSong() {
         ArrayList<Track> tracks = new ArrayList<>();
+        tracks = TrackUtil.getRawMediaList(getApplicationContext());
 
-        Field[] fields=R.raw.class.getFields();
-        try {
-            for(int index=0; index < fields.length; index++){
-                int id = fields[index].getInt(fields[index]);
-                String name = fields[index].getName();
-                String artist = "unknown";
-                Track track = new Track(id, name, artist, null, null, 100);
-                tracks.add(track);
-            }
-        }catch (Exception ex) {
-            Log.e(TAG, ex.toString());
-        }
+//        Field[] fields=R.raw.class.getFields();
+//        try {
+//            for(int index=0; index < fields.length; index++){
+//                int id = fields[index].getInt(fields[index]);
+//                String name = fields[index].getName();
+//                String artist = "unknown";
+//                Track track = new Track(id, name, artist, null, null, 100);
+//                tracks.add(track);
+//            }
+//        }catch (Exception ex) {
+//            Log.e(TAG, ex.toString());
+//        }
 
         return tracks;
     }
