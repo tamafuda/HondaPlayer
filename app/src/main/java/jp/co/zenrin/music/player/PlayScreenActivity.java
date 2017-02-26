@@ -56,7 +56,7 @@ public class PlayScreenActivity extends AppCompatActivity implements View.OnClic
         Intent intent = null;
         switch (id) {
             case R.id.btn_arrange:
-                intent = new Intent(PlayScreenActivity.this, MusicArrangeActivity.class);
+                intent = new Intent(PlayScreenActivity.this, ArrangeActivity.class);
                 intent.putExtra(TAG,true);
                 break;
             case R.id.btn_ai_recommend:

@@ -42,6 +42,13 @@
         
         <activity android:name="jp.co.zenrin.music.player.MusicArrangeActivity"
             android:parentActivityName="jp.co.zenrin.music.player.PlayScreenActivity"></activity>
+        <activity android:name="jp.co.zenrin.music.player.ArrangeActivity"
+            android:parentActivityName="jp.co.zenrin.music.player.PlayScreenActivity"></activity>
+        <service
+            android:name="jp.co.zenrin.music.service.MusicService"
+            android:enabled="true"
+            android:exported="true"></service>
+
     </application>
 
 </manifest>
