@@ -47,7 +47,7 @@ public class MusicArrangeActivity extends ListActivity {
                 int id = fields[index].getInt(fields[index]);
                 String name = fields[index].getName();
                 String artist = "unknown";
-                Track track = new Track(id, name, artist, null, null, null);
+                Track track = new Track(id, name, artist, null, null, 100);
                 tracks.add(track);
             }
         }catch (Exception ex) {

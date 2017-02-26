@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import jp.co.zenrin.music.player.R;
+import jp.co.zenrin.music.util.TrackUtil;
 
 /**
  * @Author: Hoang Vu
@@ -60,7 +61,8 @@ public class SongAdapter extends BaseAdapter {
 		Track currTrack = tracks.get(position);
 		//get title and artist strings
 		songView.setText(currTrack.getTitle());
-		artistView.setText(currTrack.getArtist());
+		//artistView.setText(currTrack.getArtist());
+		artistView.setText(TrackUtil.covertDuration(currTrack.getDuration()));
 		//set position as tag
 		songLay.setTag(position);
 		return songLay;

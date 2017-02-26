@@ -15,9 +15,9 @@ public class Track implements Serializable {
     private String title;
     private String artist;
     private String album;
-    private String duration;
+    private long duration;
 
-    public Track(long trackID, String trackData, String trackTitle, String trackArtist, String trackAlbum, String trackDuration) {
+    public Track(long trackID, String trackData, String trackTitle, String trackArtist, String trackAlbum, long trackDuration) {
         id = trackID;
         data = trackData;
         title = trackTitle;
@@ -47,7 +47,7 @@ public class Track implements Serializable {
         return album;
     }
 
-    public String getDuration() {
+    public long getDuration() {
         return duration;
     }
 }
