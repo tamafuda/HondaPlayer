@@ -20,8 +20,8 @@ import jp.co.zenrin.music.util.TrackUtil;
 import jp.co.zenrin.music.zdccore.HondaSharePreference;
 import jp.co.zenrin.music.zdccore.Logger;
 import jp.co.zenrin.music.zdccore.MusicController;
-import jp.co.zenrin.music.zdccore.SongAdapter;
 import jp.co.zenrin.music.zdccore.Track;
+import jp.co.zenrin.music.zdccore.TrackAdapter;
 
 /**
  * @Author: Hoang Vu
@@ -86,8 +86,9 @@ public class MusicPlayActivity extends AppCompatActivity {
 //        });
 
         // Create and set adapter
-        SongAdapter songAdt = new SongAdapter(this, trackList);
-        songView.setAdapter(songAdt);
+        //SongAdapter songAdt = new SongAdapter(this, trackList);
+        TrackAdapter trackAdapter = new TrackAdapter(this, R.layout.song, trackList);
+        songView.setAdapter(trackAdapter);
     }
 
     //Binding this Client to the AudioPlayer Service

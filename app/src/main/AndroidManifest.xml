@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -13,44 +13,46 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
-
     <application
-        android:name="jp.co.zenrin.music.player.HondaPlayApplication"
+        android:name=".HondaPlayApplication"
         android:allowBackup="true"
         android:icon="@drawable/icon_honda"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/CustomTheme">
 
-        <!-- Service register-->
-        <service android:name="jp.co.zenrin.music.service.MediaPlayerService" android:enabled="true"/>
-        <service android:name="jp.co.zenrin.music.service.MusicService"  android:enabled="true" android:exported="true"></service>
+        <!-- Service register -->
+        <service
+            android:name="jp.co.zenrin.music.service.MediaPlayerService"
+            android:enabled="true" />
+        <service
+            android:name="jp.co.zenrin.music.service.MusicService"
+            android:enabled="true"
+            android:exported="true" />
 
-        <!-- Activity register-->
-        <activity android:name="jp.co.zenrin.music.player.MainActivity">
+        <!-- Activity register -->
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="jp.co.zenrin.music.player.ControllerActivity"
-                  android:parentActivityName="jp.co.zenrin.music.player.MainActivity"/>
-
-        <activity android:name="jp.co.zenrin.music.player.MusicPlayActivity" />
-
-        <activity android:name="jp.co.zenrin.music.player.PlayScreenActivity"
-                  android:parentActivityName="jp.co.zenrin.music.player.MainActivity"/>
-
-        <activity android:name="jp.co.zenrin.music.player.RadioPlayer"></activity>
-        
-        <activity android:name="jp.co.zenrin.music.player.MusicArrangeActivity"
-            android:parentActivityName="jp.co.zenrin.music.player.PlayScreenActivity"></activity>
-
-        <activity android:name="jp.co.zenrin.music.player.ArrangeActivity"
-            android:parentActivityName="jp.co.zenrin.music.player.PlayScreenActivity"></activity>
-
-
+        <activity
+            android:name=".ControllerActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".MusicPlayActivity" />
+        <activity
+            android:name=".PlayScreenActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".RadioPlayer" />
+        <activity
+            android:name=".MusicArrangeActivity"
+            android:parentActivityName=".PlayScreenActivity" />
+        <activity
+            android:name=".ArrangeActivity"
+            android:parentActivityName=".PlayScreenActivity" />
+        <activity android:name=".AIMixAudio"></activity>
     </application>
 
 </manifest>
