@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal"
+	android:padding="5dp"
+	android:background="@android:drawable/screen_background_dark">
+
+
+	<ImageView
+		android:layout_width="30dp"
+		app:srcCompat="@drawable/dark_default_album_artwork"
+		android:id="@+id/imageView"
+		android:layout_centerVertical="true"
+		android:layout_alignParentStart="true"
+		android:layout_height="match_parent" />
+
+	<TextView
+		android:text="TextView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:layout_toEndOf="@+id/imageView"
+		android:layout_marginStart="36dp"
+		android:id="@+id/track_title" />
+
+	<TextView
+		android:text="TextView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/track_title"
+		android:layout_alignStart="@+id/track_title"
+		android:id="@+id/track_duration" />
+
+	<Button
+		android:text="Button"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:layout_alignParentEnd="true"
+		android:layout_marginEnd="49dp"
+		android:id="@+id/track_arrange"
+		android:background="@drawable/bg_button_play" />
+</RelativeLayout>

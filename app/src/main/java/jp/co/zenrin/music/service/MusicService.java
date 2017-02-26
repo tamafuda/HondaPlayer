@@ -16,7 +16,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Random;
 
-import jp.co.zenrin.music.controller.Song;
+import jp.co.zenrin.music.zdccore.Song;
 import jp.co.zenrin.music.player.MainActivity;
 import jp.co.zenrin.music.player.R;
 

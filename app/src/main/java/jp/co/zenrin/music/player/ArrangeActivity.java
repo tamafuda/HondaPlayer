@@ -16,19 +16,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import jp.co.zenrin.music.controller.Song;
+import jp.co.zenrin.music.zdccore.Song;
 import jp.co.zenrin.music.helper.MediaControlHelper;
 import jp.co.zenrin.music.service.MusicService;
 import jp.co.zenrin.music.zdccore.ArrangeAdapter;
-import jp.co.zenrin.music.zdccore.Track;
 
 /**
  * Created by nguyenngocbinh on 2/26/17.

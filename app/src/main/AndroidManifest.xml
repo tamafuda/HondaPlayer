@@ -24,30 +24,32 @@
 
         <!-- Service register-->
         <service android:name="jp.co.zenrin.music.service.MediaPlayerService" android:enabled="true"/>
+        <service android:name="jp.co.zenrin.music.service.MusicService"  android:enabled="true" android:exported="true"></service>
 
         <!-- Activity register-->
         <activity android:name="jp.co.zenrin.music.player.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name="jp.co.zenrin.music.player.ControllerActivity"
                   android:parentActivityName="jp.co.zenrin.music.player.MainActivity"/>
+
         <activity android:name="jp.co.zenrin.music.player.MusicPlayActivity" />
+
         <activity android:name="jp.co.zenrin.music.player.PlayScreenActivity"
                   android:parentActivityName="jp.co.zenrin.music.player.MainActivity"/>
+
         <activity android:name="jp.co.zenrin.music.player.RadioPlayer"></activity>
         
         <activity android:name="jp.co.zenrin.music.player.MusicArrangeActivity"
             android:parentActivityName="jp.co.zenrin.music.player.PlayScreenActivity"></activity>
+
         <activity android:name="jp.co.zenrin.music.player.ArrangeActivity"
             android:parentActivityName="jp.co.zenrin.music.player.PlayScreenActivity"></activity>
-        <service
-            android:name="jp.co.zenrin.music.service.MusicService"
-            android:enabled="true"
-            android:exported="true"></service>
+
 
     </application>
 

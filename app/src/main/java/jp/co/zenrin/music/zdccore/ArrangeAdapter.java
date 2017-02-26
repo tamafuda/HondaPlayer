@@ -9,9 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
-import jp.co.zenrin.music.controller.Song;
 import jp.co.zenrin.music.player.R;
 
 /**

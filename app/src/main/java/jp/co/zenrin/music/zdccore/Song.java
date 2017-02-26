@@ -1,4 +1,4 @@
-package jp.co.zenrin.music.controller;
+package jp.co.zenrin.music.zdccore;
 
 import android.database.Cursor;
 import android.provider.MediaStore;

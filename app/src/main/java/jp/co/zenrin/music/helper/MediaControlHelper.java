@@ -1,15 +1,13 @@
 package jp.co.zenrin.music.helper;
 
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import android.provider.MediaStore;
 
 import java.util.ArrayList;
 
-import jp.co.zenrin.music.controller.Song;
+import jp.co.zenrin.music.zdccore.Song;
 
 /**
  * Created by nguyenngocbinh on 2/25/17.
