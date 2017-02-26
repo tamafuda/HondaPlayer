@@ -23,7 +23,7 @@
         android:theme="@style/CustomTheme">
 
         <!-- Service register-->
-        <service android:name="jp.co.zenrin.music.service.MediaPlayerService"/>
+        <service android:name="jp.co.zenrin.music.service.MediaPlayerService" android:enabled="true"/>
 
         <!-- Activity register-->
         <activity android:name="jp.co.zenrin.music.player.MainActivity">

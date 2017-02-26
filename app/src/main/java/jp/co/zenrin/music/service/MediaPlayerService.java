@@ -560,7 +560,10 @@ public class MediaPlayerService extends Service implements
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        // Fix problem that onServiceConnected method is not called
+        // Instead of return null -> Return IBinder
+        return musicBind;
+        //return null;
     }
 
     @Override

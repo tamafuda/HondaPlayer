@@ -178,4 +178,9 @@ public class MusicPlayActivity extends AppCompatActivity {
             sendBroadcast(broadcastIntent);
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 }
