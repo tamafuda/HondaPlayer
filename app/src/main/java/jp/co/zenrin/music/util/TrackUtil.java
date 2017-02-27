@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import jp.co.zenrin.music.player.R;
 import jp.co.zenrin.music.zdccore.Track;
+import jp.co.zenrin.music.zdccore.TrackInfo;
 
 /**
  * @Author: Hoang Vu
@@ -98,6 +99,11 @@ public final class TrackUtil {
         return out;
     }
 
+    /**
+     *
+     * @param context
+     * @return
+     */
     public static ArrayList<Track> getRawMediaList(Context context) {
         ArrayList<MediaMetadataRetriever> metadataRetrievers = new ArrayList<MediaMetadataRetriever>();
         Uri mediaPath = null;
@@ -161,6 +167,34 @@ public final class TrackUtil {
             Track track = new Track(1, "", title, "","",Long.valueOf(duration));
             trackList.add(track);
         }
+
+        return trackList;
+    }
+
+    /**
+     *
+     * @param context
+     * @return
+     */
+    public static ArrayList<TrackInfo> getRawToMix(Context context) {
+        Uri mediaPath = null;
+        TrackInfo trackInfo = null;
+        ArrayList<TrackInfo> trackList = new ArrayList<TrackInfo>();
+        // Hard code
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.ghita);
+        trackInfo = new TrackInfo("ghita", mediaPath);
+        trackList.add(trackInfo);
+
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.bazz);
+        trackInfo = new TrackInfo("bass", mediaPath);
+        trackList.add(trackInfo);
+
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.jazz);
+        trackInfo = new TrackInfo("jazz", mediaPath);
+        trackList.add(trackInfo);
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.pop);
+        trackInfo = new TrackInfo("pop", mediaPath);
+        trackList.add(trackInfo);
 
         return trackList;
     }

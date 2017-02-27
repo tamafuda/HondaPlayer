@@ -11,22 +11,44 @@
     tools:context="jp.co.zenrin.music.player.AIMixAudio">
 
     <Button
-        android:text="Ghita"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="49dp"
-        android:id="@+id/id_ghita" />
-
-    <Button
-        android:text="Bass"
+        android:text="ベース"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="67dp"
         android:id="@+id/id_bass"
         android:layout_alignBaseline="@+id/id_ghita"
         android:layout_alignBottom="@+id/id_ghita"
-        android:layout_toEndOf="@+id/id_ghita" />
+        android:layout_toEndOf="@+id/id_ghita"
+        android:tag="bass" />
+
+    <Button
+        android:text="ジャズ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_ghita"
+        android:layout_alignStart="@+id/id_ghita"
+        android:layout_marginTop="15dp"
+        android:id="@+id/id_jazz"
+        android:tag="jazz" />
+
+    <Button
+        android:text="ポップ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/id_pop"
+        android:layout_alignBaseline="@+id/id_jazz"
+        android:layout_alignBottom="@+id/id_jazz"
+        android:layout_alignStart="@+id/id_bass"
+        android:tag="pop" />
+
+    <Button
+        android:text="ギター"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="56dp"
+        android:id="@+id/id_ghita"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:tag="ghita" />
 </RelativeLayout>
