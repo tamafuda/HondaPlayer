@@ -115,5 +115,8 @@ public class AIMixAudio extends AppCompatActivity implements MediaPlayer.OnCompl
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
         Log.d(this.getClass().getName(), "Debug");
+        mediaPlayer.reset();
     }
+
+
 }
