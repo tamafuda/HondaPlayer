@@ -10,4 +10,23 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="jp.co.zenrin.music.player.AIMixAudio">
 
+    <Button
+        android:text="Ghita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="49dp"
+        android:id="@+id/id_ghita" />
+
+    <Button
+        android:text="Bass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="67dp"
+        android:id="@+id/id_bass"
+        android:layout_alignBaseline="@+id/id_ghita"
+        android:layout_alignBottom="@+id/id_ghita"
+        android:layout_toEndOf="@+id/id_ghita" />
 </RelativeLayout>
