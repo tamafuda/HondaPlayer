@@ -52,6 +52,7 @@
         <activity
             android:name=".ArrangeActivity"
             android:parentActivityName=".PlayScreenActivity" />
+
         <activity android:name=".AIMixAudio"></activity>
     </application>
 

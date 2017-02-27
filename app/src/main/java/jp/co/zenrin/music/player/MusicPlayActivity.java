@@ -63,6 +63,7 @@ public class MusicPlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         log.d("onCreate");
         setContentView(R.layout.activity_music_play);
+
         btnPrevious = (Button) findViewById(R.id.btn_previous);
         btnPlay = (Button) findViewById(R.id.btn_play);
         btnPause = (Button) findViewById(R.id.btn_pause);

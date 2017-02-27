@@ -36,6 +36,8 @@ public class PlayScreenActivity extends AppCompatActivity implements View.OnClic
         View view =getSupportActionBar().getCustomView();
         TextView txtView = (TextView) view.findViewById(R.id.title_action_bar);
         txtView.setText(getResources().getString(R.string.txt_play));
+        // Add back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Arrange button
         mBtnArrange = (Button) findViewById(R.id.btn_arrange);
