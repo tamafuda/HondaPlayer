@@ -2,6 +2,7 @@ package jp.co.zenrin.music.player;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,5 +24,32 @@ public class RadioPlayer extends AppCompatActivity {
         View view =getSupportActionBar().getCustomView();
         TextView txtView = (TextView) view.findViewById(R.id.title_action_bar);
         txtView.setText(getResources().getString(R.string.txt_fm_am));
+        // Add back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        return super.dispatchKeyEvent(event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onNavigateUp() {
+        return super.onNavigateUp();
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_radio_player"
     android:layout_width="match_parent"
@@ -11,4 +12,54 @@
     tools:context="jp.co.zenrin.music.player.RadioPlayer"
     android:background="@android:drawable/screen_background_dark">
 
+    <TextView
+        android:text="80.5 Mhz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="53dp"
+        android:id="@+id/textView"
+        android:textColor="@color/bg_thin_line" />
+
+    <TextView
+        android:text="TOKYO FM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginTop="22dp"
+        android:id="@+id/id_chanel"
+        android:textColor="@color/bg_thin_line" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/radio"
+        android:id="@+id/imageView2"
+        android:layout_marginTop="36dp"
+        android:layout_below="@+id/id_chanel"
+        android:layout_alignEnd="@+id/id_chanel" />
+
+    <TextView
+        android:text="Arigatou"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView2"
+        android:layout_toEndOf="@+id/imageView2"
+        android:layout_marginStart="82dp"
+        android:layout_marginTop="18dp"
+        android:id="@+id/id_music1"
+        android:textColor="@color/bg_thin_line" />
+
+    <TextView
+        android:text=" Kimagure Romantic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_music1"
+        android:layout_alignStart="@+id/id_music1"
+        android:layout_marginTop="18dp"
+        android:id="@+id/id_music2"
+        android:textColor="@color/bg_thin_line" />
 </RelativeLayout>

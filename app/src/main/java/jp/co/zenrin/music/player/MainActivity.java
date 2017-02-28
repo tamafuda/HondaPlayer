@@ -38,9 +38,6 @@ public class MainActivity extends AppCompatActivity {
         // Add event button
         mController.setOnClickListener(mOnclick);
         mPlay.setOnClickListener(mOnclick);
-
-
-
     }
 
     /**

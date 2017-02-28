@@ -24,17 +24,30 @@
         <!-- Service register -->
         <service
             android:name="jp.co.zenrin.music.service.MediaPlayerService"
-            android:enabled="true" />
+            android:enabled="true"
+            android:exported="false" />
         <service
             android:name="jp.co.zenrin.music.service.MusicService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false" />
+        <service
+            android:name="jp.co.zenrin.music.service.AINotificationIntentService"
+            android:exported="false" />
+
+        <!-- Receiver register -->
+        <receiver android:name="jp.co.zenrin.music.notification.AIRecommendReceiver" />
+        <receiver android:name="jp.co.zenrin.music.notification.HondaSystemReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+        </receiver>
 
         <!-- Activity register -->
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -45,15 +58,17 @@
         <activity
             android:name=".PlayScreenActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".RadioPlayer" />
+        <activity android:name=".RadioPlayer"
+            android:parentActivityName=".ControllerActivity" />
         <activity
             android:name=".MusicArrangeActivity"
             android:parentActivityName=".PlayScreenActivity" />
         <activity
             android:name=".ArrangeActivity"
             android:parentActivityName=".PlayScreenActivity" />
+        <activity android:name=".AIMixAudio" />
 
-        <activity android:name=".AIMixAudio"></activity>
+
     </application>
 
 </manifest>
