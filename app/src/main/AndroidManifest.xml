@@ -48,6 +48,7 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -58,7 +59,8 @@
         <activity
             android:name=".PlayScreenActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".RadioPlayer"
+        <activity
+            android:name=".RadioPlayer"
             android:parentActivityName=".ControllerActivity" />
         <activity
             android:name=".MusicArrangeActivity"
@@ -67,7 +69,6 @@
             android:name=".ArrangeActivity"
             android:parentActivityName=".PlayScreenActivity" />
         <activity android:name=".AIMixAudio" />
-
 
     </application>
 

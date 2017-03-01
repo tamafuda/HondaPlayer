@@ -13,6 +13,7 @@ import android.util.Log;
 
 import jp.co.zenrin.music.player.MainActivity;
 import jp.co.zenrin.music.player.R;
+import jp.co.zenrin.music.player.RadioPlayer;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -88,6 +89,10 @@ public class AINotificationIntentService extends IntentService {
             String action = intent.getAction();
             if (ACTION_START.equals(action)) {
                 processStartNotification();
+                Intent iController = new Intent(getBaseContext(), RadioPlayer.class);
+                iController.putExtra("Broadcast", true);
+                iController.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(iController);
             }
         } finally {
             WakefulBroadcastReceiver.completeWakefulIntent(intent);

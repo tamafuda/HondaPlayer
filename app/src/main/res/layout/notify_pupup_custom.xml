@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_custom_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="80dp"
+    android:background="@android:color/holo_blue_bright">
+
+    <Button
+        android:id="@+id/close_popup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="This is a sample popup window."
+        android:layout_centerInParent="true"
+        style="?android:attr/borderlessButtonStyle"/>
+
+</RelativeLayout>

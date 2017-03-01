@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="20dp">
+
+        <TextView
+            android:text="0:00"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/id_time_start"
+            android:layout_weight="1"
+            android:textAlignment="viewStart"
+            android:layout_marginStart="@dimen/btn_text_size" />
+
+        <TextView
+            android:text="03:00"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/id_time_end"
+            android:layout_weight="1"
+            android:textAlignment="viewEnd"
+            android:layout_marginEnd="@dimen/btn_text_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seekBar" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_weight="0.01"
+        android:layout_height="50dp">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_dark_previous_pressed"
+            android:layout_weight="1"
+            android:contentDescription="@string/txt_play"
+            android:id="@+id/btn_previous" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/bg_button_play"
+            android:contentDescription="@string/txt_play"
+            android:layout_weight="1"
+            android:id="@+id/btn_play" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/bg_button_pause"
+            android:layout_weight="1"
+            android:contentDescription="@string/txt_play"
+            android:visibility="gone"
+            android:id="@+id/btn_pause" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/bg_button_next"
+            android:contentDescription="@string/txt_play"
+            android:layout_weight="1"
+            android:id="@+id/btn_next" />
+
+    </LinearLayout>
+</LinearLayout>

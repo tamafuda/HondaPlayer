@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.btn_play:
                     Intent iPlay = new Intent(getBaseContext(), PlayScreenActivity.class);
+                    //Intent iPlay = new Intent(getBaseContext(), PlayMediaActivity.class);
                     iPlay.putExtra("MainActivity", true);
                     startActivity(iPlay);
                     break;

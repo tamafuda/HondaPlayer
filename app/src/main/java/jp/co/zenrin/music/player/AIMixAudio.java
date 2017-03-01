@@ -3,7 +3,6 @@ package jp.co.zenrin.music.player;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,9 +11,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import jp.co.zenrin.music.util.TrackUtil;
+import jp.co.zenrin.music.zdccore.BasePlayerActivity;
 import jp.co.zenrin.music.zdccore.TrackInfo;
 
-public class AIMixAudio extends AppCompatActivity implements MediaPlayer.OnCompletionListener{
+public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnCompletionListener{
 
     Button btnGhita;
     Button btnBass;
@@ -25,7 +25,7 @@ public class AIMixAudio extends AppCompatActivity implements MediaPlayer.OnCompl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aimix_audio);
+        //setContentView(R.layout.activity_aimix_audio);
         btnGhita = (Button) findViewById(R.id.id_ghita);
         btnBass = (Button) findViewById(R.id.id_bass);
         btnJazz = (Button) findViewById(R.id.id_jazz);
@@ -35,6 +35,16 @@ public class AIMixAudio extends AppCompatActivity implements MediaPlayer.OnCompl
         btnJazz.setOnClickListener(mOnclick);
         btnPop.setOnClickListener(mOnclick);
         trackInfoList = TrackUtil.getRawToMix(getApplicationContext());
+    }
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_aimix_audio;
+    }
+
+    @Override
+    protected int getAudioIndex() {
+        return 0;
     }
 
     /**
