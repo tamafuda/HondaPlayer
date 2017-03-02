@@ -11,6 +11,6 @@ import android.content.Intent;
 public class HondaSystemReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        AIRecommendReceiver.setupNotify(context);
+        //AIRecommendReceiver.setupNotify(context);
     }
 }

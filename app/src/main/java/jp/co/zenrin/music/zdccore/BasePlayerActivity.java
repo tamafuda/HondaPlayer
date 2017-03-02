@@ -10,6 +10,7 @@ import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
 
 import java.util.ArrayList;
 
@@ -26,6 +27,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     private ImageButton btnPlay;
     private ImageButton btnPause;
     private ImageButton btnNext;
+    private SeekBar seekBarContrl;
 
     // Track list variables
     private ArrayList<Track> trackList;
@@ -37,6 +39,8 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     // Binding
     private boolean serviceBound = false;
 
+    HondaSharePreference storage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,13 +49,16 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         btnPlay = (ImageButton) findViewById(R.id.btn_play);
         btnPause = (ImageButton) findViewById(R.id.btn_pause);
         btnNext = (ImageButton) findViewById(R.id.btn_next);
+        seekBarContrl = (SeekBar) findViewById(R.id.seekBar);
         btnPrevious.setOnClickListener(mOnclick);
         btnPlay.setOnClickListener(mOnclick);
         btnPause.setOnClickListener(mOnclick);
         btnNext.setOnClickListener(mOnclick);
         // Get song list from device
         trackList = TrackUtil.getTrackList(getApplicationContext());
+        storage = new HondaSharePreference(getApplicationContext());
     }
+    
 
 
     /**
@@ -86,12 +93,14 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             MediaPlayerService.MusicBinder binder = (MediaPlayerService.MusicBinder) service;
             player = binder.getService();
             serviceBound = true;
+            storage.storeMPLServiceStatus(true);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
             log.d("ServiceBound is false");
             serviceBound = false;
+            storage.storeMPLServiceStatus(false);
         }
     };
 
@@ -125,7 +134,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         //Check is service is active
         if (!serviceBound) {
             //Store Serializable audioList to SharedPreferences
-            HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
+            //HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
             storage.storeTrackList(trackList);
             storage.storeTrackIndex(getAudioIndex());
 
@@ -134,7 +143,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             bindService(playerIntent, serviceConnection, Context.BIND_AUTO_CREATE);
         } else {
             //Store the new audioIndex to SharedPreferences
-            HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
+            //HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
             storage.storeTrackIndex(getAudioIndex());
 
             //Service is active
@@ -143,6 +152,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             sendBroadcast(broadcastIntent);
         }
     }
+
 
     @Override
     protected void onPause() {

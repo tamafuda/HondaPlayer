@@ -36,6 +36,10 @@
 
         <!-- Receiver register -->
         <receiver android:name="jp.co.zenrin.music.notification.AIRecommendReceiver" />
+
+        <!-- When device reboot , change date time.
+        The broadcast will be re-created to adapt new system info
+        Just comment out on this version
         <receiver android:name="jp.co.zenrin.music.notification.HondaSystemReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -43,7 +47,7 @@
                 <action android:name="android.intent.action.TIME_SET" />
             </intent-filter>
         </receiver>
-
+        -->
         <!-- Activity register -->
         <activity android:name=".MainActivity">
             <intent-filter>

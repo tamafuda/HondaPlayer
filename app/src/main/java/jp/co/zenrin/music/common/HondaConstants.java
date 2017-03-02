@@ -13,8 +13,11 @@ public final class HondaConstants {
     public static final String PREFERENCE_MEDIA_PLAYER = "MEDIA_PLAYER";
     public static final String PREFERENCE_TRACK_LIST = "TRACK_ARRAY_LIST";
     public static final String PREFERENCE_TRACK_INDEX = "TRACK_INDEX";
+    public static final String PREFERENCE_MPL_SERVICE_STATUS = "MPL_SERVICE_STATUS";
 
     //
     public static final String BROADCAST_PLAY_NEW_TRACK = "jp.co.zenrin.music.PLAY_NEW_TRACK";
+    public static final int WAIT_LENGTH = 5000;
+    public static final int WAIT_CLOSE_LENGTH = 5000;
 
 }

@@ -84,6 +84,17 @@ public class HondaSharePreference {
         preferences = context.getSharedPreferences(STORAGE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
-        editor.commit();
+        editor.apply();
+    }
+
+    public void storeMPLServiceStatus(boolean serviceBound) {
+        preferences = context.getSharedPreferences(STORAGE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(HondaConstants.PREFERENCE_MPL_SERVICE_STATUS, serviceBound);
+        editor.apply();
+    }
+    public boolean loadMPLServiceStatus() {
+        preferences = context.getSharedPreferences(STORAGE, Context.MODE_PRIVATE);
+        return preferences.getBoolean(HondaConstants.PREFERENCE_MPL_SERVICE_STATUS,false);
     }
 }

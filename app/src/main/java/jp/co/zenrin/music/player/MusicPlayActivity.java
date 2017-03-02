@@ -24,7 +24,7 @@ public class MusicPlayActivity extends BasePlayerActivity {
 
     // Track list variables
     private ArrayList<Track> trackList;
-    private ListView songView;
+    private ListView trackListView;
 
 
 
@@ -32,11 +32,11 @@ public class MusicPlayActivity extends BasePlayerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         log.d("onCreate");
-        songView = (ListView) findViewById(R.id.song_list);
+        trackListView = (ListView) findViewById(R.id.song_list);
         // Get song list from device
         trackList = TrackUtil.getTrackList(getApplicationContext());
         TrackAdapter trackAdapter = new TrackAdapter(this, R.layout.song, trackList);
-        songView.setAdapter(trackAdapter);
+        trackListView.setAdapter(trackAdapter);
     }
 
     @Override
