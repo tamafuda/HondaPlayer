@@ -163,7 +163,7 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
 
             //Service is active
             //Send a broadcast to the service -> PLAY_NEW_AUDIO
-            Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_NEW_TRACK);
+            Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_RESTORE_TRACK);
             context.sendBroadcast(broadcastIntent);
         }
 

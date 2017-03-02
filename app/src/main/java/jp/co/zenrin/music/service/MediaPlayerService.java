@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
@@ -15,6 +16,7 @@ import android.media.session.MediaSessionManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
@@ -28,8 +30,11 @@ import java.util.ArrayList;
 import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.player.R;
 import jp.co.zenrin.music.zdccore.HondaSharePreference;
+import jp.co.zenrin.music.zdccore.Logger;
 import jp.co.zenrin.music.zdccore.PlaybackStatus;
 import jp.co.zenrin.music.zdccore.Track;
+
+import static android.R.attr.action;
 
 /**
  * @Author: Hoang Vu
@@ -42,11 +47,16 @@ public class MediaPlayerService extends Service implements
         MediaPlayer.OnInfoListener, MediaPlayer.OnBufferingUpdateListener,
         AudioManager.OnAudioFocusChangeListener {
 
+    // Logger
+    protected final Logger log = new Logger(MediaPlayerService.class.getSimpleName(), true);
+
     public static final String ACTION_PLAY = "jp.co.zenrin.music.ACTION_PLAY";
     public static final String ACTION_PAUSE = "jp.co.zenrin.music.ACTION_PAUSE";
     public static final String ACTION_PREVIOUS = "jp.co.zenrin.music.ACTION_PREVIOUS";
     public static final String ACTION_NEXT = "jp.co.zenrin.music.ACTION_NEXT";
     public static final String ACTION_STOP = "jp.co.zenrin.music.ACTION_STOP";
+    public static final String CURRENT_PLAYBACK_TRACK = "jp.co.zenrin.music.zdccore.MediaPlayerService.CURRENT_PLAYBACK_TRACK";
+    public static final String CURRENT_PLAYBACK_POSITION = "jp.co.zenrin.music.zdccore.MediaPlayerService.CURRENT_PLAYBACK_POSI";
     //notification id
     private static final int NOTIFICATION_ID = 101;
 
@@ -65,7 +75,7 @@ public class MediaPlayerService extends Service implements
     private AudioManager trackManager;
 
     //song list
-    private ArrayList<Track> trackList;
+    private ArrayList<Track> mTrackList;
 
     //current position
     private int trackIndex = -1;
@@ -99,7 +109,6 @@ public class MediaPlayerService extends Service implements
     }
 
     /**
-     *
      * @return true if track is removed
      */
     private boolean removeTrackFocus() {
@@ -186,12 +195,12 @@ public class MediaPlayerService extends Service implements
 
         // If playing track is latest
         // Next to first track
-        if (trackIndex == trackList.size() - 1) {
+        if (trackIndex == mTrackList.size() - 1) {
             trackIndex = 0;
-            activeTrack = trackList.get(trackIndex);
+            activeTrack = mTrackList.get(trackIndex);
         } else {
             //get next in playlist
-            activeTrack = trackList.get(++trackIndex);
+            activeTrack = mTrackList.get(++trackIndex);
         }
 
         //Update stored index
@@ -211,11 +220,11 @@ public class MediaPlayerService extends Service implements
         if (trackIndex == 0) {
             //if first in playlist
             //set index to the last of audioList
-            trackIndex = trackList.size() - 1;
-            activeTrack = trackList.get(trackIndex);
+            trackIndex = mTrackList.size() - 1;
+            activeTrack = mTrackList.get(trackIndex);
         } else {
             //get previous in playlist
-            activeTrack = trackList.get(--trackIndex);
+            activeTrack = mTrackList.get(--trackIndex);
         }
 
         //Update stored index
@@ -225,6 +234,47 @@ public class MediaPlayerService extends Service implements
         //reset mediaPlayer
         mediaPlayer.reset();
         initMediaPlayer();
+    }
+
+
+    /**
+     * Moves a cursor of audio player
+     *
+     * @param progress position where to move
+     */
+    public void seekTo(int progress) {
+        if (mediaPlayer != null)
+            mediaPlayer.seekTo(progress);
+    }
+
+    public void seekBy(int rel) {
+        if (mediaPlayer != null) {
+            int pos = mediaPlayer.getCurrentPosition();
+            pos += rel;
+            if (pos < 0)
+                pos = 0;
+            else if (pos > mediaPlayer.getDuration())
+                pos = mediaPlayer.getDuration();
+            mediaPlayer.seekTo(pos);
+        }
+    }
+
+
+    public MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
+
+    public int getStoredCurrentPlayerPosition() {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if (pref.contains(MediaPlayerService.CURRENT_PLAYBACK_POSITION)) {
+
+        }
+
+        return 0;
+    }
+
+    public boolean isPlaying() {
+        return (mediaPlayer != null) ? mediaPlayer.isPlaying() : false;
     }
 
     /**
@@ -249,7 +299,6 @@ public class MediaPlayerService extends Service implements
     }
 
     /**
-     *
      * Notification actions -> playbackAction()
      * 0 -> Play
      * 1 -> Pause
@@ -416,7 +465,6 @@ public class MediaPlayerService extends Service implements
     }
 
     /**
-     *
      * @param actionNumber
      * @return
      */
@@ -449,35 +497,69 @@ public class MediaPlayerService extends Service implements
     /**
      * Play new Audio
      */
-    private BroadcastReceiver playNewAudio = new BroadcastReceiver() {
+    private BroadcastReceiver playBroadCastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
+            log.d("Action is: " + action);
             //Get the new media index form SharedPreferences
             trackIndex = new HondaSharePreference(getApplicationContext()).loadTrackIndex();
-            if (trackIndex != -1 && trackIndex < trackList.size()) {
+            if (trackIndex != -1 && trackIndex < mTrackList.size()) {
                 //index is in a valid range
-                activeTrack = trackList.get(trackIndex);
+                activeTrack = mTrackList.get(trackIndex);
             } else {
                 stopSelf();
             }
+            String action = intent.getAction();
+            if (action.equals(HondaConstants.BROADCAST_PLAY_RESTORE_TRACK)) {
+//                // Play new music
+//                stopMedia();
+//                mediaPlayer.reset();
+//                initMediaPlayer();
+//                updateMetaData();
+                transportControls.play();
+                buildNotification(PlaybackStatus.PLAYING);
 
-            //A PLAY_NEW_AUDIO action received
-            //reset mediaPlayer to play the new Audio
-            stopMedia();
-            mediaPlayer.reset();
-            initMediaPlayer();
-            updateMetaData();
-            buildNotification(PlaybackStatus.PLAYING);
+            }else if (action.equals(HondaConstants.BROADCAST_PLAY_NEXT_TRACK)) {
+                transportControls.skipToNext();
+                buildNotification(PlaybackStatus.PLAYING);
+                // Play next audio
+            }else if (action.equals(HondaConstants.BROADCAST_PLAY_STOP_TRACK)) {
+                // Stop music
+                transportControls.pause();
+                buildNotification(PlaybackStatus.PAUSED);
+
+            }else if (action.equals(HondaConstants.BROADCAST_PLAY_PREVIOUS_TRACK)) {
+                // Play previous
+                transportControls.skipToPrevious();
+                buildNotification(PlaybackStatus.PLAYING);
+            }
         }
     };
 
-    private void register_playNewAudio() {
+    private void register_playAudio() {
         //Register playNewMedia receiver
-        IntentFilter filter = new IntentFilter(HondaConstants.BROADCAST_PLAY_NEW_TRACK);
-        registerReceiver(playNewAudio, filter);
+        IntentFilter filter = new IntentFilter(HondaConstants.BROADCAST_PLAY_RESTORE_TRACK);
+        registerReceiver(playBroadCastReceiver, filter);
     }
 
+    private void register_nextAudio() {
+        //Register playNewMedia receiver
+        IntentFilter filter = new IntentFilter(HondaConstants.BROADCAST_PLAY_NEXT_TRACK);
+        registerReceiver(playBroadCastReceiver, filter);
+    }
+
+    private void register_previousAudio() {
+        //Register playNewMedia receiver
+        IntentFilter filter = new IntentFilter(HondaConstants.BROADCAST_PLAY_PREVIOUS_TRACK);
+        registerReceiver(playBroadCastReceiver, filter);
+    }
+
+    private void register_pauseAudio() {
+        //Register playNewMedia receiver
+        IntentFilter filter = new IntentFilter(HondaConstants.BROADCAST_PLAY_STOP_TRACK);
+        registerReceiver(playBroadCastReceiver, filter);
+    }
 
 
     // ======================================================
@@ -490,13 +572,13 @@ public class MediaPlayerService extends Service implements
 
             // Load data from SharedPreferences
             HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
-            trackList = storage.loadTrackList();
+            mTrackList = storage.loadTrackList();
             trackIndex = storage.loadTrackIndex();
 
-            if (trackIndex != -1 && trackIndex < trackList.size()) {
+            if (trackIndex != -1 && trackIndex < mTrackList.size()) {
                 // Index is in a valid range
-                activeTrack = trackList.get(trackIndex);
-            }else {
+                activeTrack = mTrackList.get(trackIndex);
+            } else {
                 stopSelf();
             }
 
@@ -512,7 +594,7 @@ public class MediaPlayerService extends Service implements
             try {
                 initMediaSession();
                 initMediaPlayer();
-            }catch(RemoteException e) {
+            } catch (RemoteException e) {
                 e.printStackTrace();
                 stopSelf();
             }
@@ -529,7 +611,10 @@ public class MediaPlayerService extends Service implements
         super.onCreate();
 
         registerBecomingNoisyReceiver();
-        register_playNewAudio();
+        register_playAudio();
+        register_nextAudio();
+        register_pauseAudio();
+        register_previousAudio();
     }
 
     @Override
@@ -544,7 +629,7 @@ public class MediaPlayerService extends Service implements
 
         // Unregister broadcaseReceiver
         unregisterReceiver(becomingNoisyReceiver);
-        unregisterReceiver(playNewAudio);
+        unregisterReceiver(playBroadCastReceiver);
 
         // Clear cache track list
         new HondaSharePreference(getApplicationContext()).clearCachedTrackPlayList();
