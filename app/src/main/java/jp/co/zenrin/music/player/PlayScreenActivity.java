@@ -2,16 +2,18 @@ package jp.co.zenrin.music.player;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.TextView;
 
-import jp.co.zenrin.music.util.CheckSystemPermissions;
 import jp.co.zenrin.music.common.HondaConstants;
+import jp.co.zenrin.music.util.CheckSystemPermissions;
 
 /**
  * @Author: Hoang Vu
@@ -29,15 +31,19 @@ public class PlayScreenActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_screen);
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        }
         // Change title
-        getSupportActionBar().setDisplayOptions(android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_text);
-        View view =getSupportActionBar().getCustomView();
-        TextView txtView = (TextView) view.findViewById(R.id.title_action_bar);
-        txtView.setText(getResources().getString(R.string.txt_play));
+        //getSupportActionBar().setDisplayOptions(android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
+        //getSupportActionBar().setDisplayShowCustomEnabled(true);
+        //getSupportActionBar().setCustomView(R.layout.custom_action_bar_text);
+        //View view =getSupportActionBar().getCustomView();
+        //TextView txtView = (TextView) view.findViewById(R.id.title_action_bar);
+        //txtView.setText(getResources().getString(R.string.txt_play));
         // Add back button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Arrange button
         mBtnArrange = (Button) findViewById(R.id.btn_arrange);

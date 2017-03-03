@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import jp.co.zenrin.music.Poup.PopupUtils;
+import jp.co.zenrin.music.dialog.PopupUtils;
 
 /**
  * @Author: Hoang Vu

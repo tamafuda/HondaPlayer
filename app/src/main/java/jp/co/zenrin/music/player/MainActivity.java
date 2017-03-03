@@ -2,9 +2,11 @@ package jp.co.zenrin.music.player;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import jp.co.zenrin.music.zdccore.Logger;
@@ -15,7 +17,7 @@ import jp.co.zenrin.music.zdccore.Logger;
  * @Date:   2017/02/23
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActionBarActivity {
 
     // Logger
     protected final Logger log = new Logger(MainActivity.class.getSimpleName(), true);
@@ -27,17 +29,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         log.d("onCreate");
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
         // Change title
-        getSupportActionBar().setDisplayOptions(android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_text);
-
+        //getSupportActionBar().setDisplayOptions(android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
+        //getSupportActionBar().setDisplayShowCustomEnabled(true);
+        //getSupportActionBar().setCustomView(R.layout.custom_action_bar_text);
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        }
         mController = (Button) findViewById(R.id.bt_controller);
         mPlay = (Button) findViewById(R.id.btn_play);
         // Add event button
         mController.setOnClickListener(mOnclick);
         mPlay.setOnClickListener(mOnclick);
+    }
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected String detectedScreen() {
+        return "";
     }
 
     /**
@@ -50,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
             final int id = v.getId();
             switch (id) {
                 case R.id.bt_controller:
-                    Intent iController = new Intent(getBaseContext(), ControllerActivity.class);
+                    //Intent iController = new Intent(getBaseContext(), ControllerActivity.class);
+                    Intent iController = new Intent(getBaseContext(), TestActivity.class);
                     iController.putExtra("MainActivity", true);
                     startActivity(iController);
                     break;

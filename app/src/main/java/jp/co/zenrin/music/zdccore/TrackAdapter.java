@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import jp.co.zenrin.music.Poup.PopupUtils;
-import jp.co.zenrin.music.Poup.ProgressDialogTask;
+import jp.co.zenrin.music.dialog.PopupUtils;
+import jp.co.zenrin.music.dialog.ProgressDialogTask;
 import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.player.AIMixAudio;
 import jp.co.zenrin.music.player.MusicPlayActivity;

@@ -22,5 +22,8 @@ public final class HondaConstants {
     public static final String BROADCAST_PLAY_STOP_TRACK = "jp.co.zenrin.music.HondaConstants.BROADCAST_PLAY_STOP_TRACK";
     public static final int WAIT_LENGTH = 5000;
     public static final int WAIT_CLOSE_LENGTH = 5000;
+    public static final String DETECTED_SCREEN_IPOD = "DETECTED_SCREEN_IPOD";
+    public static final String DETECTED_SCREEN_INTERNET_AUDIO = "DETECTED_SCREEN_INTERNET_AUDIO";
+
 
 }

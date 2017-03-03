@@ -1,4 +1,4 @@
-package jp.co.zenrin.music.Poup;
+package jp.co.zenrin.music.dialog;
 
 import android.app.ProgressDialog;
 import android.content.Context;

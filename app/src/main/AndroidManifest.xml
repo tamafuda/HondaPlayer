@@ -19,7 +19,7 @@
         android:icon="@drawable/icon_honda"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/CustomTheme">
+        android:theme="@style/AppTheme">
 
         <!-- Service register -->
         <service
@@ -37,7 +37,8 @@
         <!-- Receiver register -->
         <receiver android:name="jp.co.zenrin.music.notification.AIRecommendReceiver" />
 
-        <!-- When device reboot , change date time.
+        <!--
+        When device reboot , change date time.
         The broadcast will be re-created to adapt new system info
         Just comment out on this version
         <receiver android:name="jp.co.zenrin.music.notification.HondaSystemReceiver">
@@ -49,7 +50,7 @@
         </receiver>
         -->
         <!-- Activity register -->
-        <activity android:name=".MainActivity">
+        <activity android:name=".TestFragment">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -73,7 +74,9 @@
             android:name=".ArrangeActivity"
             android:parentActivityName=".PlayScreenActivity" />
         <activity android:name=".AIMixAudio" />
-
+        <activity android:name=".TestActivity" />
+        <activity android:name=".Test2Activity" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>
