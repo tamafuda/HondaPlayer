@@ -4,16 +4,42 @@
     android:id="@+id/activity_test"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="jp.co.zenrin.music.player.Test2Activity">
+    tools:context="jp.co.zenrin.music.player.TestFragment">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/custom_toolbar" />
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/custom_toolbar" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/frame_layout"
-        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_above="@+id/play_layout"
+        android:layout_below="@id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="400dp">
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/play_layout"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </FrameLayout>
+        <include
+            layout="@layout/viewgroup_play_control_without_seekbar"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
+        </include>
+    </LinearLayout>
+
+
 
 
 </RelativeLayout>

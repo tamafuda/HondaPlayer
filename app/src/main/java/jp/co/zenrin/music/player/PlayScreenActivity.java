@@ -8,9 +8,12 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.util.CheckSystemPermissions;
@@ -27,6 +30,8 @@ public class PlayScreenActivity extends AppCompatActivity implements View.OnClic
     private View mView;
     private boolean isPermission = false;
 
+    private GestureDetector gestureDetector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +40,33 @@ public class PlayScreenActivity extends AppCompatActivity implements View.OnClic
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         }
+        View v = findViewById(R.id.activity_play_screen);
+        v.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
+        gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                if (e1.getX() - e2.getX() < 50) {
+                    Toast.makeText(getBaseContext(), "SwipLeft", Toast.LENGTH_SHORT).show();
+                    Intent iPlay = new Intent(getBaseContext(), TestActivity.class);
+                    iPlay.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    //Intent iPlay = new Intent(getBaseContext(), PlayMediaActivity.class);
+                    iPlay.putExtra("MainActivity", true);
+                    startActivity(iPlay);
+                    return true;
+
+                }
+                return super.onFling(e1, e2, velocityX, velocityY);
+            }
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return true;
+            }
+        });
         // Change title
         //getSupportActionBar().setDisplayOptions(android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
         //getSupportActionBar().setDisplayShowCustomEnabled(true);

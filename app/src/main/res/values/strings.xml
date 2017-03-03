@@ -15,7 +15,10 @@
     <string name="popup_notify_content">運転手がお疲れみたい！</string>
     <string name="popup_sharing">シェア中。。。</string>
     <string name="popup_shared">シェアしました！</string>
+    <string name="popup_downloading">ダウンロード中。。。</string>
+    <string name="popup_download">Musicをダウンロードしました！</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

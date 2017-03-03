@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="jp.co.zenrin.music.fragment.IPodFragment">
+    tools:context="jp.co.zenrin.music.fragment.InternetRadioFragment">
 
 
     <LinearLayout
@@ -16,14 +16,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="端末名" />
+            android:text="ドメイン" />
 
         <TextView
             android:id="@+id/id_device_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:text="80.0MHz" />
+            android:text="www.chofuradio.fm" />
     </LinearLayout>
 
     <LinearLayout
@@ -36,14 +36,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="曲数" />
+            android:text="局名" />
 
         <TextView
             android:id="@+id/id_count_audio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:text="TOKYO FM" />
+            android:text="調布市放送ラジオ局" />
     </LinearLayout>
 
     <LinearLayout
@@ -63,34 +63,58 @@
         android:layout_marginTop="2dp">
 
         <ImageView
-            android:layout_marginStart="10dp"
+            android:id="@+id/bgr_singer"
             android:src="@drawable/art_fm_am"
             android:contentDescription="@string/app_name"
-            android:layout_width="80dp"
-            android:layout_height="100dp"/>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+    </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginStart="10dp"
-                android:text="Fantoume >"
-                android:textColor="@color/md_teal_600"
-                android:id="@+id/id_playlist_ipod_1" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textView34"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical|center"
+            android:text="Fantome / Hiraku Utada >" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/md_teal_600"
-                android:text="Hiraku Utada >"
-                android:id="@+id/id_playlist_ipod_2" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_height="70dp">
+        <ImageView
+            android:src="@drawable/hikaru1"
+            android:layout_weight="1"
+            android:id="@+id/horizontal_image1"
+            android:layout_width="70dp"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:src="@drawable/hikaru2"
+            android:layout_weight="1"
+            android:id="@+id/horizontal_image2"
+            android:layout_width="70dp"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:src="@drawable/nhuquynh3"
+            android:id="@+id/horizontal_image3"
+            android:layout_weight="1"
+            android:layout_width="70dp"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:src="@drawable/ikimonogakiri"
+            android:layout_weight="1"
+            android:id="@+id/horizontal_image4"
+            android:layout_width="70dp"
+            android:layout_height="match_parent" />
 
-        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:drawable/screen_background_dark"
+    android:orientation="horizontal"
+    android:tag="taglistview"
+    android:padding="5dp">
+    <LinearLayout
+        android:id="@+id/id_radio_track"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:tag="taglistview">
+
+        <TextView
+            android:id="@+id/audio_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="music title"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:tag="title_tag" />
+
+        <TextView
+            android:id="@+id/arrow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=">"
+            android:layout_marginEnd="5dp"
+            android:gravity="right"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="18sp"
+            android:tag="artist_tag" />
+    </LinearLayout>
+</LinearLayout>

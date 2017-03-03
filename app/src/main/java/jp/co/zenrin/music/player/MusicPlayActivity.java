@@ -27,7 +27,6 @@ public class MusicPlayActivity extends BasePlayerActivity {
     private ListView trackListView;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

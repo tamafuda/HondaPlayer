@@ -533,6 +533,13 @@ public class MediaPlayerService extends Service implements
                 // Play previous
                 transportControls.skipToPrevious();
                 buildNotification(PlaybackStatus.PLAYING);
+            }else if (action.equals(HondaConstants.BROADCAST_PLAY_NEW_TRACK)) {
+                // Play new music
+                stopMedia();
+                mediaPlayer.reset();
+                initMediaPlayer();
+                updateMetaData();
+                buildNotification(PlaybackStatus.PLAYING);
             }
         }
     };
@@ -558,6 +565,11 @@ public class MediaPlayerService extends Service implements
     private void register_pauseAudio() {
         //Register playNewMedia receiver
         IntentFilter filter = new IntentFilter(HondaConstants.BROADCAST_PLAY_STOP_TRACK);
+        registerReceiver(playBroadCastReceiver, filter);
+    }
+    private void register_newAudio() {
+        //Register playNewMedia receiver
+        IntentFilter filter = new IntentFilter(HondaConstants.BROADCAST_PLAY_NEW_TRACK);
         registerReceiver(playBroadCastReceiver, filter);
     }
 
@@ -615,6 +627,7 @@ public class MediaPlayerService extends Service implements
         register_nextAudio();
         register_pauseAudio();
         register_previousAudio();
+        register_newAudio();
     }
 
     @Override

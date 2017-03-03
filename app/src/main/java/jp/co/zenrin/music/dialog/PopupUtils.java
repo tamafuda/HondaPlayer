@@ -3,6 +3,7 @@ package jp.co.zenrin.music.dialog;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -63,6 +64,20 @@ public class PopupUtils{
                 t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
             }
         }, 2000); // after 2 second (or 2000 miliseconds), the task will be active.
+    }
+
+    public void downloadDialog(int mess) {
+        AlertDialog.Builder builder = new AlertDialog.Builder((mContext));
+        builder.setMessage(mess);
+        builder.setCancelable(true);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create();
+        builder.show();
     }
 
 

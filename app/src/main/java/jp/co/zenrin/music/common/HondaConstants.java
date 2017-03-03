@@ -16,7 +16,8 @@ public final class HondaConstants {
     public static final String PREFERENCE_MPL_SERVICE_STATUS = "MPL_SERVICE_STATUS";
 
     //
-    public static final String BROADCAST_PLAY_RESTORE_TRACK = "jp.co.zenrin.music.HondaConstants.PLAY_NEW_TRACK";
+    public static final String BROADCAST_PLAY_NEW_TRACK = "jp.co.zenrin.music.HondaConstants.PLAY_NEW_TRACK";
+    public static final String BROADCAST_PLAY_RESTORE_TRACK = "jp.co.zenrin.music.HondaConstants.PLAY_RESTORE_TRACK";
     public static final String BROADCAST_PLAY_NEXT_TRACK = "jp.co.zenrin.music.HondaConstants.BROADCAST_PLAY_NEXT_TRACK";
     public static final String BROADCAST_PLAY_PREVIOUS_TRACK = "jp.co.zenrin.music.HondaConstants.BROADCAST_PLAY_PREVIOUS_TRACK";
     public static final String BROADCAST_PLAY_STOP_TRACK = "jp.co.zenrin.music.HondaConstants.BROADCAST_PLAY_STOP_TRACK";

@@ -17,14 +17,25 @@ public class ProgressDialogTask extends AsyncTask<Integer, Void, Void> {
 
     private ProgressDialog dialog;
     private PopupUtils popupUtils;
+    private boolean isDownload;
+    private int mResourceId;
+    private Context mContext;
 
-    public ProgressDialogTask(Context context) {
+    /**
+     * isFlag is used to detected Download Popup or Share popup
+     * @param context
+     * @param isFlag
+     */
+    public ProgressDialogTask(Context context, boolean isFlag, int resourceId) {
+        mContext = context;
         dialog = new ProgressDialog(context);
         popupUtils = new PopupUtils(context);
+        isDownload = isFlag;
+        mResourceId = resourceId;
     }
     @Override
     protected void onPreExecute() {
-        dialog.setMessage("シェア中。。。");
+        dialog.setMessage(mContext.getResources().getString(mResourceId));
         dialog.show();
     }
 
@@ -40,7 +51,12 @@ public class ProgressDialogTask extends AsyncTask<Integer, Void, Void> {
     protected void onPostExecute(final Void v) {
         if(dialog.isShowing()) {
             dialog.dismiss();
-            popupUtils.autoCloseDialog(R.string.popup_shared);
+            if(isDownload) {
+                popupUtils.downloadDialog(R.string.popup_download);
+            }else {
+                popupUtils.autoCloseDialog(R.string.popup_shared);
+            }
+
         }
     }
 }

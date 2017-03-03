@@ -76,7 +76,8 @@
         <activity android:name=".AIMixAudio" />
         <activity android:name=".TestActivity" />
         <activity android:name=".Test2Activity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".RadarMusicActivity"></activity>
     </application>
 
 </manifest>

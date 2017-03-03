@@ -6,31 +6,28 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import jp.co.zenrin.music.dialog.PopupUtils;
-import jp.co.zenrin.music.dialog.ProgressDialogTask;
 import jp.co.zenrin.music.common.HondaConstants;
-import jp.co.zenrin.music.player.AIMixAudio;
+import jp.co.zenrin.music.dialog.PopupUtils;
 import jp.co.zenrin.music.player.MusicPlayActivity;
 import jp.co.zenrin.music.player.R;
 import jp.co.zenrin.music.service.MediaPlayerService;
-import jp.co.zenrin.music.util.TrackUtil;
 
 /**
  * @Author: Hoang Vu
  * @Date: 2017/02/26
  */
 
-public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickListener {
+public class RadioAdapter extends ArrayAdapter<Track> implements  View.OnClickListener {
 
     // Logger
     protected final Logger log = new Logger(MusicPlayActivity.class.getSimpleName(), true);
@@ -49,8 +46,9 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
     //Check is service is active
     HondaSharePreference storage;
     PopupUtils popupUtils;
+    private int indexPlayBefore;
 
-    public TrackAdapter(Context context, int resource, ArrayList<Track> mTrackList) {
+    public RadioAdapter(Context context, int resource, ArrayList<Track> mTrackList) {
         super(context, resource);
         this.trackList = mTrackList;
         this.layoutResourceId = resource;
@@ -62,22 +60,13 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
     @Override
     public void onClick(View v) {
         int position = (Integer) v.getTag();
+        View groupView = v.getRootView();
         Track track = trackList.get(position);
         switch (v.getId()) {
-            case R.id.btn_share:
-                Toast.makeText(context,"Share button", Toast.LENGTH_SHORT).show();
-                ProgressDialogTask task = new ProgressDialogTask(getContext(), false, R.string.popup_shared);
-                task.execute(0);
-
-                break;
-            case R.id.btn_arrange:
-                Toast.makeText(context,"Arrange button", Toast.LENGTH_SHORT).show();
-                Intent iController = new Intent(context, AIMixAudio.class);
-                iController.putExtra("AIMixAudio", true);
-                context.startActivity(iController);
-                break;
-            case R.id.song_title:
+            case R.id.audio_title:
                 Toast.makeText(context,"Title click", Toast.LENGTH_SHORT).show();
+                TextView txtRadio = (TextView) v.findViewById(R.id.audio_title);
+                txtRadio.setTextColor(ContextCompat.getColor(context,R.color.colorYellow));
                 play(position);
                 break;
         }
@@ -95,11 +84,7 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(layoutResourceId, parent, false);
-            viewHolder.trackTitle = (TextView) convertView.findViewById(R.id.song_title);
-            viewHolder.trackDuration = (TextView) convertView.findViewById(R.id.song_artist);
-            viewHolder.share = (Button) convertView.findViewById(R.id.btn_share);
-            viewHolder.arrange = (Button) convertView.findViewById(R.id.btn_arrange);
-
+            viewHolder.trackTitle = (TextView) convertView.findViewById(R.id.audio_title);
             result = convertView;
             convertView.setTag(viewHolder);
         }else {
@@ -107,16 +92,7 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
             result = convertView;
         }
 
-        //Animation animation = AnimationUtils.loadAnimation(context, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
-        //result.startAnimation(animation);
-        //lastPosition = position;
-
         viewHolder.trackTitle.setText(track.getTitle());
-        viewHolder.trackDuration.setText(TrackUtil.covertDuration(track.getDuration()));
-        viewHolder.share.setOnClickListener(this);
-        viewHolder.share.setTag(position);
-        viewHolder.arrange.setOnClickListener(this);
-        viewHolder.arrange.setTag(position);
         viewHolder.trackTitle.setOnClickListener(this);
         viewHolder.trackTitle.setTag(position);
 
@@ -163,11 +139,13 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
 
             //Service is active
             //Send a broadcast to the service -> PLAY_NEW_AUDIO
-            Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_RESTORE_TRACK);
+            Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_NEW_TRACK);
             context.sendBroadcast(broadcastIntent);
         }
 
     }
+
+
 
     @Override
     public int getCount() {
@@ -175,14 +153,15 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
     }
 
 
+
+    private void resetTextColor() {
+
+    }
 //======= View Holder ======
 
     // View lookup cache
     private static class ViewHolder {
         TextView trackTitle;
-        TextView trackDuration;
-        Button share;
-        Button arrange;
     }
 
 
