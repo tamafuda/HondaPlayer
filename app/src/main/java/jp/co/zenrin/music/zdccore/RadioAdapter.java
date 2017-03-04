@@ -60,7 +60,7 @@ public class RadioAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
     @Override
     public void onClick(View v) {
         int position = (Integer) v.getTag();
-        View groupView = v.getRootView();
+
         Track track = trackList.get(position);
         switch (v.getId()) {
             case R.id.audio_title:
@@ -152,11 +152,6 @@ public class RadioAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
         return trackList.size();
     }
 
-
-
-    private void resetTextColor() {
-
-    }
 //======= View Holder ======
 
     // View lookup cache

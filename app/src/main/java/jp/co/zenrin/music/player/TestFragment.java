@@ -22,11 +22,13 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.fragment.AMFMFragment;
 import jp.co.zenrin.music.fragment.IPodFragment;
 import jp.co.zenrin.music.fragment.InternetRadioFragment;
 import jp.co.zenrin.music.model.SpinnerNavItem;
 import jp.co.zenrin.music.model.TitleNavigationAdapter;
+import jp.co.zenrin.music.util.CheckSystemPermissions;
 
 public class TestFragment extends AppCompatActivity {
 
@@ -41,6 +43,10 @@ public class TestFragment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_fragment);
+        if (!CheckSystemPermissions.checkPermission(getApplicationContext(), HondaConstants.READ_EXTERNAL_STORAGE)) {
+            CheckSystemPermissions.requestPermission(this,getApplicationContext(),HondaConstants.READ_EXTERNAL_STORAGE);
+        }
+
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mSpinner = (Spinner) findViewById(R.id.spinner_nav);
@@ -66,7 +72,7 @@ public class TestFragment extends AppCompatActivity {
                     //Intent iPlay = new Intent(getBaseContext(), PlayMediaActivity.class);
                     iPlay.putExtra("MainActivity", true);
                     startActivity(iPlay);
-                    finish();
+                    //finish();
                     return true;
 
                 }
