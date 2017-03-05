@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,6 +21,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.fragment.AMFMFragment;
 import jp.co.zenrin.music.fragment.IPodFragment;
 import jp.co.zenrin.music.fragment.InternetRadioFragment;
@@ -36,6 +36,7 @@ public class TestFragment extends AppCompatActivity {
     private TitleNavigationAdapter spinAdapter;
 
     private GestureDetector gestureDetector;
+    private int detectScreen = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +64,8 @@ public class TestFragment extends AppCompatActivity {
                 if (e1.getX() - e2.getX() > 50) {
                     Toast.makeText(getBaseContext(), "SwipLeft", Toast.LENGTH_SHORT).show();
                     Intent iPlay = new Intent(getBaseContext(), RadarMusicActivity.class);
-                    //Intent iPlay = new Intent(getBaseContext(), PlayMediaActivity.class);
-                    iPlay.putExtra("MainActivity", true);
-                    startActivity(iPlay);
+                    iPlay.putExtra(HondaConstants.DETECTED_SCREEN_FLING, true);
+                    startActivityForResult(iPlay,HondaConstants.FLING_RESULT_CODE);
                     //finish();
                     return true;
 
@@ -119,16 +119,20 @@ public class TestFragment extends AppCompatActivity {
         // FM/AM
         if (position == 0) {
             fr = new AMFMFragment();
+            detectScreen = position;
 
         // iPod
         } else if (position == 1) {
             fr = new IPodFragment();
+            detectScreen = position;
 
          // Bluetooth
         } else if (position == 2) {
             fr = new AMFMFragment();
+            detectScreen = position;
         } else if (position == 3) {
             fr = new InternetRadioFragment();
+            detectScreen = position;
         }
 
          // Internet Audio
@@ -139,24 +143,8 @@ public class TestFragment extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        return super.dispatchKeyEvent(event);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
+    public void setSelection(int selection) {
+        mSpinner.setSelection(selection,true);
     }
 
     @Override

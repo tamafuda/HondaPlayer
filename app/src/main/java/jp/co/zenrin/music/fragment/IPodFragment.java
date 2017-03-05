@@ -103,11 +103,13 @@ public class IPodFragment extends Fragment implements View.OnClickListener{
                 //gotoInternetAudio();
                 //((TestFragment)getActivity()).addItemsToSpinner();
                 ((TestFragment)getActivity()).selectFrag(3);
+                ((TestFragment)getActivity()).setSelection(3);
                 break;
             case R.id.id_playlist_ipod_2:
                 //gotoInternetAudio();
                 //((TestFragment)getActivity()).addItemsToSpinner();
                 ((TestFragment)getActivity()).selectFrag(3);
+                ((TestFragment)getActivity()).setSelection(3);
                 break;
         }
     }

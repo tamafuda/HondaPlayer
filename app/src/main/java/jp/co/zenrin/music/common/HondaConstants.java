@@ -26,5 +26,9 @@ public final class HondaConstants {
     public static final String DETECTED_SCREEN_IPOD = "DETECTED_SCREEN_IPOD";
     public static final String DETECTED_SCREEN_INTERNET_AUDIO = "DETECTED_SCREEN_INTERNET_AUDIO";
 
+    public static final String DETECTED_SCREEN_FLING = "jp.co.zenrin.music.HondaConstants.DETECTED_SCREEN_FLING";
+
+    public static final int FLING_RESULT_CODE = 0;
+
 
 }

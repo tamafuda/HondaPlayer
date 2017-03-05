@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.player.R;
+import jp.co.zenrin.music.player.TestFragment;
 import jp.co.zenrin.music.util.CheckSystemPermissions;
 import jp.co.zenrin.music.util.TrackUtil;
 import jp.co.zenrin.music.zdccore.RadioAdapter;
@@ -33,7 +34,7 @@ import static jp.co.zenrin.music.common.HondaConstants.PERMISSION_REQUEST_CODE;
  * Activities that contain this fragment must implement the
  * create an instance of this fragment.
  */
-public class AMFMFragment extends Fragment {
+public class AMFMFragment extends Fragment implements View.OnClickListener{
 
     private ArrayList<Track> trackList;
     private ListView trackListView;
@@ -63,6 +64,8 @@ public class AMFMFragment extends Fragment {
         trackListView.setAdapter(trackAdapter);
         mPlaylist1 = (TextView) v.findViewById(R.id.id_playlist_fmam_1);
         mPlaylist2 = (TextView) v.findViewById(R.id.id_playlist_fmam_2);
+        mPlaylist1.setOnClickListener(this);
+        mPlaylist2.setOnClickListener(this);
         mPlaylist1.setPaintFlags(mPlaylist1.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         mPlaylist2.setPaintFlags(mPlaylist2.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         //ComponentUtils.setUnderlineTextView(mPlaylist1);
@@ -97,8 +100,23 @@ public class AMFMFragment extends Fragment {
         }
     }
 
-    private void checkPermision() {
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.id_playlist_fmam_1:
+                //gotoInternetAudio();
+                //((TestFragment)getActivity()).addItemsToSpinner();
+                ((TestFragment)getActivity()).selectFrag(3);
+                ((TestFragment)getActivity()).setSelection(3);
+                break;
+            case R.id.id_playlist_fmam_2:
+                //gotoInternetAudio();
+                //((TestFragment)getActivity()).addItemsToSpinner();
+                ((TestFragment)getActivity()).selectFrag(3);
+                ((TestFragment)getActivity()).setSelection(3);
+                break;
+        }
     }
 
 

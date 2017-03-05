@@ -6,21 +6,35 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.GestureDetector;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.dialog.ProgressDialogTask;
+import jp.co.zenrin.music.zdccore.Logger;
 
 public class RadarMusicActivity extends AppCompatActivity {
+
+    // Logger
+    protected final Logger log = new Logger(RadarMusicActivity.class.getSimpleName(), true);
 
     TextView mTitle;
     Button mAIRecommend;
     Button mDownload;
     ImageView mScreenBg;
     Context context;
+
+    private GestureDetector gestureDetector;
+
+    private int receiveDetectSrc = 0;
+    boolean detectFling = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +44,72 @@ public class RadarMusicActivity extends AppCompatActivity {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         }
-        context = this.getBaseContext();
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+           detectFling = extras.getBoolean(HondaConstants.DETECTED_SCREEN_FLING);
+        }
+
         mTitle = (TextView) findViewById(R.id.id_common_title);
         mTitle.setText("Music プレィモード");
 
         mAIRecommend = (Button) findViewById(R.id.ai_recommend);
         mDownload = (Button) findViewById(R.id.download_music);
         mScreenBg = (ImageView) findViewById(R.id.id_screen_bg);
+        // Can not set one view with 2 event listener
+        // Ex : screenBg with onClickListener and onTouchListener
+        // Should be prepare each button music to handle
         mScreenBg.setOnClickListener(mOnclick);
         mDownload.setOnClickListener(mOnclick);
         mAIRecommend.setOnClickListener(mOnclick);
+
+        // Fling screen
+        //View v = findViewById(R.id.activity_radar_music);
+        mScreenBg.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
+        gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                if (e1.getX() - e2.getX() < 50) {
+                    Toast.makeText(getBaseContext(), "SwipLeft", Toast.LENGTH_SHORT).show();
+                    Intent iPlay = new Intent(getBaseContext(), TestFragment.class);
+                    iPlay.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    //Intent iPlay = new Intent(getBaseContext(), PlayMediaActivity.class);
+                    iPlay.putExtra("MainActivity", true);
+                    setResult(RESULT_OK, iPlay);
+                    finish();
+                    //startActivity(iPlay);
+                    return true;
+
+                }
+                return super.onFling(e1, e2, velocityX, velocityY);
+            }
+            @Override
+            public boolean onDown(MotionEvent e) {
+                log.d(String.valueOf(e.getAction()));
+                log.d(String.valueOf(e.getX()));
+                log.d(String.valueOf(e.getY()));
+
+                if (detectFling){
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                return super.onSingleTapUp(e);
+            }
+
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+                return super.onSingleTapConfirmed(e);
+            }
+        });
 
     }
 
@@ -67,4 +137,13 @@ public class RadarMusicActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        return super.dispatchKeyEvent(event);
+    }
 }
