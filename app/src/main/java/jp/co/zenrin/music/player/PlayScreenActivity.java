@@ -104,7 +104,7 @@ public class PlayScreenActivity extends AppCompatActivity implements View.OnClic
                     isPermission = true;
                     Snackbar.make(mView, "Permission already granted.", Snackbar.LENGTH_INDEFINITE).show();
                 }else {
-                    CheckSystemPermissions.requestPermission(this,getApplicationContext(),HondaConstants.READ_EXTERNAL_STORAGE);
+                    CheckSystemPermissions.requestPermissionActivity(this,getApplicationContext(),HondaConstants.READ_EXTERNAL_STORAGE);
                 }
                 if (isPermission) {
                     intent = new Intent(PlayScreenActivity.this, MusicPlayActivity.class);

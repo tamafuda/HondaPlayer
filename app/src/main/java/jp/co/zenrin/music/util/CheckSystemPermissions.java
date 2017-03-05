@@ -1,6 +1,7 @@
 package jp.co.zenrin.music.util;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -37,22 +38,24 @@ public final class CheckSystemPermissions {
             int result = ContextCompat.checkSelfPermission(context, permissionName);
             if (result == PackageManager.PERMISSION_GRANTED) {
                 return true;
-            } else {
-                return false;
             }
         }
-        return true;
+        return false;
     }
 
 
-    public static void requestPermission(Activity activity, Context context, String permissionName){
+    public static void requestPermissionActivity(Activity activity, Context context, String permissionName){
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permissionName)){
 
-            Toast.makeText(context,"GPS permission allows us to access location data. Please allow in App Settings for additional functionality.",Toast.LENGTH_LONG).show();
+            Toast.makeText(context,"Android 6.0 needs permission allows us to access media data. Please allow in App Settings for additional functionality.",Toast.LENGTH_LONG).show();
 
         } else {
             ActivityCompat.requestPermissions(activity,new String[]{permissionName},PERMISSION_REQUEST_CODE);
         }
+    }
+
+    public static void requestPermissionFragment(Fragment fragment, Context context, String permissionName){
+
     }
 }
