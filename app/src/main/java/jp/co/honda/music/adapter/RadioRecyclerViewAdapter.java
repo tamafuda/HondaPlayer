@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.logger.Logger;
-import jp.co.honda.music.model.Track;
+import jp.co.honda.music.model.Media;
 import jp.co.honda.music.player.MusicPlayActivity;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.service.MediaPlayerService;
@@ -35,7 +35,7 @@ public class RadioRecyclerViewAdapter extends RecyclerView.Adapter<RadioRecycler
 
 
     protected final Logger log = new Logger(MusicPlayActivity.class.getSimpleName(), true);
-    private ArrayList<Track> mRadioList;
+    private ArrayList<Media> mRadioList;
     private Context mContext;
     private SparseBooleanArray sparseBooleanArray;
     private int previousPos = -1;
@@ -50,7 +50,7 @@ public class RadioRecyclerViewAdapter extends RecyclerView.Adapter<RadioRecycler
     //Check is service is active
     HondaSharePreference storage;
 
-    public RadioRecyclerViewAdapter(Context context, ArrayList<Track> radioList) {
+    public RadioRecyclerViewAdapter(Context context, ArrayList<Media> radioList) {
         this.mContext = context;
         this.mRadioList = radioList;
         sparseBooleanArray = new SparseBooleanArray();
@@ -69,7 +69,7 @@ public class RadioRecyclerViewAdapter extends RecyclerView.Adapter<RadioRecycler
 
     @Override
     public void onBindViewHolder(RadioViewHolder holder, int position) {
-        Track r = mRadioList.get(position);
+        Media r = mRadioList.get(position);
         Log.d("onBindViewHolder", String.valueOf(position));
         holder.textView.setText(r.getTitle());
         holder.textView.setTag(position);

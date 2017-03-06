@@ -83,6 +83,7 @@
         android:layout_marginTop="2dp">
 
         <ImageView
+            android:id="@+id/album_art"
             android:layout_marginStart="10dp"
             android:src="@drawable/ikimonogakiri"
             android:contentDescription="@string/app_name"

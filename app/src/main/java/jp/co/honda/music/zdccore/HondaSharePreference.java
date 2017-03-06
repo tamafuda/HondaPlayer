@@ -10,7 +10,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import jp.co.honda.music.common.HondaConstants;
-import jp.co.honda.music.model.Track;
+import jp.co.honda.music.model.Media;
 
 /**
  * @Author: Hoang Vu
@@ -35,7 +35,7 @@ public class HondaSharePreference {
      * store track list to preference
      * @param arrayList
      */
-    public void storeTrackList(ArrayList<Track> arrayList) {
+    public void storeTrackList(ArrayList<Media> arrayList) {
         preferences = context.getSharedPreferences(STORAGE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         Gson gson = new Gson();
@@ -44,23 +44,23 @@ public class HondaSharePreference {
         editor.apply();
     }
 
-    public void updateTrackList(int index, Track track) {
-        ArrayList<Track> trackList = loadTrackList();
-        if (trackList != null) {
-            trackList.get(index).setTitle(track.getTitle());
+    public void updateTrackList(int index, Media media) {
+        ArrayList<Media> mediaList = loadTrackList();
+        if (mediaList != null) {
+            mediaList.get(index).setTitle(media.getTitle());
         }
-        storeTrackList(trackList);
+        storeTrackList(mediaList);
     }
 
     /**
      * Load track from preference
      * @return
      */
-    public ArrayList<Track> loadTrackList() {
+    public ArrayList<Media> loadTrackList() {
         preferences = context.getSharedPreferences(STORAGE, Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = preferences.getString(HondaConstants.PREFERENCE_TRACK_LIST, null);
-        Type type = new TypeToken<ArrayList<Track>>() {
+        Type type = new TypeToken<ArrayList<Media>>() {
         }.getType();
         return gson.fromJson(json, type);
     }

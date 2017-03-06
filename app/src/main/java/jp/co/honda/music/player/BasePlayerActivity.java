@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.logger.Logger;
-import jp.co.honda.music.model.Track;
+import jp.co.honda.music.model.Media;
 import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.util.PlayerUtils;
 import jp.co.honda.music.util.TrackUtil;
@@ -40,8 +40,8 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
 
     private int mOverrideCurPos = -1;
 
-    // Track list variables
-    private ArrayList<Track> trackList;
+    // Media list variables
+    private ArrayList<Media> mediaList;
 
     // Service
     private MediaPlayerService mPlaybackService;
@@ -71,9 +71,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         btnNext.setOnClickListener(mOnclick);
         mSeekbar.setOnSeekBarChangeListener(onSeekBarChangeListener);
         // Get song list from device
-        trackList = TrackUtil.getTrackList(this);
+        mediaList = TrackUtil.getTrackList(this);
         storage = new HondaSharePreference(this);
-        //trackList = storage.loadTrackList();
+        //mediaList = storage.loadTrackList();
     }
 
     NowPlayingSeekHelper.SeekEventCallback mSeekEventCallback = new NowPlayingSeekHelper.SeekEventCallback() {
@@ -90,7 +90,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
 
     };
 
-    protected void initSeekbar(Track t) {
+    protected void initSeekbar(Media t) {
         int duration = Integer.parseInt(String.valueOf(t.getDuration()));
         if (duration <= 0 && mPlaybackService != null) {
 
@@ -153,7 +153,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
                     mHandler, btnNext, btnPrevious, mPlaybackService, mSeekEventCallback);
             mNowPlayingSeekHelper.setPlaybackService(mPlaybackService);
             updateIconPlayPause(mPlaybackService.isPlaying());
-            initSeekbar(trackList.get(getAudioIndex()));
+            initSeekbar(mediaList.get(getAudioIndex()));
         }
 
         @Override
@@ -200,7 +200,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         if (!serviceBound) {
             //Store Serializable audioList to SharedPreferences
             //HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
-            storage.storeTrackList(trackList);
+            storage.storeTrackList(mediaList);
             storage.storeTrackIndex(getAudioIndex());
 
             Intent playerIntent = new Intent(this, MediaPlayerService.class);

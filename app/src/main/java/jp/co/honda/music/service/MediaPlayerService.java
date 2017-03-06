@@ -32,7 +32,7 @@ import jp.co.honda.music.player.R;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.zdccore.PlaybackStatus;
-import jp.co.honda.music.model.Track;
+import jp.co.honda.music.model.Media;
 
 import static android.R.attr.action;
 
@@ -75,11 +75,11 @@ public class MediaPlayerService extends Service implements
     private AudioManager trackManager;
 
     //song list
-    private ArrayList<Track> mTrackList;
+    private ArrayList<Media> mMediaList;
 
     //current position
     private int trackIndex = -1;
-    private Track activeTrack;
+    private Media activeMedia;
 
 
     //Binder
@@ -95,7 +95,7 @@ public class MediaPlayerService extends Service implements
     }
 
     /**
-     * request Track focus
+     * request Media focus
      */
     private boolean requestTrackFocus() {
         trackManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -139,7 +139,7 @@ public class MediaPlayerService extends Service implements
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
             // Set the data source to the mediaFile location
-            mediaPlayer.setDataSource(activeTrack.getData());
+            mediaPlayer.setDataSource(activeMedia.getData());
         } catch (IOException e) {
             e.printStackTrace();
             stopSelf();
@@ -195,12 +195,12 @@ public class MediaPlayerService extends Service implements
 
         // If playing track is latest
         // Next to first track
-        if (trackIndex == mTrackList.size() - 1) {
+        if (trackIndex == mMediaList.size() - 1) {
             trackIndex = 0;
-            activeTrack = mTrackList.get(trackIndex);
+            activeMedia = mMediaList.get(trackIndex);
         } else {
             //get next in playlist
-            activeTrack = mTrackList.get(++trackIndex);
+            activeMedia = mMediaList.get(++trackIndex);
         }
 
         //Update stored index
@@ -220,11 +220,11 @@ public class MediaPlayerService extends Service implements
         if (trackIndex == 0) {
             //if first in playlist
             //set index to the last of audioList
-            trackIndex = mTrackList.size() - 1;
-            activeTrack = mTrackList.get(trackIndex);
+            trackIndex = mMediaList.size() - 1;
+            activeMedia = mMediaList.get(trackIndex);
         } else {
             //get previous in playlist
-            activeTrack = mTrackList.get(--trackIndex);
+            activeMedia = mMediaList.get(--trackIndex);
         }
 
         //Update stored index
@@ -342,9 +342,9 @@ public class MediaPlayerService extends Service implements
                 .setLargeIcon(largeIcon)
                 .setSmallIcon(android.R.drawable.stat_sys_headset)
                 // Set Notification content information
-                .setContentText(activeTrack.getArtist())
-                .setContentTitle(activeTrack.getAlbum())
-                .setContentInfo(activeTrack.getTitle())
+                .setContentText(activeMedia.getArtist())
+                .setContentTitle(activeMedia.getAlbum())
+                .setContentInfo(activeMedia.getTitle())
                 // Add playback actions
                 .addAction(android.R.drawable.ic_media_previous, "previous", playbackAction(3))
                 .addAction(notificationAction, "pause", play_pauseAction)
@@ -436,9 +436,9 @@ public class MediaPlayerService extends Service implements
         // Update the current metadata
         mediaSession.setMetadata(new MediaMetadataCompat.Builder()
                 .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, albumArt)
-                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, activeTrack.getArtist())
-                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, activeTrack.getAlbum())
-                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, activeTrack.getTitle())
+                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, activeMedia.getArtist())
+                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, activeMedia.getAlbum())
+                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, activeMedia.getTitle())
                 .build());
     }
 
@@ -504,9 +504,9 @@ public class MediaPlayerService extends Service implements
             log.d("Action is: " + action);
             //Get the new media index form SharedPreferences
             trackIndex = new HondaSharePreference(getApplicationContext()).loadTrackIndex();
-            if (trackIndex != -1 && trackIndex < mTrackList.size()) {
+            if (trackIndex != -1 && trackIndex < mMediaList.size()) {
                 //index is in a valid range
-                activeTrack = mTrackList.get(trackIndex);
+                activeMedia = mMediaList.get(trackIndex);
             } else {
                 stopSelf();
             }
@@ -584,12 +584,12 @@ public class MediaPlayerService extends Service implements
 
             // Load data from SharedPreferences
             HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
-            mTrackList = storage.loadTrackList();
+            mMediaList = storage.loadTrackList();
             trackIndex = storage.loadTrackIndex();
 
-            if (trackIndex != -1 && trackIndex < mTrackList.size()) {
+            if (trackIndex != -1 && trackIndex < mMediaList.size()) {
                 // Index is in a valid range
-                activeTrack = mTrackList.get(trackIndex);
+                activeMedia = mMediaList.get(trackIndex);
             } else {
                 stopSelf();
             }

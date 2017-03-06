@@ -1,5 +1,8 @@
 package jp.co.honda.music.model;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
+
 import java.io.Serializable;
 
 /**
@@ -8,7 +11,7 @@ import java.io.Serializable;
  */
 
 
-public class Track implements Serializable {
+public class Media implements Serializable {
 
     private long id;
     private String data;
@@ -16,15 +19,26 @@ public class Track implements Serializable {
     private String artist;
     private String album;
     private long duration;
+    private Uri albumArtUri;
+    private Bitmap bitmap;
     private boolean isSelect;
 
-    public Track(long trackID, String trackData, String trackTitle, String trackArtist, String trackAlbum, long trackDuration) {
-        id = trackID;
-        data = trackData;
-        title = trackTitle;
-        artist = trackArtist;
-        album = trackAlbum;
-        duration = trackDuration;
+    public Media(long trackID
+            , String trackData
+            , String trackTitle
+            , String trackArtist
+            , String trackAlbum
+            , long trackDuration
+            , Uri albumArtUri
+            , Bitmap bitmap) {
+        this.id = trackID;
+        this.data = trackData;
+        this.title = trackTitle;
+        this.artist = trackArtist;
+        this.album = trackAlbum;
+        this.duration = trackDuration;
+        this.bitmap = bitmap;
+        this.albumArtUri = albumArtUri;
     }
 
     public long getID() {
@@ -88,4 +102,19 @@ public class Track implements Serializable {
         isSelect = select;
     }
 
+    public Uri getAlbumArtUri() {
+        return albumArtUri;
+    }
+
+    public void setAlbumArtUri(Uri albumArtUri) {
+        this.albumArtUri = albumArtUri;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
 }

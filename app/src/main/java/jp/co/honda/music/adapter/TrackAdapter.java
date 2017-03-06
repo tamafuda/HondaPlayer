@@ -27,19 +27,19 @@ import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 import jp.co.honda.music.logger.Logger;
-import jp.co.honda.music.model.Track;
+import jp.co.honda.music.model.Media;
 
 /**
  * @Author: Hoang Vu
  * @Date: 2017/02/26
  */
 
-public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickListener {
+public class TrackAdapter extends ArrayAdapter<Media> implements  View.OnClickListener {
 
     // Logger
     protected final Logger log = new Logger(MusicPlayActivity.class.getSimpleName(), true);
 
-    private ArrayList<Track> trackList;
+    private ArrayList<Media> mediaList;
     private Context context;
     private int layoutResourceId;
 
@@ -55,9 +55,9 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
     PopupUtils popupUtils;
     private Activity mActivity;
 
-    public TrackAdapter(Context context, int resource, ArrayList<Track> mTrackList, Activity activity) {
+    public TrackAdapter(Context context, int resource, ArrayList<Media> mMediaList, Activity activity) {
         super(context, resource);
-        this.trackList = mTrackList;
+        this.mediaList = mMediaList;
         this.layoutResourceId = resource;
         this.context = context;
         storage = new HondaSharePreference(context);
@@ -68,7 +68,7 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
     @Override
     public void onClick(View v) {
         int position = (Integer) v.getTag();
-        Track track = trackList.get(position);
+        Media media = mediaList.get(position);
         switch (v.getId()) {
             case R.id.btn_share:
                 Toast.makeText(context,"Share button", Toast.LENGTH_SHORT).show();
@@ -95,7 +95,7 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Track track = trackList.get(position);
+        Media media = mediaList.get(position);
         ViewHolder viewHolder;
 
         final View result;
@@ -119,8 +119,8 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
         //result.startAnimation(animation);
         //lastPosition = position;
 
-        viewHolder.trackTitle.setText(track.getTitle());
-        viewHolder.trackDuration.setText(TrackUtil.covertDuration(track.getDuration()));
+        viewHolder.trackTitle.setText(media.getTitle());
+        viewHolder.trackDuration.setText(TrackUtil.covertDuration(media.getDuration()));
         viewHolder.share.setOnClickListener(this);
         viewHolder.share.setTag(position);
         viewHolder.arrange.setOnClickListener(this);
@@ -158,7 +158,7 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
         if (!serviceBound) {
             //Store Serializable audioList to SharedPreferences
             //HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
-            storage.storeTrackList(trackList);
+            storage.storeTrackList(mediaList);
             storage.storeTrackIndex(trackID);
 
             Intent playerIntent = new Intent(context,MediaPlayerService.class);
@@ -179,7 +179,7 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
 
     @Override
     public int getCount() {
-        return trackList.size();
+        return mediaList.size();
     }
 
 

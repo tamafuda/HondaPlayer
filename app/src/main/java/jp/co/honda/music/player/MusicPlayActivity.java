@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 import jp.co.honda.music.logger.Logger;
-import jp.co.honda.music.model.Track;
+import jp.co.honda.music.model.Media;
 import jp.co.honda.music.adapter.TrackAdapter;
 
 /**
@@ -27,8 +27,8 @@ public class MusicPlayActivity extends BasePlayerActivity {
     // Logger
     protected final Logger log = new Logger(MusicPlayActivity.class.getSimpleName(), true);
 
-    // Track list variables
-    private ArrayList<Track> trackList;
+    // Media list variables
+    private ArrayList<Media> mediaList;
     private ListView trackListView;
 
     private TextView mTitle;
@@ -48,11 +48,11 @@ public class MusicPlayActivity extends BasePlayerActivity {
         log.d("onCreate");
         trackListView = (ListView) findViewById(R.id.song_list);
         // Get song list from device
-        //trackList = TrackUtil.getTrackList(getApplicationContext());
+        //mediaList = TrackUtil.getTrackList(getApplicationContext());
         storage = new HondaSharePreference(this);
-        //trackList = storage.loadTrackList();
-        trackList = TrackUtil.getTrackList(getApplicationContext());
-        TrackAdapter trackAdapter = new TrackAdapter(this, R.layout.song, trackList,this);
+        //mediaList = storage.loadTrackList();
+        mediaList = TrackUtil.getTrackList(getApplicationContext());
+        TrackAdapter trackAdapter = new TrackAdapter(this, R.layout.song, mediaList,this);
         trackListView.setAdapter(trackAdapter);
     }
 

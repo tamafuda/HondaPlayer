@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +34,7 @@ import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.adapter.RadioAdapter;
-import jp.co.honda.music.model.Track;
+import jp.co.honda.music.model.Media;
 
 import static jp.co.honda.music.common.HondaConstants.PERMISSION_REQUEST_CODE;
 
@@ -44,7 +45,7 @@ import static jp.co.honda.music.common.HondaConstants.PERMISSION_REQUEST_CODE;
  */
 public class AMFMFragment extends Fragment implements View.OnClickListener {
     protected final Logger log = new Logger(AMFMFragment.class.getSimpleName(), true);
-    private ArrayList<Track> trackList;
+    private ArrayList<Media> mediaList;
     private ListView trackListView;
 
     TextView mPlaylist1;
@@ -73,20 +74,20 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_amfm, container, false);
         trackListView = (ListView) v.findViewById(R.id.song_list);
         // Get song list from device
-        //trackList = TrackUtil.getTrackList(getActivity());
+        //mediaList = TrackUtil.getTrackList(getActivity());
         if (Build.VERSION.SDK_INT < 23) {
             isPermission = true;
         }
         if (isPermission) {
             //TrackUtil.synTrackListDatabase(getActivity());
-            //trackList = storage.loadTrackList();
-            trackList = TrackUtil.getTrackList(getActivity());
+            //mediaList = storage.loadTrackList();
+            mediaList = TrackUtil.getTrackList(getActivity());
         } else {
-            trackList = new ArrayList<Track>();
+            mediaList = new ArrayList<Media>();
         }
 
         trackAdapter = new RadioAdapter(getActivity(), getActivity(), R.layout.radio
-                , trackList, HondaConstants.DETECT_FRAGMENT_FMAM, trackListView);
+                , mediaList, HondaConstants.DETECT_FRAGMENT_FMAM, trackListView);
         //trackAdapter.notifyDataSetChanged();
         trackListView.setAdapter(trackAdapter);
         mPlaylist1 = (TextView) v.findViewById(R.id.id_playlist_fmam_1);
@@ -96,6 +97,14 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
         mPlaylist1.setPaintFlags(mPlaylist1.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         mPlaylist2.setPaintFlags(mPlaylist2.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         //ComponentUtils.setUnderlineTextView(mPlaylist1);
+
+        ImageView albumArt = (ImageView) v.findViewById(R.id.album_art);
+        for (Media m : mediaList) {
+            if (m.getBitmap() != null ) {
+                albumArt.setImageBitmap(m.getBitmap());
+                break;
+            }
+        }
 
         // Implement chanel
         mRF = (TextView) v.findViewById(R.id.id_radio_way);
@@ -172,11 +181,11 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //Snackbar.make(mView,"Permission Granted, Now you can access location data.", Snackbar.LENGTH_LONG).show();
                     isPermission = true;
-                    //ArrayList<Track> list = storage.loadTrackList();
-                    ArrayList<Track> list = TrackUtil.getTrackList(getActivity());
-                    trackList.clear();
-                    trackList.addAll(list);
-                    //trackAdapter = new RadioAdapter(getActivity(),R.layout.radio,trackList);
+                    //ArrayList<Media> list = storage.loadTrackList();
+                    ArrayList<Media> list = TrackUtil.getTrackList(getActivity());
+                    mediaList.clear();
+                    mediaList.addAll(list);
+                    //trackAdapter = new RadioAdapter(getActivity(),R.layout.radio,mediaList);
                     trackAdapter.notifyDataSetChanged();
 
 

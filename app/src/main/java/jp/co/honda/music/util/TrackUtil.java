@@ -1,18 +1,23 @@
 package jp.co.honda.music.util;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import jp.co.honda.music.model.Media;
+import jp.co.honda.music.model.TrackInfo;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.zdccore.HondaSharePreference;
-import jp.co.honda.music.model.Track;
-import jp.co.honda.music.model.TrackInfo;
 
 /**
  * @Author: Hoang Vu
@@ -23,7 +28,7 @@ public final class TrackUtil {
 
     public static void synTrackListDatabase(Context context) {
         HondaSharePreference storage = new HondaSharePreference(context);
-        ArrayList<Track> trackList = new ArrayList<Track>();
+        ArrayList<Media> mediaList = new ArrayList<Media>();
         //query external audio
         ContentResolver musicResolver = context.getContentResolver();
         Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
@@ -44,7 +49,11 @@ public final class TrackUtil {
                     (android.provider.MediaStore.Audio.Media.ARTIST);
             int albumColumn = musicCursor.getColumnIndex
                     (MediaStore.Audio.Media.ALBUM);
-            int durationColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
+            int albumIdColumn = musicCursor.getColumnIndex
+                    (MediaStore.Audio.Media.ALBUM_ID);
+            int durationColumn = musicCursor.getColumnIndex
+                    (MediaStore.Audio.Media.DURATION);
+
 
             //add songs to list
             do {
@@ -54,18 +63,38 @@ public final class TrackUtil {
                 String trackArtist = musicCursor.getString(artistColumn);
                 String trackAlbum = musicCursor.getString(albumColumn);
                 long trackDuration = musicCursor.getLong(durationColumn);
-                trackList.add(new Track(trackID, dataTrack, trackTitle, trackArtist, trackAlbum, trackDuration));
+                Long albumId = musicCursor.getLong(albumIdColumn);
+
+                Uri sArtworkUri = Uri
+                        .parse("content://media/external/audio/albumart");
+                Uri albumArtUri = ContentUris.withAppendedId(sArtworkUri, albumId);
+
+                Bitmap bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(
+                            context.getContentResolver(), albumArtUri);
+                    bitmap = Bitmap.createScaledBitmap(bitmap, 30, 30, true);
+
+                } catch (FileNotFoundException exception) {
+                    exception.printStackTrace();
+                    bitmap = BitmapFactory.decodeResource(context.getResources(),
+                            R.drawable.dark_default_album_artwork);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                mediaList.add(new Media(trackID, dataTrack, trackTitle, trackArtist, trackAlbum, trackDuration,albumArtUri,bitmap));
             }
             while (musicCursor.moveToNext());
         }
         musicCursor.close();
         if(storage.loadTrackList() != null) {
-            storage.storeTrackList(trackList);
+            storage.storeTrackList(mediaList);
         }
     }
 
-    public static ArrayList<Track> getTrackList(Context context) {
-        ArrayList<Track> trackList = new ArrayList<Track>();
+    public static ArrayList<Media> getTrackList(Context context) {
+        ArrayList<Media> mediaList = new ArrayList<Media>();
         //query external audio
         ContentResolver musicResolver = context.getContentResolver();
         Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
@@ -88,6 +117,8 @@ public final class TrackUtil {
                     (android.provider.MediaStore.Audio.Media.ARTIST);
             int albumColumn = musicCursor.getColumnIndex
                     (MediaStore.Audio.Media.ALBUM);
+            int albumIdColumn = musicCursor.getColumnIndex
+                    (MediaStore.Audio.Media.ALBUM_ID);
             int durationColumn = musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
 
             //add songs to list
@@ -98,12 +129,31 @@ public final class TrackUtil {
                 String trackArtist = musicCursor.getString(artistColumn);
                 String trackAlbum = musicCursor.getString(albumColumn);
                 long trackDuration = musicCursor.getLong(durationColumn);
-                trackList.add(new Track(trackID, dataTrack, trackTitle, trackArtist, trackAlbum, trackDuration));
+                Long albumId = musicCursor.getLong(albumIdColumn);
+
+                Uri sArtworkUri = Uri
+                        .parse("content://media/external/audio/albumart");
+                Uri albumArtUri = ContentUris.withAppendedId(sArtworkUri, albumId);
+
+                Bitmap bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(
+                            context.getContentResolver(), albumArtUri);
+                    bitmap = Bitmap.createScaledBitmap(bitmap, 30, 30, true);
+
+                } catch (FileNotFoundException exception) {
+                    exception.printStackTrace();
+                    bitmap = BitmapFactory.decodeResource(context.getResources(),
+                            R.drawable.dark_default_album_artwork);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                mediaList.add(new Media(trackID, dataTrack, trackTitle, trackArtist, trackAlbum, trackDuration,albumArtUri,bitmap));
             }
             while (musicCursor.moveToNext());
         }
         musicCursor.close();
-        return trackList;
+        return mediaList;
 
     }
 
@@ -150,7 +200,7 @@ public final class TrackUtil {
      * @param context
      * @return
      */
-    public static ArrayList<Track> getRawMediaList(Context context) {
+    public static ArrayList<Media> getRawMediaList(Context context) {
         ArrayList<MediaMetadataRetriever> metadataRetrievers = new ArrayList<MediaMetadataRetriever>();
         Uri mediaPath = null;
         MediaMetadataRetriever mmr = null;
@@ -206,15 +256,15 @@ public final class TrackUtil {
         mmr.setDataSource(context,mediaPath);
         metadataRetrievers.add(mmr);
 
-        ArrayList<Track> trackList = new ArrayList<Track>();
+        ArrayList<Media> mediaList = new ArrayList<Media>();
         for (MediaMetadataRetriever obj:metadataRetrievers) {
             String title = obj.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
             String duration = obj.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-            Track track = new Track(1, "", title, "","",Long.valueOf(duration));
-            trackList.add(track);
+            Media media = new Media(1, "", title, "","",Long.valueOf(duration),null,null);
+            mediaList.add(media);
         }
 
-        return trackList;
+        return mediaList;
     }
 
     /**

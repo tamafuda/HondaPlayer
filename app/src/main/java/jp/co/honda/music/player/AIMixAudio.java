@@ -20,9 +20,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import jp.co.honda.music.common.HondaConstants;
+import jp.co.honda.music.model.Media;
 import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.HondaSharePreference;
-import jp.co.honda.music.model.Track;
 import jp.co.honda.music.model.TrackInfo;
 
 public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnCompletionListener{
@@ -204,8 +204,8 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
             indexTrack = extras.getInt(HondaConstants.INTENT_AIMIXAUDIO);
         }
         if(indexTrack != -1) {
-            ArrayList<Track> list = storage.loadTrackList();
-            Track t = list.get(indexTrack);
+            ArrayList<Media> list = storage.loadTrackList();
+            Media t = list.get(indexTrack);
             t.setTitle(t.getTitle() + titleChanged);
             storage.storeTrackList(list);
         }

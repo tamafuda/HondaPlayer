@@ -23,7 +23,7 @@ import jp.co.honda.music.zdccore.HondaSharePreference;
 import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.adapter.RadioAdapter;
 import jp.co.honda.music.adapter.RadioRecyclerViewAdapter;
-import jp.co.honda.music.model.Track;
+import jp.co.honda.music.model.Media;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,7 +35,7 @@ public class IPodFragment extends Fragment implements View.OnClickListener{
 
     // Logger
     protected final Logger log = new Logger(IPodFragment.class.getSimpleName(), true);
-    private ArrayList<Track> trackList;
+    private ArrayList<Media> mediaList;
     private ListView trackListView;
     private TextView mDeviceInfo;
     private TextView mAudioAmount;
@@ -58,13 +58,13 @@ public class IPodFragment extends Fragment implements View.OnClickListener{
         //mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
         //mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         // Get song list from device
-        //trackList = TrackUtil.getTrackList(getActivity());
+        //mediaList = TrackUtil.getTrackList(getActivity());
         storage = new HondaSharePreference(getActivity());
-        //trackList = storage.loadTrackList();
-        trackList = TrackUtil.getTrackList(getActivity());
+        //mediaList = storage.loadTrackList();
+        mediaList = TrackUtil.getTrackList(getActivity());
         RadioAdapter trackAdapter = new RadioAdapter(getActivity(), getActivity(),R.layout.radio
-                , trackList, HondaConstants.DETECT_FRAGMENT_IPOD,trackListView);
-        //mRadioRecyclerAdapter = new RadioRecyclerViewAdapter(getActivity(), trackList);
+                , mediaList, HondaConstants.DETECT_FRAGMENT_IPOD,trackListView);
+        //mRadioRecyclerAdapter = new RadioRecyclerViewAdapter(getActivity(), mediaList);
 
         trackListView.setAdapter(trackAdapter);
         //mRecyclerView.setAdapter(mRadioRecyclerAdapter);
@@ -74,7 +74,7 @@ public class IPodFragment extends Fragment implements View.OnClickListener{
         mDeviceInfo.setText(SystemUtils.getDeviceInfo());
 
         mAudioAmount = (TextView) v.findViewById(R.id.id_count_audio);
-        String amountAudio = String.valueOf(trackList.size()) + "曲";
+        String amountAudio = String.valueOf(mediaList.size()) + "曲";
         mAudioAmount.setText(amountAudio);
 
         mPlaylist1 = (TextView) v.findViewById(R.id.id_playlist_ipod_1);

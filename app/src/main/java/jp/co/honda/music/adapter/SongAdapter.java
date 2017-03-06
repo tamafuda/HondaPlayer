@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import jp.co.honda.music.model.Media;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.util.TrackUtil;
-import jp.co.honda.music.model.Track;
 
 /**
  * @Author: Hoang Vu
@@ -23,18 +23,18 @@ import jp.co.honda.music.model.Track;
 public class SongAdapter extends BaseAdapter {
 	
 	//song list and layout
-	private ArrayList<Track> tracks;
+	private ArrayList<Media> medias;
 	private LayoutInflater songInf;
 	
 	//constructor
-	public SongAdapter(Context c, ArrayList<Track> theTracks){
-		tracks = theTracks;
+	public SongAdapter(Context c, ArrayList<Media> theMedias){
+		medias = theMedias;
 		songInf=LayoutInflater.from(c);
 	}
 
 	@Override
 	public int getCount() {
-		return tracks.size();
+		return medias.size();
 	}
 
 	@Override
@@ -59,11 +59,11 @@ public class SongAdapter extends BaseAdapter {
 		TextView songView = (TextView)songLay.findViewById(R.id.song_title);
 		TextView artistView = (TextView)songLay.findViewById(R.id.song_artist);
 		//get song using position
-		Track currTrack = tracks.get(position);
+		Media currMedia = medias.get(position);
 		//get title and artist strings
-		songView.setText(currTrack.getTitle());
-		//artistView.setText(currTrack.getArtist());
-		artistView.setText(TrackUtil.covertDuration(currTrack.getDuration()));
+		songView.setText(currMedia.getTitle());
+		//artistView.setText(currMedia.getArtist());
+		artistView.setText(TrackUtil.covertDuration(currMedia.getDuration()));
 		//set position as tag
 		songLay.setTag(position);
 		return songLay;

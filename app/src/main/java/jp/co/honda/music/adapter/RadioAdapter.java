@@ -20,24 +20,24 @@ import java.util.ArrayList;
 
 import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.dialog.PopupUtils;
+import jp.co.honda.music.model.Media;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.player.HomeBaseFragment;
 import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 import jp.co.honda.music.logger.Logger;
-import jp.co.honda.music.model.Track;
 
 /**
  * @Author: Hoang Vu
  * @Date: 2017/02/26
  */
 
-public class RadioAdapter extends ArrayAdapter<Track> implements  View.OnClickListener {
+public class RadioAdapter extends ArrayAdapter<Media> implements  View.OnClickListener {
 
     // Logger
     protected final Logger log = new Logger(RadioAdapter.class.getSimpleName(), true);
 
-    private ArrayList<Track> trackList;
+    private ArrayList<Media> mediaList;
     private Context context;
     private int layoutResourceId;
 
@@ -59,9 +59,9 @@ public class RadioAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
     // Detect fragment
     private String detectFragment;
 
-    public RadioAdapter(Context context, Activity activity, int resource, ArrayList<Track> mTrackList, String fragment, ListView listView) {
+    public RadioAdapter(Context context, Activity activity, int resource, ArrayList<Media> mMediaList, String fragment, ListView listView) {
         super(context, resource);
-        this.trackList = mTrackList;
+        this.mediaList = mMediaList;
         this.layoutResourceId = resource;
         this.context = context;
         storage = new HondaSharePreference(context);
@@ -76,7 +76,7 @@ public class RadioAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
         int position = (Integer) v.getTag();
         log.d("Child count is : " + String.valueOf(mListView.getChildCount()));
 
-        Track track = trackList.get(position);
+        Media media = mediaList.get(position);
         switch (v.getId()) {
             case R.id.audio_title:
                 Toast.makeText(context,"Title click: " + String.valueOf(position), Toast.LENGTH_SHORT).show();
@@ -90,9 +90,9 @@ public class RadioAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
                         log.d("Tag of textview is : " + String.valueOf(txt.getTag()));
                         txt.setTextColor(ContextCompat.getColor(context,R.color.holo_green_dark));
                     }
-                    trackList.get(previousPos).setSelect(false);
+                    mediaList.get(previousPos).setSelect(false);
                 }
-                track.setSelect(true);
+                media.setSelect(true);
                 break;
             case R.id.arrow:
 
@@ -118,7 +118,7 @@ public class RadioAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Track track = trackList.get(position);
+        Media media = mediaList.get(position);
         ViewHolder viewHolder;
 
         final View result;
@@ -137,10 +137,10 @@ public class RadioAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
             log.d("Position loaded is : " + String.valueOf(position));
         }
 
-        viewHolder.trackTitle.setText(track.getTitle());
+        viewHolder.trackTitle.setText(media.getTitle());
         viewHolder.trackTitle.setOnClickListener(this);
         viewHolder.trackTitle.setTag(position);
-        if (!track.isSelect()) {
+        if (!media.isSelect()) {
             viewHolder.trackTitle.setTextColor(ContextCompat.getColor(context,R.color.holo_green_dark));
         }
 
@@ -177,7 +177,7 @@ public class RadioAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
         if (!serviceBound) {
             //Store Serializable audioList to SharedPreferences
             //HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
-            storage.storeTrackList(trackList);
+            storage.storeTrackList(mediaList);
             storage.storeTrackIndex(trackID);
 
             Intent playerIntent = new Intent(context,MediaPlayerService.class);
@@ -198,7 +198,7 @@ public class RadioAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
 
     @Override
     public int getCount() {
-        return trackList.size();
+        return mediaList.size();
     }
 
 //======= View Holder ======
