@@ -1,7 +1,11 @@
 package jp.co.zenrin.music.player;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.view.WindowManager;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -26,10 +30,17 @@ public class MusicPlayActivity extends BasePlayerActivity {
     private ArrayList<Track> trackList;
     private ListView trackListView;
 
+    private TextView mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        }
+        mTitle = (TextView) findViewById(R.id.id_common_title);
+        mTitle.setText("AI レコメンド");
         log.d("onCreate");
         trackListView = (ListView) findViewById(R.id.song_list);
         // Get song list from device

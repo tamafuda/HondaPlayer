@@ -27,9 +27,10 @@ import jp.co.zenrin.music.fragment.IPodFragment;
 import jp.co.zenrin.music.fragment.InternetRadioFragment;
 import jp.co.zenrin.music.model.SpinnerNavItem;
 import jp.co.zenrin.music.model.TitleNavigationAdapter;
+import jp.co.zenrin.music.zdccore.Logger;
 
 public class TestFragment extends AppCompatActivity {
-
+    protected final Logger log = new Logger(MusicPlayActivity.class.getSimpleName(), true);
     private Toolbar mToolbar;
     private Spinner mSpinner;
     // Navigation adapter
@@ -40,6 +41,7 @@ public class TestFragment extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        log.d("onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_fragment);
 

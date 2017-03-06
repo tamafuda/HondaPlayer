@@ -28,6 +28,7 @@ public class RadarMusicActivity extends AppCompatActivity {
     TextView mTitle;
     Button mAIRecommend;
     Button mDownload;
+    Button mMusic;
     ImageView mScreenBg;
     Context context;
 
@@ -53,15 +54,18 @@ public class RadarMusicActivity extends AppCompatActivity {
         mTitle = (TextView) findViewById(R.id.id_common_title);
         mTitle.setText("Music プレィモード");
 
+
         mAIRecommend = (Button) findViewById(R.id.ai_recommend);
         mDownload = (Button) findViewById(R.id.download_music);
         mScreenBg = (ImageView) findViewById(R.id.id_screen_bg);
+        mMusic = (Button) findViewById(R.id.ic_music);
         // Can not set one view with 2 event listener
         // Ex : screenBg with onClickListener and onTouchListener
         // Should be prepare each button music to handle
         mScreenBg.setOnClickListener(mOnclick);
         mDownload.setOnClickListener(mOnclick);
         mAIRecommend.setOnClickListener(mOnclick);
+        mMusic.setOnClickListener(mOnclick);
 
         // Fling screen
         //View v = findViewById(R.id.activity_radar_music);
@@ -93,11 +97,11 @@ public class RadarMusicActivity extends AppCompatActivity {
                 log.d(String.valueOf(e.getAction()));
                 log.d(String.valueOf(e.getX()));
                 log.d(String.valueOf(e.getY()));
-
-                if (detectFling){
+                return true;
+                /*if (detectFling){
                     return true;
                 }
-                return false;
+                return false;*/
             }
 
             @Override
@@ -108,6 +112,16 @@ public class RadarMusicActivity extends AppCompatActivity {
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
                 return super.onSingleTapConfirmed(e);
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+                super.onLongPress(e);
+            }
+
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                return super.onDoubleTap(e);
             }
         });
 
@@ -130,6 +144,9 @@ public class RadarMusicActivity extends AppCompatActivity {
 
                     break;
                 case R.id.id_screen_bg:
+                    mDownload.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.ic_music:
                     mDownload.setVisibility(View.VISIBLE);
                     break;
                 // even more buttons here

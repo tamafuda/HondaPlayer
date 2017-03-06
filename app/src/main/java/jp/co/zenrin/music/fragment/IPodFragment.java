@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.player.R;
 import jp.co.zenrin.music.player.TestFragment;
 import jp.co.zenrin.music.util.SystemUtils;
@@ -46,6 +47,7 @@ public class IPodFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        log.d("onCreate");
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_ipod, container, false);
         //View v = inflater.inflate(R.layout.fragment_ipod_recycleview, container, false);
@@ -54,7 +56,8 @@ public class IPodFragment extends Fragment implements View.OnClickListener{
         //mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         // Get song list from device
         trackList = TrackUtil.getTrackList(getActivity());
-        RadioAdapter trackAdapter = new RadioAdapter(getActivity(), R.layout.radio, trackList);
+        RadioAdapter trackAdapter = new RadioAdapter(getActivity(), getActivity(),R.layout.radio
+                , trackList, HondaConstants.DETECT_FRAGMENT_IPOD,trackListView);
         //mRadioRecyclerAdapter = new RadioRecyclerViewAdapter(getActivity(), trackList);
 
         trackListView.setAdapter(trackAdapter);

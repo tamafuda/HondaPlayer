@@ -30,5 +30,10 @@ public final class HondaConstants {
 
     public static final int FLING_RESULT_CODE = 0;
 
+    public static final String DETECT_FRAGMENT_IPOD = "jp.co.zenrin.music.fragment.IPodFragment";
+    public static final String DETECT_FRAGMENT_FMAM = "jp.co.zenrin.music.fragment.AMFMFragment";
+    public static final String DETECT_FRAGMENT_NETRADIO = "jp.co.zenrin.music.fragment.InternetRadioFragment";
+    public static final String DETECT_FRAGMENT_BLUETOOTH = "jp.co.zenrin.music.fragment.BluetoothFragment";
+
 
 }

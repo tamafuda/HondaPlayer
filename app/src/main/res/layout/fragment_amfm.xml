@@ -13,37 +13,57 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="周波数" />
 
         <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
+            android:id="@+id/id_radio_way"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:text="80.0MHz" />
+            android:text="80.0MHz"
+            android:textColor="@color/md_teal_600" />
+
+        <Button
+            android:id="@+id/chanel_up"
+            android:background="@drawable/triangle_up"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:text="" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="2dp">
 
         <TextView
-            android:id="@+id/textView21"
-            android:layout_width="wrap_content"
+            android:id="@+id/text_chanel_name"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="局名" />
 
         <TextView
-            android:id="@+id/textView31"
-            android:layout_width="wrap_content"
+            android:id="@+id/id_chanel_name"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
+            android:textColor="@color/md_teal_600"
             android:text="TOKYO FM" />
+
+
+        <Button
+            android:id="@+id/chanel_down"
+            android:background="@drawable/triangle_down"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:text="" />
     </LinearLayout>
 
     <LinearLayout
@@ -102,7 +122,7 @@
         <ListView
             android:id="@+id/song_list"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="match_parent" >
         </ListView>
 
     </LinearLayout>

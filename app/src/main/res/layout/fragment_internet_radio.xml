@@ -13,27 +13,28 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="ドメイン" />
 
         <TextView
-            android:id="@+id/id_device_info"
+            android:id="@+id/id_radio_domain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
+            android:textColor="@color/md_teal_600"
             android:text="www.chofuradio.fm" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="2dp">
 
         <TextView
             android:id="@+id/textView21"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="局名" />
@@ -42,6 +43,7 @@
             android:id="@+id/id_count_audio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/md_teal_600"
             android:layout_marginStart="40dp"
             android:text="調布市放送ラジオ局" />
     </LinearLayout>
@@ -67,7 +69,7 @@
             android:src="@drawable/art_fm_am"
             android:contentDescription="@string/app_name"
             android:layout_width="match_parent"
-            android:layout_height="200dp"/>
+            android:layout_height="150dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -126,7 +128,7 @@
         <ListView
             android:id="@+id/song_list"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="match_parent" >
         </ListView>
 
     </LinearLayout>

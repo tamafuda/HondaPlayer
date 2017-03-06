@@ -1,15 +1,18 @@
 package jp.co.zenrin.music.fragment;
 
 import android.app.Fragment;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.player.R;
 import jp.co.zenrin.music.util.TrackUtil;
 import jp.co.zenrin.music.zdccore.RadioAdapter;
@@ -31,6 +34,8 @@ public class InternetRadioFragment extends Fragment {
     private ImageView image4;
 
     private ImageView artSinger;
+
+    private TextView radioDomain;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,7 +44,8 @@ public class InternetRadioFragment extends Fragment {
         trackListView = (ListView) v.findViewById(R.id.song_list);
         // Get song list from device
         trackList = TrackUtil.getTrackList(getActivity());
-        RadioAdapter trackAdapter = new RadioAdapter(getActivity(), R.layout.radio, trackList);
+        RadioAdapter trackAdapter = new RadioAdapter(getActivity(),getActivity(), R.layout.radio
+                , trackList, HondaConstants.DETECT_FRAGMENT_NETRADIO,trackListView);
         trackListView.setAdapter(trackAdapter);
 
         artSinger = (ImageView) v.findViewById(R.id.bgr_singer);
@@ -51,6 +57,9 @@ public class InternetRadioFragment extends Fragment {
         image2.setOnClickListener(mOnclick);
         image3.setOnClickListener(mOnclick);
         image4.setOnClickListener(mOnclick);
+
+        radioDomain = (TextView) v.findViewById(R.id.id_radio_domain);
+        radioDomain.setPaintFlags(radioDomain.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         return v;
     }

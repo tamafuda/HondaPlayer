@@ -2,10 +2,14 @@ package jp.co.zenrin.music.player;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,19 +25,31 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
     Button btnJazz;
     Button btnPop;
     ArrayList<TrackInfo> trackInfoList;
+    TextView mTitle;
+
+    Button btnSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_aimix_audio);
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        }
+        mTitle = (TextView) findViewById(R.id.id_common_title);
+        mTitle.setText("Music アレンジ");
+
         btnGhita = (Button) findViewById(R.id.id_ghita);
         btnBass = (Button) findViewById(R.id.id_bass);
         btnJazz = (Button) findViewById(R.id.id_jazz);
         btnPop = (Button) findViewById(R.id.id_pop);
+        btnSave = (Button) findViewById(R.id.btn_share);
         btnGhita.setOnClickListener(mOnclick);
         btnBass.setOnClickListener(mOnclick);
         btnJazz.setOnClickListener(mOnclick);
         btnPop.setOnClickListener(mOnclick);
+        btnSave.setOnClickListener(mOnclick);
         trackInfoList = TrackUtil.getRawToMix(getApplicationContext());
     }
 
@@ -68,6 +84,9 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
                     break;
                 case R.id.id_pop:
                     tag = btnPop.getTag().toString();
+                    break;
+                case R.id.btn_save:
+                    
                     break;
                 // even more buttons here
             }

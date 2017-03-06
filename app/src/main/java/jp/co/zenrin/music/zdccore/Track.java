@@ -16,6 +16,7 @@ public class Track implements Serializable {
     private String artist;
     private String album;
     private long duration;
+    private boolean isSelect;
 
     public Track(long trackID, String trackData, String trackTitle, String trackArtist, String trackAlbum, long trackDuration) {
         id = trackID;
@@ -49,5 +50,13 @@ public class Track implements Serializable {
 
     public long getDuration() {
         return duration;
+    }
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
     }
 }
