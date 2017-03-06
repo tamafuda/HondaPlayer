@@ -1,4 +1,4 @@
-package jp.co.zenrin.music.zdccore;
+package jp.co.zenrin.music.model;
 
 import android.media.MediaPlayer;
 import android.net.Uri;

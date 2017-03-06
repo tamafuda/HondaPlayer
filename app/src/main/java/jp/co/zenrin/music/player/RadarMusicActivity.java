@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.dialog.ProgressDialogTask;
-import jp.co.zenrin.music.zdccore.Logger;
+import jp.co.zenrin.music.logger.Logger;
 
 public class RadarMusicActivity extends AppCompatActivity {
 

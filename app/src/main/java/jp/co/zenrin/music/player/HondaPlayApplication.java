@@ -6,7 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
-import jp.co.zenrin.music.zdccore.Logger;
+import jp.co.zenrin.music.logger.Logger;
 
 /**
  * @Author: Hoang Vu

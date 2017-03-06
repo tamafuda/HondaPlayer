@@ -1,4 +1,4 @@
-package jp.co.zenrin.music.zdccore;
+package jp.co.zenrin.music.adapter;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -18,9 +18,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import jp.co.zenrin.music.common.HondaConstants;
+import jp.co.zenrin.music.logger.Logger;
+import jp.co.zenrin.music.model.Track;
 import jp.co.zenrin.music.player.MusicPlayActivity;
 import jp.co.zenrin.music.player.R;
 import jp.co.zenrin.music.service.MediaPlayerService;
+import jp.co.zenrin.music.zdccore.HondaSharePreference;
 
 /**
  * @Author: Hoang Vu

@@ -1,4 +1,4 @@
-package jp.co.zenrin.music.zdccore;
+package jp.co.zenrin.music.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import jp.co.zenrin.music.player.R;
 import jp.co.zenrin.music.util.TrackUtil;
+import jp.co.zenrin.music.model.Track;
 
 /**
  * @Author: Hoang Vu

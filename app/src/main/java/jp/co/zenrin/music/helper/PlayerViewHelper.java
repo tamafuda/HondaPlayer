@@ -1,4 +1,4 @@
-package jp.co.zenrin.music.zdccore;
+package jp.co.zenrin.music.helper;
 
 import android.view.View;
 

@@ -30,9 +30,9 @@ import java.util.ArrayList;
 import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.player.R;
 import jp.co.zenrin.music.zdccore.HondaSharePreference;
-import jp.co.zenrin.music.zdccore.Logger;
+import jp.co.zenrin.music.logger.Logger;
 import jp.co.zenrin.music.zdccore.PlaybackStatus;
-import jp.co.zenrin.music.zdccore.Track;
+import jp.co.zenrin.music.model.Track;
 
 import static android.R.attr.action;
 

@@ -1,10 +1,12 @@
-package jp.co.zenrin.music.zdccore;
+package jp.co.zenrin.music.helper;
 
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.Toast;
+
+import jp.co.zenrin.music.logger.Logger;
 
 
 public class ViewInitHelper

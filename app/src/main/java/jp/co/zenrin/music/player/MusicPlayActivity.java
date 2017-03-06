@@ -11,11 +11,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import jp.co.zenrin.music.util.TrackUtil;
-import jp.co.zenrin.music.zdccore.BasePlayerActivity;
 import jp.co.zenrin.music.zdccore.HondaSharePreference;
-import jp.co.zenrin.music.zdccore.Logger;
-import jp.co.zenrin.music.zdccore.Track;
-import jp.co.zenrin.music.zdccore.TrackAdapter;
+import jp.co.zenrin.music.logger.Logger;
+import jp.co.zenrin.music.model.Track;
+import jp.co.zenrin.music.adapter.TrackAdapter;
 
 /**
  * @Author: Hoang Vu

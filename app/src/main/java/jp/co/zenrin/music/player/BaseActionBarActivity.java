@@ -1,6 +1,5 @@
 package jp.co.zenrin.music.player;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,9 +9,8 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.model.SpinnerNavItem;
-import jp.co.zenrin.music.model.TitleNavigationAdapter;
+import jp.co.zenrin.music.adapter.TitleNavigationAdapter;
 
 public abstract class BaseActionBarActivity extends AppCompatActivity {
 
@@ -57,7 +55,7 @@ public abstract class BaseActionBarActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
-                if (position == 0 && !detectedScreen().equals(HondaConstants.DETECTED_SCREEN_IPOD)) {
+                /*if (position == 0 && !detectedScreen().equals(HondaConstants.DETECTED_SCREEN_IPOD)) {
                     Intent iController = new Intent(getBaseContext(), TestActivity.class);
                     iController.putExtra("MainActivity", true);
                     startActivity(iController);
@@ -65,7 +63,7 @@ public abstract class BaseActionBarActivity extends AppCompatActivity {
                     Intent iController = new Intent(getBaseContext(), TestActivity.class);
                     iController.putExtra("MainActivity", true);
                     startActivity(iController);
-                }
+                }*/
 
             }
 

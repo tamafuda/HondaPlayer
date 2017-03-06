@@ -28,12 +28,12 @@ import jp.co.zenrin.music.dialog.PopupUtils;
 import jp.co.zenrin.music.model.ChanelRadio;
 import jp.co.zenrin.music.player.HomeBaseFragment;
 import jp.co.zenrin.music.player.R;
-import jp.co.zenrin.music.util.CheckSystemPermissions;
+import jp.co.zenrin.music.zdccore.CheckSystemPermissions;
 import jp.co.zenrin.music.util.TrackUtil;
 import jp.co.zenrin.music.zdccore.HondaSharePreference;
-import jp.co.zenrin.music.zdccore.Logger;
-import jp.co.zenrin.music.zdccore.RadioAdapter;
-import jp.co.zenrin.music.zdccore.Track;
+import jp.co.zenrin.music.logger.Logger;
+import jp.co.zenrin.music.adapter.RadioAdapter;
+import jp.co.zenrin.music.model.Track;
 
 import static jp.co.zenrin.music.common.HondaConstants.PERMISSION_REQUEST_CODE;
 

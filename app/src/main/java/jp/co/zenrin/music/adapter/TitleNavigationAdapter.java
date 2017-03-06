@@ -1,4 +1,4 @@
-package jp.co.zenrin.music.model;
+package jp.co.zenrin.music.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import jp.co.zenrin.music.model.SpinnerNavItem;
 import jp.co.zenrin.music.player.R;
 
 public class TitleNavigationAdapter extends BaseAdapter {

@@ -1,4 +1,4 @@
-package jp.co.zenrin.music.util;
+package jp.co.zenrin.music.zdccore;
 
 import android.app.Activity;
 import android.app.Fragment;

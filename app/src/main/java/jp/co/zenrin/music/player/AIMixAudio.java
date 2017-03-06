@@ -21,10 +21,9 @@ import java.util.ArrayList;
 
 import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.util.TrackUtil;
-import jp.co.zenrin.music.zdccore.BasePlayerActivity;
 import jp.co.zenrin.music.zdccore.HondaSharePreference;
-import jp.co.zenrin.music.zdccore.Track;
-import jp.co.zenrin.music.zdccore.TrackInfo;
+import jp.co.zenrin.music.model.Track;
+import jp.co.zenrin.music.model.TrackInfo;
 
 public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnCompletionListener{
 

@@ -29,9 +29,9 @@ import jp.co.zenrin.music.fragment.AMFMFragment;
 import jp.co.zenrin.music.fragment.IPodFragment;
 import jp.co.zenrin.music.fragment.InternetRadioFragment;
 import jp.co.zenrin.music.model.SpinnerNavItem;
-import jp.co.zenrin.music.model.TitleNavigationAdapter;
+import jp.co.zenrin.music.adapter.TitleNavigationAdapter;
 import jp.co.zenrin.music.notification.AIRecommendReceiver;
-import jp.co.zenrin.music.zdccore.Logger;
+import jp.co.zenrin.music.logger.Logger;
 
 public class HomeBaseFragment extends AppCompatActivity implements View.OnClickListener{
     protected final Logger log = new Logger(MusicPlayActivity.class.getSimpleName(), true);

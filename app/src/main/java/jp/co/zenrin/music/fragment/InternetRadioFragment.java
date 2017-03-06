@@ -16,8 +16,8 @@ import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.player.R;
 import jp.co.zenrin.music.util.TrackUtil;
 import jp.co.zenrin.music.zdccore.HondaSharePreference;
-import jp.co.zenrin.music.zdccore.RadioAdapter;
-import jp.co.zenrin.music.zdccore.Track;
+import jp.co.zenrin.music.adapter.RadioAdapter;
+import jp.co.zenrin.music.model.Track;
 
 /**
  * A simple {@link Fragment} subclass.

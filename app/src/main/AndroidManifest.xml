@@ -57,27 +57,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ControllerActivity"
-            android:parentActivityName=".MainActivity" />
         <activity android:name=".MusicPlayActivity" />
-        <activity
-            android:name=".PlayScreenActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".RadioPlayer"
-            android:parentActivityName=".ControllerActivity" />
-        <activity
-            android:name=".MusicArrangeActivity"
-            android:parentActivityName=".PlayScreenActivity" />
-        <activity
-            android:name=".ArrangeActivity"
-            android:parentActivityName=".PlayScreenActivity" />
         <activity android:name=".AIMixAudio" />
-        <activity android:name=".TestActivity" />
-        <activity android:name=".Test2Activity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".RadarMusicActivity"></activity>
+        <activity android:name=".RadarMusicActivity"/>
     </application>
 
 </manifest>

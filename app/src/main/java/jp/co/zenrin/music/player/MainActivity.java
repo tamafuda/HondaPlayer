@@ -1,7 +1,6 @@
 package jp.co.zenrin.music.player;
 
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -9,7 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import jp.co.zenrin.music.zdccore.Logger;
+import jp.co.zenrin.music.logger.Logger;
 
 
 /**
@@ -66,15 +65,15 @@ public class MainActivity extends BaseActionBarActivity {
             switch (id) {
                 case R.id.bt_controller:
                     //Intent iController = new Intent(getBaseContext(), ControllerActivity.class);
-                    Intent iController = new Intent(getBaseContext(), TestActivity.class);
+                   /* Intent iController = new Intent(getBaseContext(), TestActivity.class);
                     iController.putExtra("MainActivity", true);
-                    startActivity(iController);
+                    startActivity(iController);*/
                     break;
                 case R.id.btn_play:
-                    Intent iPlay = new Intent(getBaseContext(), PlayScreenActivity.class);
+                    /*Intent iPlay = new Intent(getBaseContext(), PlayScreenActivity.class);
                     //Intent iPlay = new Intent(getBaseContext(), PlayMediaActivity.class);
                     iPlay.putExtra("MainActivity", true);
-                    startActivity(iPlay);
+                    startActivity(iPlay);*/
                     break;
                 // even more buttons here
             }

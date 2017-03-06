@@ -1,4 +1,4 @@
-package jp.co.zenrin.music.zdccore;
+package jp.co.zenrin.music.helper;
 
 import android.media.MediaPlayer;
 import android.os.Handler;
@@ -8,6 +8,7 @@ import android.view.View.OnTouchListener;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import jp.co.zenrin.music.logger.Logger;
 import jp.co.zenrin.music.service.MediaPlayerService;
 import jp.co.zenrin.music.util.PlayerUtils;
 

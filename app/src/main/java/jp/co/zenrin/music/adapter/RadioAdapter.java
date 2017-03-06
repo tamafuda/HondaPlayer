@@ -1,4 +1,4 @@
-package jp.co.zenrin.music.zdccore;
+package jp.co.zenrin.music.adapter;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -23,6 +23,9 @@ import jp.co.zenrin.music.dialog.PopupUtils;
 import jp.co.zenrin.music.player.R;
 import jp.co.zenrin.music.player.HomeBaseFragment;
 import jp.co.zenrin.music.service.MediaPlayerService;
+import jp.co.zenrin.music.zdccore.HondaSharePreference;
+import jp.co.zenrin.music.logger.Logger;
+import jp.co.zenrin.music.model.Track;
 
 /**
  * @Author: Hoang Vu

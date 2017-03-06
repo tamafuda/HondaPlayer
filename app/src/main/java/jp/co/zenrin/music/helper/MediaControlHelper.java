@@ -7,7 +7,7 @@ import android.provider.MediaStore;
 
 import java.util.ArrayList;
 
-import jp.co.zenrin.music.zdccore.Song;
+import jp.co.zenrin.music.model.Song;
 
 /**
  * Created by nguyenngocbinh on 2/25/17.
