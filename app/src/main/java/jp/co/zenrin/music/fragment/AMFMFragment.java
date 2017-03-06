@@ -270,7 +270,7 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
             @Override
             public void run() {
                 try{
-                    sleep(5000);
+                    sleep(50000);
                     Message message = new Message();
                     message.what = 1;
                     handler.sendMessage(message);
