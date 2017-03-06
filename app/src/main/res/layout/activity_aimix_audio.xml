@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg_screen_mix"
-    tools:context="jp.co.zenrin.music.player.AIMixAudio">
+    tools:context="jp.co.honda.music.player.AIMixAudio">
 
     <include
         android:id="@+id/toolbar"

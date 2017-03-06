@@ -4,7 +4,7 @@
     android:id="@+id/activity_radar_music"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="jp.co.zenrin.music.player.RadarMusicActivity">
+    tools:context="jp.co.honda.music.player.RadarMusicActivity">
 
     <include
         android:id="@+id/toolbar"
