@@ -16,8 +16,9 @@ import java.util.ArrayList;
 
 import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.player.R;
-import jp.co.zenrin.music.player.TestFragment;
+import jp.co.zenrin.music.player.HomeBaseFragment;
 import jp.co.zenrin.music.util.SystemUtils;
+import jp.co.zenrin.music.util.TrackUtil;
 import jp.co.zenrin.music.zdccore.HondaSharePreference;
 import jp.co.zenrin.music.zdccore.Logger;
 import jp.co.zenrin.music.zdccore.RadioAdapter;
@@ -59,7 +60,8 @@ public class IPodFragment extends Fragment implements View.OnClickListener{
         // Get song list from device
         //trackList = TrackUtil.getTrackList(getActivity());
         storage = new HondaSharePreference(getActivity());
-        trackList = storage.loadTrackList();
+        //trackList = storage.loadTrackList();
+        trackList = TrackUtil.getTrackList(getActivity());
         RadioAdapter trackAdapter = new RadioAdapter(getActivity(), getActivity(),R.layout.radio
                 , trackList, HondaConstants.DETECT_FRAGMENT_IPOD,trackListView);
         //mRadioRecyclerAdapter = new RadioRecyclerViewAdapter(getActivity(), trackList);
@@ -108,15 +110,15 @@ public class IPodFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.id_playlist_ipod_1:
                 //gotoInternetAudio();
-                //((TestFragment)getActivity()).addItemsToSpinner();
-                ((TestFragment)getActivity()).selectFrag(3);
-                ((TestFragment)getActivity()).setSelection(3);
+                //((HomeBaseFragment)getActivity()).addItemsToSpinner();
+                ((HomeBaseFragment)getActivity()).selectFrag(3);
+                ((HomeBaseFragment)getActivity()).setSelection(3);
                 break;
             case R.id.id_playlist_ipod_2:
                 //gotoInternetAudio();
-                //((TestFragment)getActivity()).addItemsToSpinner();
-                ((TestFragment)getActivity()).selectFrag(3);
-                ((TestFragment)getActivity()).setSelection(3);
+                //((HomeBaseFragment)getActivity()).addItemsToSpinner();
+                ((HomeBaseFragment)getActivity()).selectFrag(3);
+                ((HomeBaseFragment)getActivity()).setSelection(3);
                 break;
         }
     }

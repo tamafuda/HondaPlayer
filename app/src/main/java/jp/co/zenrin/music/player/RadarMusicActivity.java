@@ -80,7 +80,7 @@ public class RadarMusicActivity extends AppCompatActivity {
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 if (e1.getX() - e2.getX() < 50) {
                     Toast.makeText(getBaseContext(), "SwipLeft", Toast.LENGTH_SHORT).show();
-                    Intent iPlay = new Intent(getBaseContext(), TestFragment.class);
+                    Intent iPlay = new Intent(getBaseContext(), HomeBaseFragment.class);
                     iPlay.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     //Intent iPlay = new Intent(getBaseContext(), PlayMediaActivity.class);
                     iPlay.putExtra("MainActivity", true);
@@ -162,5 +162,13 @@ public class RadarMusicActivity extends AppCompatActivity {
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         return super.dispatchKeyEvent(event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent iPlay = new Intent(getBaseContext(), HomeBaseFragment.class);
+        //iPlay.putExtra(HondaConstants.DETECTED_SCREEN_FLING, true);
+        startActivity(iPlay);
+        finish();
     }
 }

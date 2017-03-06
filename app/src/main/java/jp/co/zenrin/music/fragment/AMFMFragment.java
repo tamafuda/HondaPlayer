@@ -2,6 +2,7 @@ package jp.co.zenrin.music.fragment;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -25,8 +26,8 @@ import java.util.ArrayList;
 import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.dialog.PopupUtils;
 import jp.co.zenrin.music.model.ChanelRadio;
+import jp.co.zenrin.music.player.HomeBaseFragment;
 import jp.co.zenrin.music.player.R;
-import jp.co.zenrin.music.player.TestFragment;
 import jp.co.zenrin.music.util.CheckSystemPermissions;
 import jp.co.zenrin.music.util.TrackUtil;
 import jp.co.zenrin.music.zdccore.HondaSharePreference;
@@ -61,7 +62,8 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
     ArrayList<ChanelRadio> listChanel;
     private HondaSharePreference storage;
     private Handler handler;
-
+    private Dialog mDialog;
+    private Thread thread;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,8 +78,9 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
             isPermission = true;
         }
         if (isPermission) {
-            TrackUtil.synTrackListDatabase(getActivity());
-            trackList = storage.loadTrackList();
+            //TrackUtil.synTrackListDatabase(getActivity());
+            //trackList = storage.loadTrackList();
+            trackList = TrackUtil.getTrackList(getActivity());
         } else {
             trackList = new ArrayList<Track>();
         }
@@ -140,15 +143,15 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.id_playlist_fmam_1:
                 //gotoInternetAudio();
-                //((TestFragment)getActivity()).addItemsToSpinner();
-                ((TestFragment) getActivity()).selectFrag(3);
-                ((TestFragment) getActivity()).setSelection(3);
+                //((HomeBaseFragment)getActivity()).addItemsToSpinner();
+                ((HomeBaseFragment) getActivity()).selectFrag(3);
+                ((HomeBaseFragment) getActivity()).setSelection(3);
                 break;
             case R.id.id_playlist_fmam_2:
                 //gotoInternetAudio();
-                //((TestFragment)getActivity()).addItemsToSpinner();
-                ((TestFragment) getActivity()).selectFrag(3);
-                ((TestFragment) getActivity()).setSelection(3);
+                //((HomeBaseFragment)getActivity()).addItemsToSpinner();
+                ((HomeBaseFragment) getActivity()).selectFrag(3);
+                ((HomeBaseFragment) getActivity()).setSelection(3);
                 break;
             case R.id.chanel_up:
                 setChanel(1);
@@ -169,7 +172,8 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //Snackbar.make(mView,"Permission Granted, Now you can access location data.", Snackbar.LENGTH_LONG).show();
                     isPermission = true;
-                    ArrayList<Track> list = storage.loadTrackList();
+                    //ArrayList<Track> list = storage.loadTrackList();
+                    ArrayList<Track> list = TrackUtil.getTrackList(getActivity());
                     trackList.clear();
                     trackList.addAll(list);
                     //trackAdapter = new RadioAdapter(getActivity(),R.layout.radio,trackList);
@@ -242,7 +246,8 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
 
     private void showNotify() {
         PopupUtils popupUtils = new PopupUtils(getActivity());
-        popupUtils.notifyDialogCustom(getActivity(), R.string.popup_notify_content);
+        mDialog = popupUtils.notifyDialogCustom(getActivity(), R.string.popup_notify_content);
+        mDialog.show();
     }
 
     private void customHandle(){
@@ -261,20 +266,36 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
     }
 
     private void showAINofity() {
-        Thread thread = new Thread() {
+        thread = new Thread() {
             @Override
             public void run() {
                 try{
-                    sleep(10000);
+                    sleep(5000);
                     Message message = new Message();
                     message.what = 1;
                     handler.sendMessage(message);
 
                 }catch (Exception e) {
                     e.printStackTrace();
+                    thread.interrupt();
                 }
             }
         };
         thread.start();
     }
+
+    @Override
+    public void onDestroy() {
+        log.d("Fragment destroy");
+        if(mDialog != null) {
+            mDialog.dismiss();
+            mDialog = null;
+        }
+        if (thread.isAlive()) {
+            log.d("Interrupt thread");
+            thread.interrupt();
+        }
+        super.onDestroy();
+    }
+
 }

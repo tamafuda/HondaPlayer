@@ -69,14 +69,14 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
         switch (v.getId()) {
             case R.id.btn_share:
                 Toast.makeText(context,"Share button", Toast.LENGTH_SHORT).show();
-                ProgressDialogTask task = new ProgressDialogTask(getContext(), false, R.string.popup_shared);
+                ProgressDialogTask task = new ProgressDialogTask(getContext(), false, R.string.popup_sharing);
                 task.execute(0);
 
                 break;
             case R.id.btn_arrange:
                 Toast.makeText(context,"Arrange button", Toast.LENGTH_SHORT).show();
                 Intent iController = new Intent(context, AIMixAudio.class);
-                iController.putExtra(HondaConstants.INTENT_PLAYSCREEN_AIMIXAUDIO, position);
+                iController.putExtra(HondaConstants.INTENT_AIMIXAUDIO, position);
                 mActivity.startActivity(iController);
                 mActivity.finish();
 

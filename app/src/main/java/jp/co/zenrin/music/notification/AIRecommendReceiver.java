@@ -28,7 +28,7 @@ public class AIRecommendReceiver extends WakefulBroadcastReceiver {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = getStartPendingIntent(context);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-                getTriggerAt(new Date()), AlarmManager.INTERVAL_FIFTEEN_MINUTES/15, alarmIntent);
+                getTriggerAt(new Date()), AlarmManager.INTERVAL_FIFTEEN_MINUTES/30, alarmIntent);
     }
 
     /**

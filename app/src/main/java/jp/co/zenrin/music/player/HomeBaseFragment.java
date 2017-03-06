@@ -33,7 +33,7 @@ import jp.co.zenrin.music.model.TitleNavigationAdapter;
 import jp.co.zenrin.music.notification.AIRecommendReceiver;
 import jp.co.zenrin.music.zdccore.Logger;
 
-public class TestFragment extends AppCompatActivity implements View.OnClickListener{
+public class HomeBaseFragment extends AppCompatActivity implements View.OnClickListener{
     protected final Logger log = new Logger(MusicPlayActivity.class.getSimpleName(), true);
     private Toolbar mToolbar;
     private Spinner mSpinner;
@@ -101,7 +101,7 @@ public class TestFragment extends AppCompatActivity implements View.OnClickListe
     public void addItemsToSpinner() {
         SpinnerNavItem spn;
         ArrayList<SpinnerNavItem> list = new ArrayList<SpinnerNavItem>();
-        spn = new SpinnerNavItem("FMA/AM", R.drawable.fm_am);
+        spn = new SpinnerNavItem("FM/AM", R.drawable.fm_am);
         list.add(spn);
         spn = new SpinnerNavItem("iPod", R.drawable.ipod);
         list.add(spn);
@@ -172,6 +172,8 @@ public class TestFragment extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         log.d("Debug");
+        this.finish();
+        //this.onDestroy();
         //super.onBackPressed();
     }
 

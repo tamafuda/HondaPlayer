@@ -50,7 +50,7 @@
         </receiver>
         -->
         <!-- Activity register -->
-        <activity android:name=".TestFragment">
+        <activity android:name=".HomeBaseFragment">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

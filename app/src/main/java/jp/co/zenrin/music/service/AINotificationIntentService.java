@@ -89,7 +89,7 @@ public class AINotificationIntentService extends IntentService {
             if (ACTION_START.equals(action)) {
                 processStartNotification();
                 /*AIRecommendReceiver.cancelNotify(getBaseContext());
-                Intent iController = new Intent(getBaseContext(), TestFragment.class);
+                Intent iController = new Intent(getBaseContext(), HomeBaseFragment.class);
                 iController.putExtra(HondaConstants.BROADCAST_AI_RECOMMEND, true);
                 iController.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(iController);*/

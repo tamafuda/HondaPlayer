@@ -4,7 +4,7 @@
     android:id="@+id/activity_test"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="jp.co.zenrin.music.player.TestFragment">
+    tools:context="jp.co.zenrin.music.player.HomeBaseFragment">
 
     <LinearLayout
         android:id="@+id/toolbar_layout"

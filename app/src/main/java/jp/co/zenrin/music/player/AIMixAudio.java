@@ -119,7 +119,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
                                               if(arrangeMusic.isEmpty()) {
                                                   arrangeMusic = musicChangeName.getHint().toString();
                                               }
-                                              synTrackListChanged(arrangeMusic);
+                                              //synTrackListChanged(arrangeMusic);
                                               Intent iController = new Intent(getBaseContext(), MusicPlayActivity.class);
                                               startActivity(iController);
                                               finish();
@@ -202,7 +202,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
         Bundle extras = getIntent().getExtras();
         int indexTrack = -1;
         if (extras != null) {
-            indexTrack = extras.getInt(HondaConstants.INTENT_PLAYSCREEN_AIMIXAUDIO);
+            indexTrack = extras.getInt(HondaConstants.INTENT_AIMIXAUDIO);
         }
         if(indexTrack != -1) {
             ArrayList<Track> list = storage.loadTrackList();
@@ -215,6 +215,8 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        Intent iPlay = new Intent(getBaseContext(), MusicPlayActivity.class);
+        startActivity(iPlay);
+        finish();
     }
 }

@@ -35,7 +35,15 @@ public final class HondaConstants {
     public static final String DETECT_FRAGMENT_FMAM = "jp.co.zenrin.music.fragment.AMFMFragment";
     public static final String DETECT_FRAGMENT_NETRADIO = "jp.co.zenrin.music.fragment.InternetRadioFragment";
     public static final String DETECT_FRAGMENT_BLUETOOTH = "jp.co.zenrin.music.fragment.BluetoothFragment";
-    public static final String INTENT_PLAYSCREEN_AIMIXAUDIO = "jp.co.zenrin.music.HondaConstants.AIMixAudio";
+    public static final String INTENT_AIMIXAUDIO = "jp.co.zenrin.music.HondaConstants.AIMixAudio";
+    public static final String INTENT_NOTIFY_TO_MUSICPLAY_SRC = "jp.co.zenrin.music.HondaConstants.MusicPlayActivity";
+    public static final String INTENT_TEST_FRAGMENT = "jp.co.zenrin.music.HondaConstants.HomeBaseFragment";
+    public static final String INTENT_AFFM_FRAGMENT = "jp.co.zenrin.music.HondaConstants.AMFMFragment";
+    public static final String INTENT_INTERNET_RADIO_FRAGMENT = "jp.co.zenrin.music.HondaConstants.InternetRadioFragment";
+    public static final String INTENT_IPOD_FRAGMENT = "jp.co.zenrin.music.HondaConstants.IPodFragment";
+    public static final String INTENT_BASE = "jp.co.zenrin.music.HondaConstants.BasePlayerActivity";
+
+
 
 
 }

@@ -76,6 +76,27 @@ public class HondaSharePreference {
     }
 
     /**
+     * Store state screen flow from Notify to MusicPlay screen
+     * @param flag
+     */
+    public void storeTransitionNotifyToPlay(boolean flag) {
+        preferences = context.getSharedPreferences(STORAGE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(HondaConstants.INTENT_NOTIFY_TO_MUSICPLAY_SRC, flag);
+        editor.apply();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean loadTransitionNotifyToPlay() {
+        preferences = context.getSharedPreferences(STORAGE, Context.MODE_PRIVATE);
+        //return false if no data found
+        return preferences.getBoolean(HondaConstants.INTENT_NOTIFY_TO_MUSICPLAY_SRC, false);
+    }
+
+    /**
      * Load index of track
      * @return
      */

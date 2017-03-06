@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.dialog.PopupUtils;
 import jp.co.zenrin.music.player.R;
-import jp.co.zenrin.music.player.TestFragment;
+import jp.co.zenrin.music.player.HomeBaseFragment;
 import jp.co.zenrin.music.service.MediaPlayerService;
 
 /**
@@ -102,8 +102,8 @@ public class RadioAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
                 fragmentTransaction.commit();*/
                 if (!detectFragment.equals(HondaConstants.DETECT_FRAGMENT_NETRADIO)) {
                     Toast.makeText(context,"Arrow click : " + String.valueOf(position), Toast.LENGTH_SHORT).show();
-                    ((TestFragment)mActivity).selectFrag(3);
-                    ((TestFragment)mActivity).setSelection(3);
+                    ((HomeBaseFragment)mActivity).selectFrag(3);
+                    ((HomeBaseFragment)mActivity).setSelection(3);
                 }
 
                 break;

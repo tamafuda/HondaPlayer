@@ -17,6 +17,7 @@ import java.util.TimerTask;
 import jp.co.zenrin.music.player.MusicPlayActivity;
 import jp.co.zenrin.music.player.R;
 import jp.co.zenrin.music.util.SystemUtils;
+import jp.co.zenrin.music.zdccore.HondaSharePreference;
 
 /**
  * Created by v_hoang on 3/2/2017.
@@ -34,7 +35,7 @@ public class PopupUtils{
      *
      * @param tltStringResId
      */
-    public void notifyDialogCustom(final Activity activity, int tltStringResId) {
+    public Dialog notifyDialogCustom(final Activity activity, int tltStringResId) {
         // custom dialog
         // Should be use "this"
         // getApplicationContext() or getBaseContext() is false
@@ -54,12 +55,17 @@ public class PopupUtils{
             @Override
             public void onClick(View view) {
                 Intent iPlay = new Intent(activity.getBaseContext(), MusicPlayActivity.class);
+                //iPlay.putExtra(HondaConstants.INTENT_NOTIFY_TO_MUSICPLAY_SRC,true);
                 activity.startActivity(iPlay);
+                HondaSharePreference storage = new HondaSharePreference(mContext);
+                storage.storeTransitionNotifyToPlay(true);
                 activity.finish();
+                dialog.dismiss();
             }
         });
         dialog.getWindow().setGravity(Gravity.TOP);
-        dialog.show();
+        //dialog.show();
+        return dialog;
     }
 
     public void autoCloseDialog(int tltStringResId) {
