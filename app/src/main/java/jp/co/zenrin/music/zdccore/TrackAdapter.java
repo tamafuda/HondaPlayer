@@ -1,5 +1,6 @@
 package jp.co.zenrin.music.zdccore;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -16,9 +17,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.dialog.PopupUtils;
 import jp.co.zenrin.music.dialog.ProgressDialogTask;
-import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.player.AIMixAudio;
 import jp.co.zenrin.music.player.MusicPlayActivity;
 import jp.co.zenrin.music.player.R;
@@ -49,14 +50,16 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
     //Check is service is active
     HondaSharePreference storage;
     PopupUtils popupUtils;
+    private Activity mActivity;
 
-    public TrackAdapter(Context context, int resource, ArrayList<Track> mTrackList) {
+    public TrackAdapter(Context context, int resource, ArrayList<Track> mTrackList, Activity activity) {
         super(context, resource);
         this.trackList = mTrackList;
         this.layoutResourceId = resource;
         this.context = context;
         storage = new HondaSharePreference(context);
         popupUtils = new PopupUtils(context);
+        this.mActivity = activity;
     }
 
     @Override
@@ -73,8 +76,10 @@ public class TrackAdapter extends ArrayAdapter<Track> implements  View.OnClickLi
             case R.id.btn_arrange:
                 Toast.makeText(context,"Arrange button", Toast.LENGTH_SHORT).show();
                 Intent iController = new Intent(context, AIMixAudio.class);
-                iController.putExtra("AIMixAudio", true);
-                context.startActivity(iController);
+                iController.putExtra(HondaConstants.INTENT_PLAYSCREEN_AIMIXAUDIO, position);
+                mActivity.startActivity(iController);
+                mActivity.finish();
+
                 break;
             case R.id.song_title:
                 Toast.makeText(context,"Title click", Toast.LENGTH_SHORT).show();

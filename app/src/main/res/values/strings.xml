@@ -12,7 +12,8 @@
     <string name="txt_music_drop">musicを拾う</string>
     <string name="txt_music_ai_recommend">AI レコメンド</string>
     <string name="title_activity_main2">Main2Activity</string>
-    <string name="popup_notify_content">運転手がお疲れみたい！</string>
+    <string name="popup_notify_title">運転手がお疲れみたい！</string>
+    <string name="popup_notify_content">音楽アレンジでお盛り上がろう!</string>
     <string name="popup_sharing">シェア中。。。</string>
     <string name="popup_shared">シェアしました！</string>
     <string name="popup_downloading">ダウンロード中。。。</string>

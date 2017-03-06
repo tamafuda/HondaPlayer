@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import jp.co.zenrin.music.util.TrackUtil;
 import jp.co.zenrin.music.zdccore.BasePlayerActivity;
+import jp.co.zenrin.music.zdccore.HondaSharePreference;
 import jp.co.zenrin.music.zdccore.Logger;
 import jp.co.zenrin.music.zdccore.Track;
 import jp.co.zenrin.music.zdccore.TrackAdapter;
@@ -31,6 +31,7 @@ public class MusicPlayActivity extends BasePlayerActivity {
     private ListView trackListView;
 
     private TextView mTitle;
+    private HondaSharePreference storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +45,10 @@ public class MusicPlayActivity extends BasePlayerActivity {
         log.d("onCreate");
         trackListView = (ListView) findViewById(R.id.song_list);
         // Get song list from device
-        trackList = TrackUtil.getTrackList(getApplicationContext());
-        TrackAdapter trackAdapter = new TrackAdapter(this, R.layout.song, trackList);
+        //trackList = TrackUtil.getTrackList(getApplicationContext());
+        storage = new HondaSharePreference(this);
+        trackList = storage.loadTrackList();
+        TrackAdapter trackAdapter = new TrackAdapter(this, R.layout.song, trackList,this);
         trackListView.setAdapter(trackAdapter);
     }
 
@@ -58,5 +61,7 @@ public class MusicPlayActivity extends BasePlayerActivity {
     protected int getAudioIndex() {
         return 0;
     }
+
+
 
 }

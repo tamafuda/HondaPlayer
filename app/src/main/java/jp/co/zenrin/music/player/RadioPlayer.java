@@ -1,14 +1,8 @@
 package jp.co.zenrin.music.player;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import jp.co.zenrin.music.dialog.PopupUtils;
 
 /**
  * @Author: Hoang Vu
@@ -25,25 +19,25 @@ public class RadioPlayer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_radio_player);
         // Change title
-        getSupportActionBar().setDisplayOptions(android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_text);
-        View view =getSupportActionBar().getCustomView();
-        TextView txtView = (TextView) view.findViewById(R.id.title_action_bar);
-        txtView.setText(getResources().getString(R.string.txt_fm_am));
+        //getSupportActionBar().setDisplayOptions(android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
+        //getSupportActionBar().setDisplayShowCustomEnabled(true);
+        //getSupportActionBar().setCustomView(R.layout.custom_action_bar_text);
+        //View view =getSupportActionBar().getCustomView();
+        //TextView txtView = (TextView) view.findViewById(R.id.title_action_bar);
+        //txtView.setText(getResources().getString(R.string.txt_fm_am));
         // Add back button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Get the widgets reference from XML layout
         //mRelativeLayout = (RelativeLayout) findViewById(R.id.id_activity_radio);
 
-        Intent intent = getIntent();
+        /*Intent intent = getIntent();
         boolean iGet = intent.getBooleanExtra("Broadcast",false);
         if(iGet) {
             Toast.makeText(getBaseContext(),"OK", Toast.LENGTH_SHORT).show();
             PopupUtils popupUtils = new PopupUtils(this);
             popupUtils.notifyDialogCustom(R.string.popup_notify_content);
-        }
+        }*/
     }
 
 

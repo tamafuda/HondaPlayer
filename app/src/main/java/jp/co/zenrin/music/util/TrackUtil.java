@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import java.util.ArrayList;
 
 import jp.co.zenrin.music.player.R;
+import jp.co.zenrin.music.zdccore.HondaSharePreference;
 import jp.co.zenrin.music.zdccore.Track;
 import jp.co.zenrin.music.zdccore.TrackInfo;
 
@@ -20,7 +21,8 @@ import jp.co.zenrin.music.zdccore.TrackInfo;
 
 public final class TrackUtil {
 
-    public static ArrayList<Track> getTrackList(Context context) {
+    public static void synTrackListDatabase(Context context) {
+        HondaSharePreference storage = new HondaSharePreference(context);
         ArrayList<Track> trackList = new ArrayList<Track>();
         //query external audio
         ContentResolver musicResolver = context.getContentResolver();
@@ -57,8 +59,9 @@ public final class TrackUtil {
             while (musicCursor.moveToNext());
         }
         musicCursor.close();
-
-        return trackList;
+        if(storage.loadTrackList() != null) {
+            storage.storeTrackList(trackList);
+        }
     }
 
     /**

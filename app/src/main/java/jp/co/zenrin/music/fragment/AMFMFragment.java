@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
@@ -21,11 +23,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import jp.co.zenrin.music.common.HondaConstants;
+import jp.co.zenrin.music.dialog.PopupUtils;
 import jp.co.zenrin.music.model.ChanelRadio;
 import jp.co.zenrin.music.player.R;
 import jp.co.zenrin.music.player.TestFragment;
 import jp.co.zenrin.music.util.CheckSystemPermissions;
 import jp.co.zenrin.music.util.TrackUtil;
+import jp.co.zenrin.music.zdccore.HondaSharePreference;
 import jp.co.zenrin.music.zdccore.Logger;
 import jp.co.zenrin.music.zdccore.RadioAdapter;
 import jp.co.zenrin.music.zdccore.Track;
@@ -55,18 +59,25 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
     RadioAdapter trackAdapter;
 
     ArrayList<ChanelRadio> listChanel;
+    private HondaSharePreference storage;
+    private Handler handler;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         log.d("onCreate");
+        storage = new HondaSharePreference(getActivity());
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_amfm, container, false);
         trackListView = (ListView) v.findViewById(R.id.song_list);
         // Get song list from device
         //trackList = TrackUtil.getTrackList(getActivity());
+        if (Build.VERSION.SDK_INT < 23) {
+            isPermission = true;
+        }
         if (isPermission) {
-            trackList = TrackUtil.getTrackList(getActivity());
+            TrackUtil.synTrackListDatabase(getActivity());
+            trackList = storage.loadTrackList();
         } else {
             trackList = new ArrayList<Track>();
         }
@@ -91,7 +102,9 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
         mBtnChanelDown.setOnClickListener(this);
         mBtnChanelUp.setOnClickListener(this);
         listChanel = initView();
-
+        // Auto show popup notification
+        showAINofity();
+        customHandle();
         return v;
     }
 
@@ -156,7 +169,7 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //Snackbar.make(mView,"Permission Granted, Now you can access location data.", Snackbar.LENGTH_LONG).show();
                     isPermission = true;
-                    ArrayList<Track> list = TrackUtil.getTrackList(getActivity());
+                    ArrayList<Track> list = storage.loadTrackList();
                     trackList.clear();
                     trackList.addAll(list);
                     //trackAdapter = new RadioAdapter(getActivity(),R.layout.radio,trackList);
@@ -208,14 +221,14 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
                     break;
                 }
             } catch (IndexOutOfBoundsException e) {
-                if(isUpDown > 0) {
+                if (isUpDown > 0) {
                     RFText = listChanel.get(0).getIdChanel();
                     chanelName = listChanel.get(0).getNameChanel();
                     listChanel.get(0).setPlay(true);
-                }else {
-                    RFText = listChanel.get(listChanel.size() -1 ).getIdChanel();
-                    chanelName = listChanel.get(listChanel.size() -1).getNameChanel();
-                    listChanel.get(listChanel.size() -1 ).setPlay(true);
+                } else {
+                    RFText = listChanel.get(listChanel.size() - 1).getIdChanel();
+                    chanelName = listChanel.get(listChanel.size() - 1).getNameChanel();
+                    listChanel.get(listChanel.size() - 1).setPlay(true);
                 }
 
             }
@@ -225,5 +238,43 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
         mRF.setText(RFText);
         mChanel.setText(chanelName);
 
+    }
+
+    private void showNotify() {
+        PopupUtils popupUtils = new PopupUtils(getActivity());
+        popupUtils.notifyDialogCustom(getActivity(), R.string.popup_notify_content);
+    }
+
+    private void customHandle(){
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what){
+                    case 1:
+                        //Toast.makeText(getActivity(),"cool",Toast.LENGTH_SHORT).show();
+                        showNotify();
+                        break;
+                }
+                super.handleMessage(msg);
+            }
+        };
+    }
+
+    private void showAINofity() {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try{
+                    sleep(10000);
+                    Message message = new Message();
+                    message.what = 1;
+                    handler.sendMessage(message);
+
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
     }
 }

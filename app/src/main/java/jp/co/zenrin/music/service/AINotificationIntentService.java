@@ -11,9 +11,8 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
-import jp.co.zenrin.music.player.MainActivity;
+import jp.co.zenrin.music.player.MusicPlayActivity;
 import jp.co.zenrin.music.player.R;
-import jp.co.zenrin.music.player.RadioPlayer;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -64,13 +63,13 @@ public class AINotificationIntentService extends IntentService {
 
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        builder.setContentTitle("HGT")
+        builder.setContentTitle("運手がお疲れみたい！")
                 .setAutoCancel(true)
                 .setSound(uri)
                 .setSmallIcon(R.drawable.icon_honda)
-                .setContentText("運手がお疲れみたい！");
+                .setContentText("音楽アレンジでお盛り上がろう!");
 
-        Intent mainIntent = new Intent(this, MainActivity.class);
+        Intent mainIntent = new Intent(this, MusicPlayActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 NOTIFICATION_ID,
                 mainIntent,
@@ -89,10 +88,11 @@ public class AINotificationIntentService extends IntentService {
             String action = intent.getAction();
             if (ACTION_START.equals(action)) {
                 processStartNotification();
-                Intent iController = new Intent(getBaseContext(), RadioPlayer.class);
-                iController.putExtra("Broadcast", true);
+                /*AIRecommendReceiver.cancelNotify(getBaseContext());
+                Intent iController = new Intent(getBaseContext(), TestFragment.class);
+                iController.putExtra(HondaConstants.BROADCAST_AI_RECOMMEND, true);
                 iController.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(iController);
+                startActivity(iController);*/
             }
         } finally {
             WakefulBroadcastReceiver.completeWakefulIntent(intent);

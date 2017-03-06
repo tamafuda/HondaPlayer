@@ -43,6 +43,14 @@ public class HondaSharePreference {
         editor.apply();
     }
 
+    public void updateTrackList(int index, Track track) {
+        ArrayList<Track> trackList = loadTrackList();
+        if (trackList != null) {
+            trackList.get(index).setTitle(track.getTitle());
+        }
+        storeTrackList(trackList);
+    }
+
     /**
      * Load track from preference
      * @return

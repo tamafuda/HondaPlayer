@@ -33,6 +33,14 @@
             android:gravity="center"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp" />
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:gravity="center"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp" />
 
     </RelativeLayout>
 

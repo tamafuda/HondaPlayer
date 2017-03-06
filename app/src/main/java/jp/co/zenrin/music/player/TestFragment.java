@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -22,14 +24,16 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import jp.co.zenrin.music.common.HondaConstants;
+import jp.co.zenrin.music.dialog.PopupUtils;
 import jp.co.zenrin.music.fragment.AMFMFragment;
 import jp.co.zenrin.music.fragment.IPodFragment;
 import jp.co.zenrin.music.fragment.InternetRadioFragment;
 import jp.co.zenrin.music.model.SpinnerNavItem;
 import jp.co.zenrin.music.model.TitleNavigationAdapter;
+import jp.co.zenrin.music.notification.AIRecommendReceiver;
 import jp.co.zenrin.music.zdccore.Logger;
 
-public class TestFragment extends AppCompatActivity {
+public class TestFragment extends AppCompatActivity implements View.OnClickListener{
     protected final Logger log = new Logger(MusicPlayActivity.class.getSimpleName(), true);
     private Toolbar mToolbar;
     private Spinner mSpinner;
@@ -38,12 +42,17 @@ public class TestFragment extends AppCompatActivity {
 
     private GestureDetector gestureDetector;
     private int detectScreen = 0;
+    private ImageButton mPlay;
+    private ImageButton mPause;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         log.d("onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_fragment);
+        // Setup notification
+        setupNotification();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mSpinner = (Spinner) findViewById(R.id.spinner_nav);
@@ -67,7 +76,7 @@ public class TestFragment extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "SwipLeft", Toast.LENGTH_SHORT).show();
                     Intent iPlay = new Intent(getBaseContext(), RadarMusicActivity.class);
                     iPlay.putExtra(HondaConstants.DETECTED_SCREEN_FLING, true);
-                    startActivityForResult(iPlay,HondaConstants.FLING_RESULT_CODE);
+                    startActivity(iPlay);
                     //finish();
                     return true;
 
@@ -80,7 +89,13 @@ public class TestFragment extends AppCompatActivity {
             }
         });
 
+        mPlay = (ImageButton) findViewById(R.id.btn_play);
+        mPause = (ImageButton) findViewById(R.id.btn_pause);
+        mPlay.setOnClickListener(this);
+        mPause.setOnClickListener(this);
     }
+
+
 
     // add items into spinner dynamically
     public void addItemsToSpinner() {
@@ -152,6 +167,45 @@ public class TestFragment extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onBackPressed() {
+        log.d("Debug");
+        //super.onBackPressed();
+    }
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onPostCreate(savedInstanceState, persistentState);
+    }
+
+    private void setupNotification() {
+        AIRecommendReceiver.setupNotify(getBaseContext());
+    }
+
+    private void receiverNotify() {
+        Intent intent = getIntent();
+        boolean iGet = intent.getBooleanExtra(HondaConstants.BROADCAST_AI_RECOMMEND,false);
+        if(iGet) {
+            PopupUtils popupUtils = new PopupUtils(this);
+            //popupUtils.notifyDialogCustom(R.string.popup_notify_content);
+        }
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_play:
+                mPlay.setVisibility(View.GONE);
+                mPause.setVisibility(View.VISIBLE);
+                break;
+            case R.id.btn_pause:
+                mPlay.setVisibility(View.VISIBLE);
+                mPause.setVisibility(View.GONE);
+                break;
+        }
     }
 }
 

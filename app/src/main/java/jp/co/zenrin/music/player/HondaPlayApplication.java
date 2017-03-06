@@ -8,8 +8,10 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.widget.Toast;
 
 import jp.co.zenrin.music.common.HondaConstants;
+import jp.co.zenrin.music.dialog.PopupUtils;
 import jp.co.zenrin.music.util.CheckSystemPermissions;
 import jp.co.zenrin.music.zdccore.Logger;
 
@@ -37,6 +39,7 @@ public class HondaPlayApplication extends Application {
                 // If new activity is created,force its orientation to portrait
                 Log.d(TAG, "onActivityCreated");
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
 
             }
 

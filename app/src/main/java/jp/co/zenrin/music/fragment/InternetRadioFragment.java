@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.player.R;
 import jp.co.zenrin.music.util.TrackUtil;
+import jp.co.zenrin.music.zdccore.HondaSharePreference;
 import jp.co.zenrin.music.zdccore.RadioAdapter;
 import jp.co.zenrin.music.zdccore.Track;
 
@@ -36,6 +37,8 @@ public class InternetRadioFragment extends Fragment {
     private ImageView artSinger;
 
     private TextView radioDomain;
+    private HondaSharePreference storage;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,7 +46,9 @@ public class InternetRadioFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_internet_radio, container, false);
         trackListView = (ListView) v.findViewById(R.id.song_list);
         // Get song list from device
-        trackList = TrackUtil.getTrackList(getActivity());
+        //trackList = TrackUtil.getTrackList(getActivity());
+        storage = new HondaSharePreference(getActivity());
+        trackList = storage.loadTrackList();
         RadioAdapter trackAdapter = new RadioAdapter(getActivity(),getActivity(), R.layout.radio
                 , trackList, HondaConstants.DETECT_FRAGMENT_NETRADIO,trackListView);
         trackListView.setAdapter(trackAdapter);

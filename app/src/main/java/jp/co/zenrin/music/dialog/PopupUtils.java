@@ -1,17 +1,22 @@
 package jp.co.zenrin.music.dialog;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
+import jp.co.zenrin.music.player.MusicPlayActivity;
 import jp.co.zenrin.music.player.R;
+import jp.co.zenrin.music.util.SystemUtils;
 
 /**
  * Created by v_hoang on 3/2/2017.
@@ -29,20 +34,28 @@ public class PopupUtils{
      *
      * @param tltStringResId
      */
-    public void notifyDialogCustom(int tltStringResId) {
+    public void notifyDialogCustom(final Activity activity, int tltStringResId) {
         // custom dialog
         // Should be use "this"
         // getApplicationContext() or getBaseContext() is false
         final Dialog dialog = new Dialog(mContext);
-
+        String notifyTime = SystemUtils.getSystemTimeNotify();
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.notify_pupup_custom);
         dialog.setCancelable(false);
+        //dialog.setTitle("運手がお疲れみたい！   " + notifyTime);
         Button btn = (Button) dialog.findViewById(R.id.close_popup);
-        btn.setText(tltStringResId);
+        String message = "";
+        String str1 = activity.getResources().getString(R.string.popup_notify_title);
+        String str2 = activity.getResources().getString(R.string.popup_notify_content);
+        message = str1 + " " + notifyTime + "\n" + str2;
+        btn.setText(message);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.dismiss();
+                Intent iPlay = new Intent(activity.getBaseContext(), MusicPlayActivity.class);
+                activity.startActivity(iPlay);
+                activity.finish();
             }
         });
         dialog.getWindow().setGravity(Gravity.TOP);

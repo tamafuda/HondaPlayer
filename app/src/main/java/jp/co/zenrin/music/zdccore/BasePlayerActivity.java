@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.player.MusicPlayActivity;
 import jp.co.zenrin.music.player.R;
+import jp.co.zenrin.music.player.TestFragment;
 import jp.co.zenrin.music.service.MediaPlayerService;
 import jp.co.zenrin.music.util.PlayerUtils;
-import jp.co.zenrin.music.util.TrackUtil;
 
 public abstract class BasePlayerActivity extends AppCompatActivity {
     // Logger
@@ -68,8 +68,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         btnNext.setOnClickListener(mOnclick);
         mSeekbar.setOnSeekBarChangeListener(onSeekBarChangeListener);
         // Get song list from device
-        trackList = TrackUtil.getTrackList(getApplicationContext());
-        storage = new HondaSharePreference(getApplicationContext());
+        //trackList = TrackUtil.getTrackList(this);
+        storage = new HondaSharePreference(this);
+        trackList = storage.loadTrackList();
     }
 
     NowPlayingSeekHelper.SeekEventCallback mSeekEventCallback = new NowPlayingSeekHelper.SeekEventCallback() {
@@ -315,4 +316,10 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
 
     protected abstract int getAudioIndex();
 
+    @Override
+    public void onBackPressed() {
+        Intent iPlay = new Intent(getBaseContext(), TestFragment.class);
+        //iPlay.putExtra(HondaConstants.DETECTED_SCREEN_FLING, true);
+        startActivity(iPlay);
+    }
 }

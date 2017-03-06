@@ -18,7 +18,7 @@ import jp.co.zenrin.music.common.HondaConstants;
 import jp.co.zenrin.music.player.R;
 import jp.co.zenrin.music.player.TestFragment;
 import jp.co.zenrin.music.util.SystemUtils;
-import jp.co.zenrin.music.util.TrackUtil;
+import jp.co.zenrin.music.zdccore.HondaSharePreference;
 import jp.co.zenrin.music.zdccore.Logger;
 import jp.co.zenrin.music.zdccore.RadioAdapter;
 import jp.co.zenrin.music.zdccore.RadioRecyclerViewAdapter;
@@ -44,6 +44,8 @@ public class IPodFragment extends Fragment implements View.OnClickListener{
     TextView mPlaylist1;
     TextView mPlaylist2;
 
+    private HondaSharePreference storage;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,7 +57,9 @@ public class IPodFragment extends Fragment implements View.OnClickListener{
         //mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
         //mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         // Get song list from device
-        trackList = TrackUtil.getTrackList(getActivity());
+        //trackList = TrackUtil.getTrackList(getActivity());
+        storage = new HondaSharePreference(getActivity());
+        trackList = storage.loadTrackList();
         RadioAdapter trackAdapter = new RadioAdapter(getActivity(), getActivity(),R.layout.radio
                 , trackList, HondaConstants.DETECT_FRAGMENT_IPOD,trackListView);
         //mRadioRecyclerAdapter = new RadioRecyclerViewAdapter(getActivity(), trackList);

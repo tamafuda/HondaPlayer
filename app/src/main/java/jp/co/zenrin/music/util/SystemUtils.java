@@ -2,6 +2,9 @@ package jp.co.zenrin.music.util;
 
 import android.os.Build;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @Author: Hoang Vu
  * @Date: 2017/03/03
@@ -19,5 +22,12 @@ public class SystemUtils {
             return "No device name";
         }
         return returnString;
+    }
+
+    public static String getSystemTimeNotify() {
+        Date dt = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
+        String dateTimeNotify = sdf.format(dt);
+        return dateTimeNotify;
     }
 }
