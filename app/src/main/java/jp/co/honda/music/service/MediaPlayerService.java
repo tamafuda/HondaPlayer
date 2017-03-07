@@ -76,7 +76,7 @@ public class MediaPlayerService extends Service implements
     private MediaControllerCompat.TransportControls transportControls;
 
     // Used to pause/resume MediaPlayer
-    private int resumePosition;
+    private int resumePosition = -1;
 
     // Audio Focus
     private AudioManager trackManager;
@@ -535,10 +535,10 @@ public class MediaPlayerService extends Service implements
                 // Play new music
                 log.d("PLAY RESTORE _BROADCAST");
                 mPlayerState = STATE_PLAY;
-                stopMedia();
+                /*stopMedia();
                 mediaPlayer.reset();
-                initMediaPlayer();
-                playMedia();
+                initMediaPlayer();*/
+                resumeMedia();
                 updateMetaData();
                 buildNotification(PlaybackStatus.PLAYING);
 
@@ -805,5 +805,9 @@ public class MediaPlayerService extends Service implements
     @Override
     public void onSeekComplete(MediaPlayer mp) {
 
+    }
+
+    public int getResumePosition() {
+        return resumePosition;
     }
 }

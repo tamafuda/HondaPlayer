@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.model.Media;
+import jp.co.honda.music.player.HomeBaseFragment;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.AdapterInterface;
@@ -99,6 +100,6 @@ public class InternetRadioFragment extends Fragment implements AdapterInterface{
 
     @Override
     public void updateArtAlbum(int pos) {
-
+        ((HomeBaseFragment)getActivity()).playMusicInList(pos);
     }
 }

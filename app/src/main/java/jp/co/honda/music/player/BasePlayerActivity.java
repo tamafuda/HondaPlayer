@@ -223,7 +223,14 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
             updateIconPlayPause(true);
             //Service is active
             //Send a broadcast to the service -> PLAY_NEW_AUDIO
-            Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_NEW_TRACK);
+            Intent broadcastIntent;
+            log.d("isResume play or not: " + String.valueOf(mPlaybackService.getResumePosition()));
+            if(mPlaybackService.getResumePosition() != -1) {
+                broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_RESTORE_TRACK);
+            }else {
+                broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_NEW_TRACK);
+            }
+
             sendBroadcast(broadcastIntent);
         }
     }
