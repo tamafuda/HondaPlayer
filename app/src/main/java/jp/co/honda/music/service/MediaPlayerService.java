@@ -810,4 +810,8 @@ public class MediaPlayerService extends Service implements
     public int getResumePosition() {
         return resumePosition;
     }
+
+    public void setResumePosition(int resumePosition) {
+        this.resumePosition = resumePosition;
+    }
 }

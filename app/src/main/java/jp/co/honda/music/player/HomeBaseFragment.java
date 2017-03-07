@@ -30,7 +30,6 @@ import jp.co.honda.music.fragment.IPodFragment;
 import jp.co.honda.music.fragment.InternetRadioFragment;
 import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.SpinnerNavItem;
-import jp.co.honda.music.notification.AIRecommendReceiver;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
 public class HomeBaseFragment extends BasePlayerActivity implements View.OnClickListener{
@@ -105,6 +104,11 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
     @Override
     protected int getAudioIndex() {
         return 0;
+    }
+
+    @Override
+    protected boolean isNeedKeepMediaSrv() {
+        return false;
     }
 
 
@@ -194,7 +198,7 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
     }
 
     private void setupNotification() {
-        AIRecommendReceiver.setupNotify(getBaseContext());
+        //AIRecommendReceiver.setupNotify(getBaseContext());
     }
 
     private void receiverNotify() {
@@ -224,7 +228,7 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
     public void playMusicInList(int pos) {
         log.d("Play when user touch on listview ");
         storage.storeTrackIndex(pos);
-        super.play();
+        super.playFromAdapter();
     }
 }
 

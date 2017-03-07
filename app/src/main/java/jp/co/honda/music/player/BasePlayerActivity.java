@@ -170,6 +170,18 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
     };
 
 
+    private void doUnbindService() {
+        log.d("Do Unbind service !");
+        if(mPlaybackService != null) {
+            log.d("Release media player");
+            mPlaybackService.getMediaPlayer().stop();
+            mPlaybackService.getMediaPlayer().reset();
+        }
+        unbindService(serviceConnection);
+        serviceBound = false;
+        storage.storeMPLServiceStatus(false);
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
@@ -185,13 +197,16 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
 
     @Override
     protected void onDestroy() {
-        log.d("onDestroy");
-        if (serviceBound) {
-            unbindService(serviceConnection);
-            //service is active
-            mPlaybackService.stopSelf();
-        }
+        log.d("BasePlayerActivity onDestroy");
         super.onDestroy();
+        if(isNeedKeepMediaSrv()){
+            log.d("BasePlayerActivity still keep service");
+            return;
+        }
+        if (storage.loadMPLServiceStatus() && serviceConnection != null) {
+            log.d("onDestroy - Unbind service ");
+            doUnbindService();
+        }
 
     }
 
@@ -343,4 +358,12 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
         startActivity(iPlay);
         finish();
     }*/
+    protected abstract boolean isNeedKeepMediaSrv();
+
+    public void playFromAdapter(){
+        if (mPlaybackService != null) {
+            mPlaybackService.setResumePosition(-1);
+        }
+        play();
+    }
 }

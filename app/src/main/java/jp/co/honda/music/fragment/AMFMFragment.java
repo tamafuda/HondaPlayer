@@ -111,8 +111,8 @@ public class AMFMFragment extends Fragment implements View.OnClickListener, Adap
         mBtnChanelUp.setOnClickListener(this);
         listChanel = initView();
         // Auto show popup notification
-        showAINofity();
-        customHandle();
+        //showAINofity();
+        //customHandle();
         return v;
     }
 
@@ -296,7 +296,7 @@ public class AMFMFragment extends Fragment implements View.OnClickListener, Adap
             mDialog.dismiss();
             mDialog = null;
         }
-        if (thread.isAlive()) {
+        if (thread != null && thread.isAlive()) {
             log.d("Interrupt thread");
             thread.interrupt();
         }

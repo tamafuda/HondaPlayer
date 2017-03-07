@@ -22,10 +22,11 @@ import java.util.ArrayList;
 import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.model.Media;
 import jp.co.honda.music.util.TrackUtil;
+import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 import jp.co.honda.music.model.TrackInfo;
 
-public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnCompletionListener{
+public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnCompletionListener,AdapterInterface{
 
     Button btnGhita;
     Button btnBass;
@@ -39,6 +40,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
     final Context mContext = this;
     String titleOriginIntent;
     private HondaSharePreference storage;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,11 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
         return 0;
     }
 
+    @Override
+    protected boolean isNeedKeepMediaSrv() {
+        return false;
+    }
+
     /**
      *
      * @param v
@@ -102,6 +109,11 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
                     tag = btnPop.getTag().toString();
                     break;
                 case R.id.btn_save:
+                    // Release the media player
+                    if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                        mediaPlayer.release();
+                        mediaPlayer = null;
+                    }
                     // Save audio after mixed
                     LayoutInflater layoutInflater = LayoutInflater.from(mContext);
                     View view = layoutInflater.inflate(R.layout.input_dialog_mix,null);
@@ -137,6 +149,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
                     Intent iController = new Intent(getBaseContext(), MusicPlayActivity.class);
                     startActivity(iController);
                     finish();
+                    break;
                 // even more buttons here
             }
             if(!tag.isEmpty()) {
@@ -148,22 +161,22 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
     private void playAudio(Context ctx, String tag){
         TrackInfo trackInfo = getTrackByTag(tag);
         if(trackInfo != null){
-            MediaPlayer mp = trackInfo.getMp();
-            if(mp.isPlaying()){
-                mp.pause();
-                trackInfo.setPosition(mp.getCurrentPosition());
+            mediaPlayer = trackInfo.getMp();
+            if(mediaPlayer.isPlaying()){
+                mediaPlayer.pause();
+                trackInfo.setPosition(mediaPlayer.getCurrentPosition());
                 trackInfo.setPause(true);
             }else {
                 if (trackInfo.isPause()) {
-                    mp.start();
-                    mp.seekTo(trackInfo.getPosition());
+                    mediaPlayer.start();
+                    mediaPlayer.seekTo(trackInfo.getPosition());
                 }else {
                     try {
-                        mp.setDataSource(ctx, trackInfo.getSong());
-                        mp.setOnCompletionListener(this);
+                        mediaPlayer.setDataSource(ctx, trackInfo.getSong());
+                        mediaPlayer.setOnCompletionListener(this);
                         trackInfo.setPause(false);
-                        mp.prepare();
-                        mp.start();
+                        mediaPlayer.prepare();
+                        mediaPlayer.start();
                     }catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -196,7 +209,6 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
         mediaPlayer.reset();
     }
 
-
     private void synTrackListChanged(String titleChanged) {
         Bundle extras = getIntent().getExtras();
         int indexTrack = -1;
@@ -217,5 +229,17 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
         Intent iPlay = new Intent(getBaseContext(), MusicPlayActivity.class);
         startActivity(iPlay);
         finish();
+    }
+
+    @Override
+    public void updateArtAlbum(int pos) {
+        storage.storeTrackIndex(pos);
+        super.playFromAdapter();
+    }
+
+    @Override
+    protected void onDestroy() {
+        log.d("AIMixAudio onDestroy");
+        super.onDestroy();
     }
 }

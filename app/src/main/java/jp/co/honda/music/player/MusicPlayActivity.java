@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import jp.co.honda.music.util.TrackUtil;
+import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.Media;
@@ -22,7 +23,7 @@ import jp.co.honda.music.adapter.TrackAdapter;
  */
 
 
-public class MusicPlayActivity extends BasePlayerActivity {
+public class MusicPlayActivity extends BasePlayerActivity implements AdapterInterface {
 
     // Logger
     protected final Logger log = new Logger(MusicPlayActivity.class.getSimpleName(), true);
@@ -52,7 +53,7 @@ public class MusicPlayActivity extends BasePlayerActivity {
         storage = new HondaSharePreference(this);
         //mediaList = storage.loadTrackList();
         mediaList = TrackUtil.getTrackList(getApplicationContext());
-        TrackAdapter trackAdapter = new TrackAdapter(this, R.layout.song, mediaList,this);
+        TrackAdapter trackAdapter = new TrackAdapter(this, R.layout.song, mediaList,this, this);
         trackListView.setAdapter(trackAdapter);
     }
 
@@ -64,6 +65,11 @@ public class MusicPlayActivity extends BasePlayerActivity {
     @Override
     protected int getAudioIndex() {
         return 0;
+    }
+
+    @Override
+    protected boolean isNeedKeepMediaSrv() {
+        return true;
     }
 
     @Override
@@ -91,4 +97,11 @@ public class MusicPlayActivity extends BasePlayerActivity {
         boolean isTransition = storage.loadTransitionNotifyToPlay();
         return isTransition;
     }
+
+    @Override
+    public void updateArtAlbum(int pos) {
+        storage.storeTrackIndex(pos);
+        super.playFromAdapter();
+    }
+
 }

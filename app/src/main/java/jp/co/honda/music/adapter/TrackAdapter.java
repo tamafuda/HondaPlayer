@@ -1,11 +1,8 @@
 package jp.co.honda.music.adapter;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +17,15 @@ import java.util.ArrayList;
 import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.dialog.PopupUtils;
 import jp.co.honda.music.dialog.ProgressDialogTask;
+import jp.co.honda.music.logger.Logger;
+import jp.co.honda.music.model.Media;
 import jp.co.honda.music.player.AIMixAudio;
 import jp.co.honda.music.player.MusicPlayActivity;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.util.TrackUtil;
+import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
-import jp.co.honda.music.logger.Logger;
-import jp.co.honda.music.model.Media;
 
 /**
  * @Author: Hoang Vu
@@ -54,8 +52,9 @@ public class TrackAdapter extends ArrayAdapter<Media> implements  View.OnClickLi
     HondaSharePreference storage;
     PopupUtils popupUtils;
     private Activity mActivity;
+    private AdapterInterface mAdapterInterface;
 
-    public TrackAdapter(Context context, int resource, ArrayList<Media> mMediaList, Activity activity) {
+    public TrackAdapter(Context context, int resource, ArrayList<Media> mMediaList, Activity activity, AdapterInterface adapterInterface) {
         super(context, resource);
         this.mediaList = mMediaList;
         this.layoutResourceId = resource;
@@ -63,6 +62,7 @@ public class TrackAdapter extends ArrayAdapter<Media> implements  View.OnClickLi
         storage = new HondaSharePreference(context);
         popupUtils = new PopupUtils(context);
         this.mActivity = activity;
+        this.mAdapterInterface = adapterInterface;
     }
 
     @Override
@@ -81,12 +81,12 @@ public class TrackAdapter extends ArrayAdapter<Media> implements  View.OnClickLi
                 Intent iController = new Intent(context, AIMixAudio.class);
                 iController.putExtra(HondaConstants.INTENT_AIMIXAUDIO, position);
                 mActivity.startActivity(iController);
-                mActivity.finish();
+                //mActivity.finish();
 
                 break;
             case R.id.song_title:
                 Toast.makeText(context,"Title click", Toast.LENGTH_SHORT).show();
-                play(position);
+                mAdapterInterface.updateArtAlbum(position);
                 break;
         }
 
@@ -131,6 +131,7 @@ public class TrackAdapter extends ArrayAdapter<Media> implements  View.OnClickLi
         return convertView;
 
     }
+/*
 
     //Binding this Client to the AudioPlayer Service
     private ServiceConnection serviceConnection = new ServiceConnection() {
@@ -176,6 +177,7 @@ public class TrackAdapter extends ArrayAdapter<Media> implements  View.OnClickLi
         }
 
     }
+*/
 
     @Override
     public int getCount() {
