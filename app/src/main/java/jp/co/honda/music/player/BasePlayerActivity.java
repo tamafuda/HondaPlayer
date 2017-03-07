@@ -18,16 +18,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import jp.co.honda.music.common.HondaConstants;
+import jp.co.honda.music.helper.NowPlayingSeekHelper;
+import jp.co.honda.music.helper.PlayerViewHelper;
 import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.Media;
 import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.util.PlayerUtils;
 import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.HondaSharePreference;
-import jp.co.honda.music.helper.NowPlayingSeekHelper;
-import jp.co.honda.music.helper.PlayerViewHelper;
 
-public abstract class BasePlayerActivity extends AppCompatActivity {
+public abstract class BasePlayerActivity extends AppCompatActivity{
     // Logger
     protected final Logger log = new Logger(MusicPlayActivity.class.getSimpleName(), true);
     private ImageButton btnPrevious;
@@ -53,6 +53,8 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     private HondaSharePreference storage;
     private NowPlayingSeekHelper mNowPlayingSeekHelper;
 
+    private int currentPosition;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +64,17 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         btnPlay = (ImageButton) findViewById(R.id.btn_play);
         btnPause = (ImageButton) findViewById(R.id.btn_pause);
         btnNext = (ImageButton) findViewById(R.id.btn_next);
-        mSeekbar = (SeekBar) findViewById(R.id.seekBar);
-        mElapsedTime = (TextView) findViewById(R.id.id_time_start);
-        mRemainingTime = (TextView) findViewById(R.id.id_time_end);
+        if(getLayoutResourceId() != R.layout.activity_test_fragment) {
+            mSeekbar = (SeekBar) findViewById(R.id.seekBar);
+            mElapsedTime = (TextView) findViewById(R.id.id_time_start);
+            mRemainingTime = (TextView) findViewById(R.id.id_time_end);
+            mSeekbar.setOnSeekBarChangeListener(onSeekBarChangeListener);
+        }
+
         btnPrevious.setOnClickListener(mOnclick);
         btnPlay.setOnClickListener(mOnclick);
         btnPause.setOnClickListener(mOnclick);
         btnNext.setOnClickListener(mOnclick);
-        mSeekbar.setOnSeekBarChangeListener(onSeekBarChangeListener);
         // Get song list from device
         mediaList = TrackUtil.getTrackList(this);
         storage = new HondaSharePreference(this);
@@ -195,32 +200,37 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     }
 
 
-    private void play() {
+    public void play() {
         //Check is service is active
         if (!serviceBound) {
+            log.d("MediaPlayService serviceBound is not started !");
             //Store Serializable audioList to SharedPreferences
             //HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
+            currentPosition = storage.loadTrackIndex();
+            if(currentPosition == -1) {
+                currentPosition = 0;
+                storage.storeTrackIndex(0);
+            }
             storage.storeTrackList(mediaList);
-            storage.storeTrackIndex(getAudioIndex());
-
+            //storage.storeTrackIndex(getAudioIndex());
             Intent playerIntent = new Intent(this, MediaPlayerService.class);
             startService(playerIntent);
             bindService(playerIntent, serviceConnection, Context.BIND_AUTO_CREATE);
         } else {
             //Store the new audioIndex to SharedPreferences
             //HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
-            storage.storeTrackIndex(getAudioIndex());
+            //storage.storeTrackIndex(getAudioIndex());
             updateIconPlayPause(true);
             //Service is active
             //Send a broadcast to the service -> PLAY_NEW_AUDIO
-            Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_RESTORE_TRACK);
+            Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_NEW_TRACK);
             sendBroadcast(broadcastIntent);
         }
     }
 
-    private void pause() {
+    public void pause() {
 
-        storage.storeTrackIndex(getAudioIndex());
+        //storage.storeTrackIndex(getAudioIndex());
         //Service is active
         //Send a broadcast to the service -> PLAY_NEW_AUDIO
         updateIconPlayPause(false);
@@ -228,9 +238,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         sendBroadcast(broadcastIntent);
     }
 
-    private void next() {
-
-        storage.storeTrackIndex(getAudioIndex());
+    public void next() {
         updateIconPlayPause(true);
         //Service is active
         //Send a broadcast to the service -> PLAY_NEW_AUDIO
@@ -238,9 +246,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         sendBroadcast(broadcastIntent);
     }
 
-    private void previous() {
+    public void previous() {
 
-        storage.storeTrackIndex(getAudioIndex());
+        //storage.storeTrackIndex(getAudioIndex());
         updateIconPlayPause(true);
         //Service is active
         //Send a broadcast to the service -> PLAY_NEW_AUDIO
@@ -318,6 +326,8 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     protected abstract int getLayoutResourceId();
 
     protected abstract int getAudioIndex();
+
+
 
 /*    @Override
     public void onBackPressed() {

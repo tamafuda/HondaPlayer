@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -23,17 +22,18 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import jp.co.honda.music.adapter.TitleNavigationAdapter;
 import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.dialog.PopupUtils;
 import jp.co.honda.music.fragment.AMFMFragment;
 import jp.co.honda.music.fragment.IPodFragment;
 import jp.co.honda.music.fragment.InternetRadioFragment;
-import jp.co.honda.music.model.SpinnerNavItem;
-import jp.co.honda.music.adapter.TitleNavigationAdapter;
-import jp.co.honda.music.notification.AIRecommendReceiver;
 import jp.co.honda.music.logger.Logger;
+import jp.co.honda.music.model.SpinnerNavItem;
+import jp.co.honda.music.notification.AIRecommendReceiver;
+import jp.co.honda.music.zdccore.HondaSharePreference;
 
-public class HomeBaseFragment extends AppCompatActivity implements View.OnClickListener{
+public class HomeBaseFragment extends BasePlayerActivity implements View.OnClickListener{
     protected final Logger log = new Logger(MusicPlayActivity.class.getSimpleName(), true);
     private Toolbar mToolbar;
     private Spinner mSpinner;
@@ -44,15 +44,16 @@ public class HomeBaseFragment extends AppCompatActivity implements View.OnClickL
     private int detectScreen = 0;
     private ImageButton mPlay;
     private ImageButton mPause;
-
+    private HondaSharePreference storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         log.d("onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_fragment);
+//        setContentView(R.layout.activity_test_fragment);
         // Setup notification
         setupNotification();
+        storage = new HondaSharePreference(this);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mSpinner = (Spinner) findViewById(R.id.spinner_nav);
@@ -89,12 +90,22 @@ public class HomeBaseFragment extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        mPlay = (ImageButton) findViewById(R.id.btn_play);
-        mPause = (ImageButton) findViewById(R.id.btn_pause);
-        mPlay.setOnClickListener(this);
-        mPause.setOnClickListener(this);
+        //mPlay = (ImageButton) findViewById(R.id.btn_play);
+        //mPause = (ImageButton) findViewById(R.id.btn_pause);
+        //mPlay.setOnClickListener(this);
+        //mPause.setOnClickListener(this);
     }
 
+    @Override
+    protected int getLayoutResourceId() {
+        //setContentView(R.layout.activity_test_fragment);
+        return R.layout.activity_test_fragment;
+    }
+
+    @Override
+    protected int getAudioIndex() {
+        return 0;
+    }
 
 
     // add items into spinner dynamically
@@ -208,6 +219,12 @@ public class HomeBaseFragment extends AppCompatActivity implements View.OnClickL
                 mPause.setVisibility(View.GONE);
                 break;
         }
+    }
+
+    public void playMusicInList(int pos) {
+        log.d("Play when user touch on listview ");
+        storage.storeTrackIndex(pos);
+        super.play();
     }
 }
 

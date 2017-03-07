@@ -1,11 +1,8 @@
 package jp.co.honda.music.adapter;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -20,20 +17,20 @@ import java.util.ArrayList;
 
 import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.dialog.PopupUtils;
+import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.Media;
-import jp.co.honda.music.player.R;
 import jp.co.honda.music.player.HomeBaseFragment;
+import jp.co.honda.music.player.R;
 import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
-import jp.co.honda.music.logger.Logger;
 
 /**
  * @Author: Hoang Vu
  * @Date: 2017/02/26
  */
 
-public class RadioAdapter extends ArrayAdapter<Media> implements  View.OnClickListener {
+public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickListener {
 
     // Logger
     protected final Logger log = new Logger(RadioAdapter.class.getSimpleName(), true);
@@ -77,21 +74,21 @@ public class RadioAdapter extends ArrayAdapter<Media> implements  View.OnClickLi
     @Override
     public void onClick(View v) {
         int position = (Integer) v.getTag();
+        log.d("Touch on item : " + position);
         log.d("Child count is : " + String.valueOf(mListView.getChildCount()));
 
         Media media = mediaList.get(position);
         switch (v.getId()) {
             case R.id.audio_title:
-                Toast.makeText(context,"Title click: " + String.valueOf(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Title click: " + String.valueOf(position), Toast.LENGTH_SHORT).show();
                 TextView txtRadio = (TextView) v.findViewById(R.id.audio_title);
-                txtRadio.setTextColor(ContextCompat.getColor(context,R.color.colorYellow));
+                txtRadio.setTextColor(ContextCompat.getColor(context, R.color.colorYellow));
                 //setNotifyOnChange(true);
-                play(position);
                 if (previousPos != -1 && previousPos != position) {
                     if (mListView.getChildAt(previousPos) != null) {
                         TextView txt = (TextView) mListView.getChildAt(previousPos).findViewById(R.id.audio_title);
                         log.d("Tag of textview is : " + String.valueOf(txt.getTag()));
-                        txt.setTextColor(ContextCompat.getColor(context,R.color.holo_green_dark));
+                        txt.setTextColor(ContextCompat.getColor(context, R.color.holo_green_dark));
                     }
                     mediaList.get(previousPos).setSelect(false);
                 }
@@ -108,9 +105,9 @@ public class RadioAdapter extends ArrayAdapter<Media> implements  View.OnClickLi
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();*/
                 if (!detectFragment.equals(HondaConstants.DETECT_FRAGMENT_NETRADIO)) {
-                    Toast.makeText(context,"Arrow click : " + String.valueOf(position), Toast.LENGTH_SHORT).show();
-                    ((HomeBaseFragment)mActivity).selectFrag(3);
-                    ((HomeBaseFragment)mActivity).setSelection(3);
+                    Toast.makeText(context, "Arrow click : " + String.valueOf(position), Toast.LENGTH_SHORT).show();
+                    ((HomeBaseFragment) mActivity).selectFrag(3);
+                    ((HomeBaseFragment) mActivity).setSelection(3);
                 }
 
                 break;
@@ -135,7 +132,7 @@ public class RadioAdapter extends ArrayAdapter<Media> implements  View.OnClickLi
             result = convertView;
             convertView.setTag(viewHolder);
             log.d("Position new load is : " + String.valueOf(position));
-        }else {
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
             result = convertView;
             log.d("Position loaded is : " + String.valueOf(position));
@@ -145,7 +142,7 @@ public class RadioAdapter extends ArrayAdapter<Media> implements  View.OnClickLi
         viewHolder.trackTitle.setOnClickListener(this);
         viewHolder.trackTitle.setTag(position);
         if (!media.isSelect()) {
-            viewHolder.trackTitle.setTextColor(ContextCompat.getColor(context,R.color.holo_green_dark));
+            viewHolder.trackTitle.setTextColor(ContextCompat.getColor(context, R.color.holo_green_dark));
         }
 
         viewHolder.arrow.setTag(position);
@@ -154,7 +151,7 @@ public class RadioAdapter extends ArrayAdapter<Media> implements  View.OnClickLi
         return convertView;
 
     }
-
+/*
     //Binding this Client to the AudioPlayer Service
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
@@ -198,7 +195,7 @@ public class RadioAdapter extends ArrayAdapter<Media> implements  View.OnClickLi
             context.sendBroadcast(broadcastIntent);
         }
 
-    }
+    }*/
 
     @Override
     public int getCount() {

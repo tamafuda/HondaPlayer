@@ -33,6 +33,7 @@ import jp.co.honda.music.zdccore.HondaSharePreference;
 import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.zdccore.PlaybackStatus;
 import jp.co.honda.music.model.Media;
+import jp.co.honda.music.zdccore.PlayerState;
 
 import static android.R.attr.action;
 
@@ -57,6 +58,12 @@ public class MediaPlayerService extends Service implements
     public static final String ACTION_STOP = "jp.co.honda.music.ACTION_STOP";
     public static final String CURRENT_PLAYBACK_TRACK = "jp.co.honda.music.zdccore.MediaPlayerService.CURRENT_PLAYBACK_TRACK";
     public static final String CURRENT_PLAYBACK_POSITION = "jp.co.honda.music.zdccore.MediaPlayerService.CURRENT_PLAYBACK_POSI";
+    public static final String STATE_PLAY = "PLAY";
+    public static final String STATE_PAUSE = "PAUSE";
+    public static final String STATE_NEXT = "NEXT";
+    public static final String STATE_PREVIOUS = "PREVIOUS";
+    private String mPlayerState;
+
     //notification id
     private static final int NOTIFICATION_ID = 101;
 
@@ -121,6 +128,7 @@ public class MediaPlayerService extends Service implements
      * Init Media player
      */
     private void initMediaPlayer() {
+        log.d("initMediaPlayer");
         if (mediaPlayer == null)
             // New MediaPlayer instance
             mediaPlayer = new MediaPlayer();
@@ -151,6 +159,7 @@ public class MediaPlayerService extends Service implements
      * Play media
      */
     private void playMedia() {
+        log.d("playMedia");
         if (!mediaPlayer.isPlaying()) {
             mediaPlayer.start();
         }
@@ -160,6 +169,7 @@ public class MediaPlayerService extends Service implements
      * Stop media
      */
     private void stopMedia() {
+        log.d("stopMedia");
         if (mediaPlayer == null) {
             return;
         }
@@ -172,6 +182,7 @@ public class MediaPlayerService extends Service implements
      * Pause media
      */
     private void pauseMedia() {
+        log.d("pauseMedia");
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
             resumePosition = mediaPlayer.getCurrentPosition();
@@ -182,6 +193,7 @@ public class MediaPlayerService extends Service implements
      * Resume media
      */
     private void resumeMedia() {
+        log.d("resumeMedia");
         if (!mediaPlayer.isPlaying()) {
             mediaPlayer.seekTo(resumePosition);
             mediaPlayer.start();
@@ -192,7 +204,7 @@ public class MediaPlayerService extends Service implements
      * Skip to next
      */
     private void skipToNext() {
-
+        log.d("skipToNext");
         // If playing track is latest
         // Next to first track
         if (trackIndex == mMediaList.size() - 1) {
@@ -216,7 +228,7 @@ public class MediaPlayerService extends Service implements
      * Skip to previous
      */
     private void skipToPrevious() {
-
+        log.d("skipToPrevious");
         if (trackIndex == 0) {
             //if first in playlist
             //set index to the last of audioList
@@ -357,7 +369,7 @@ public class MediaPlayerService extends Service implements
      * MediaSession and Notification actions
      */
     private void initMediaSession() throws RemoteException {
-
+        log.d("Init Media Session");
         if (mediaSessionManager != null) {
             //mediaSessionManager exists
             return;
@@ -382,6 +394,7 @@ public class MediaPlayerService extends Service implements
             // Implement callbacks
             @Override
             public void onPlay() {
+                log.d("MediaSession- Callback - onPlay");
                 super.onPlay();
 
                 resumeMedia();
@@ -390,6 +403,7 @@ public class MediaPlayerService extends Service implements
 
             @Override
             public void onPause() {
+                log.d("MediaSession- Callback - onPause");
                 super.onPause();
 
                 pauseMedia();
@@ -398,6 +412,7 @@ public class MediaPlayerService extends Service implements
 
             @Override
             public void onSkipToNext() {
+                log.d("MediaSession- Callback - onSkipToNext");
                 super.onSkipToNext();
 
                 skipToNext();
@@ -407,6 +422,7 @@ public class MediaPlayerService extends Service implements
 
             @Override
             public void onSkipToPrevious() {
+                log.d("MediaSession- Callback - onSkipToPrevious");
                 super.onSkipToPrevious();
 
                 skipToPrevious();
@@ -416,6 +432,7 @@ public class MediaPlayerService extends Service implements
 
             @Override
             public void onStop() {
+                log.d("MediaSession- Callback - onStop");
                 super.onStop();
                 removeNotification();
                 //Stop the service
@@ -452,14 +469,19 @@ public class MediaPlayerService extends Service implements
 
         String actionString = playbackAction.getAction();
         if (actionString.equalsIgnoreCase(ACTION_PLAY)) {
+            log.d("HandleIncoming - ACTION_PLAY");
             transportControls.play();
         } else if (actionString.equalsIgnoreCase(ACTION_PAUSE)) {
+            log.d("HandleIncoming - ACTION_PAUSE");
             transportControls.pause();
         } else if (actionString.equalsIgnoreCase(ACTION_NEXT)) {
+            log.d("HandleIncoming - ACTION_NEXT");
             transportControls.skipToNext();
         } else if (actionString.equalsIgnoreCase(ACTION_PREVIOUS)) {
+            log.d("HandleIncoming - ACTION_PREVIOUS");
             transportControls.skipToPrevious();
         } else if (actionString.equalsIgnoreCase(ACTION_STOP)) {
+            log.d("HandleIncoming - ACTION_STOP");
             transportControls.stop();
         }
     }
@@ -495,7 +517,7 @@ public class MediaPlayerService extends Service implements
 
 
     /**
-     * Play new Audio
+     * Play media from broadcast receiver
      */
     private BroadcastReceiver playBroadCastReceiver = new BroadcastReceiver() {
         @Override
@@ -504,40 +526,52 @@ public class MediaPlayerService extends Service implements
             log.d("Action is: " + action);
             //Get the new media index form SharedPreferences
             trackIndex = new HondaSharePreference(getApplicationContext()).loadTrackIndex();
+            log.d("Broadcast Receiver recevied trackID : " + trackIndex);
             if (trackIndex != -1 && trackIndex < mMediaList.size()) {
-                //index is in a valid range
                 activeMedia = mMediaList.get(trackIndex);
-            } else {
-                stopSelf();
             }
             String action = intent.getAction();
             if (action.equals(HondaConstants.BROADCAST_PLAY_RESTORE_TRACK)) {
-//                // Play new music
-//                stopMedia();
-//                mediaPlayer.reset();
-//                initMediaPlayer();
-//                updateMetaData();
-                transportControls.play();
-                buildNotification(PlaybackStatus.PLAYING);
-
-            }else if (action.equals(HondaConstants.BROADCAST_PLAY_NEXT_TRACK)) {
-                transportControls.skipToNext();
-                buildNotification(PlaybackStatus.PLAYING);
-                // Play next audio
-            }else if (action.equals(HondaConstants.BROADCAST_PLAY_STOP_TRACK)) {
-                // Stop music
-                transportControls.pause();
-                buildNotification(PlaybackStatus.PAUSED);
-
-            }else if (action.equals(HondaConstants.BROADCAST_PLAY_PREVIOUS_TRACK)) {
-                // Play previous
-                transportControls.skipToPrevious();
-                buildNotification(PlaybackStatus.PLAYING);
-            }else if (action.equals(HondaConstants.BROADCAST_PLAY_NEW_TRACK)) {
                 // Play new music
+                log.d("PLAY RESTORE _BROADCAST");
+                mPlayerState = STATE_PLAY;
                 stopMedia();
                 mediaPlayer.reset();
                 initMediaPlayer();
+                playMedia();
+                updateMetaData();
+                buildNotification(PlaybackStatus.PLAYING);
+
+            } else if (action.equals(HondaConstants.BROADCAST_PLAY_NEXT_TRACK)) {
+                log.d("SKIP TO NEXT _BROADCAST");
+                mPlayerState = STATE_NEXT;
+                skipToNext();
+                buildNotification(PlaybackStatus.PLAYING);
+                updateMetaData();
+                // Play next audio
+            } else if (action.equals(HondaConstants.BROADCAST_PLAY_STOP_TRACK)) {
+                // Stop music
+                log.d("STOP _BROADCAST");
+                mPlayerState = STATE_PAUSE;
+                pauseMedia();
+                buildNotification(PlaybackStatus.PAUSED);
+                updateMetaData();
+
+            } else if (action.equals(HondaConstants.BROADCAST_PLAY_PREVIOUS_TRACK)) {
+                // Play previous
+                log.d("PREVIOUS _BROADCAST");
+                mPlayerState = STATE_PREVIOUS;
+                skipToPrevious();
+                buildNotification(PlaybackStatus.PLAYING);
+                updateMetaData();
+            } else if (action.equals(HondaConstants.BROADCAST_PLAY_NEW_TRACK)) {
+                // Play new music
+                log.d("PLAY NEW _BROADCAST");
+                mPlayerState = STATE_PLAY;
+                stopMedia();
+                mediaPlayer.reset();
+                initMediaPlayer();
+                playMedia();
                 updateMetaData();
                 buildNotification(PlaybackStatus.PLAYING);
             }
@@ -567,6 +601,7 @@ public class MediaPlayerService extends Service implements
         IntentFilter filter = new IntentFilter(HondaConstants.BROADCAST_PLAY_STOP_TRACK);
         registerReceiver(playBroadCastReceiver, filter);
     }
+
     private void register_newAudio() {
         //Register playNewMedia receiver
         IntentFilter filter = new IntentFilter(HondaConstants.BROADCAST_PLAY_NEW_TRACK);
@@ -586,6 +621,7 @@ public class MediaPlayerService extends Service implements
             HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
             mMediaList = storage.loadTrackList();
             trackIndex = storage.loadTrackIndex();
+            log.d("Current track index is : " + String.valueOf(trackIndex));
 
             if (trackIndex != -1 && trackIndex < mMediaList.size()) {
                 // Index is in a valid range
@@ -667,29 +703,40 @@ public class MediaPlayerService extends Service implements
     @Override
     public void onAudioFocusChange(int focusChange) {
         //Invoked when the audio focus of the system is updated.
+        // Temporary fix bug when notification come
+        focusChange = HondaConstants.AUDIO_FOCUS_CHANGE;
         switch (focusChange) {
             case AudioManager.AUDIOFOCUS_GAIN:
+                log.d("AUDIOFOCUS_GAIN");
                 // resume playback
-                if (mediaPlayer == null) initMediaPlayer();
-                else if (!mediaPlayer.isPlaying()) mediaPlayer.start();
+                if (mediaPlayer == null) {
+                    initMediaPlayer();
+                } else if (!mediaPlayer.isPlaying()) {
+                    mediaPlayer.start();
+                }
                 mediaPlayer.setVolume(1.0f, 1.0f);
                 break;
             case AudioManager.AUDIOFOCUS_LOSS:
+                log.d("AUDIOFOCUS_LOSS");
                 // Lost focus for an unbounded amount of time: stop playback and release media player
                 if (mediaPlayer.isPlaying()) mediaPlayer.stop();
                 mediaPlayer.release();
                 mediaPlayer = null;
                 break;
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                log.d("AUDIOFOCUS_LOSS_TRANSIENT");
                 // Lost focus for a short time, but we have to stop
                 // playback. We don't release the media player because playback
                 // is likely to resume
                 if (mediaPlayer.isPlaying()) mediaPlayer.pause();
                 break;
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                log.d("AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK");
                 // Lost focus for a short time, but it's ok to keep playing
                 // at an attenuated level
-                if (mediaPlayer.isPlaying()) mediaPlayer.setVolume(0.1f, 0.1f);
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.setVolume(0.1f, 0.1f);
+                }
                 break;
         }
     }
@@ -701,8 +748,24 @@ public class MediaPlayerService extends Service implements
 
     @Override
     public void onCompletion(MediaPlayer mp) {
+        log.d("onCompletion");
+        log.d("State is : " + mPlayerState);
+        if (mediaPlayer == null) {
+            // MediaPlayer will signal normal completion even on an error,
+            // so we will stop here to avoid spamming the user.
+            log.w("not continuing playback due to error");
+            return;
+        }
+
+        if (mMediaList.isEmpty()) {
+            log.e("Tracklist is empty. No action will be done on completion");
+            return;
+        }
         // After play done, play to next track
-        skipToNext();
+        if(mPlayerState.equals(PlayerState.NEXT.getState())) {
+            skipToNext();
+        }
+
         // Invoked when playback of a media has completed
         //stopMedia();
 
@@ -735,6 +798,7 @@ public class MediaPlayerService extends Service implements
 
     @Override
     public void onPrepared(MediaPlayer mp) {
+        log.d("onPrepared");
         playMedia();
     }
 

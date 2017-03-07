@@ -10,6 +10,7 @@ import android.util.Log;
 import java.util.Calendar;
 import java.util.Date;
 
+import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.service.AINotificationIntentService;
 
 /**
@@ -21,14 +22,12 @@ public class AIRecommendReceiver extends WakefulBroadcastReceiver {
     private static final String ACTION_START_NOTIFICATION_SERVICE = "ACTION_START_NOTIFICATION_SERVICE";
     private static final String ACTION_DELETE_NOTIFICATION = "ACTION_DELETE_NOTIFICATION";
 
-    private static final int NOTIFICATIONS_INTERVAL_IN_MINUTE = 1;
-
 
     public static void setupNotify(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = getStartPendingIntent(context);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-                getTriggerAt(new Date()), AlarmManager.INTERVAL_FIFTEEN_MINUTES/30, alarmIntent);
+                getTriggerAt(new Date()), AlarmManager.INTERVAL_FIFTEEN_MINUTES/ HondaConstants.NOTIFICATIONS_INTERVAL_IN_MINUTE, alarmIntent);
     }
 
     /**

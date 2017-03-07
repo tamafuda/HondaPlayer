@@ -5,9 +5,9 @@ package jp.co.honda.music.zdccore;
  */
 
 public interface PlayerInterface {
-    public void play();
-    public void next();
-    public void stop();
-    public void previous();
+    public void IFplay();
+    public void IFnext();
+    public void IFstop();
+    public void IFprevious();
 
 }
