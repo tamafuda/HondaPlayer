@@ -14,16 +14,17 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import jp.co.honda.music.common.HondaConstants;
-import jp.co.honda.music.player.R;
-import jp.co.honda.music.player.HomeBaseFragment;
-import jp.co.honda.music.util.SystemUtils;
-import jp.co.honda.music.util.TrackUtil;
-import jp.co.honda.music.zdccore.HondaSharePreference;
-import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.adapter.RadioAdapter;
 import jp.co.honda.music.adapter.RadioRecyclerViewAdapter;
+import jp.co.honda.music.common.HondaConstants;
+import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.Media;
+import jp.co.honda.music.player.HomeBaseFragment;
+import jp.co.honda.music.player.R;
+import jp.co.honda.music.util.SystemUtils;
+import jp.co.honda.music.util.TrackUtil;
+import jp.co.honda.music.zdccore.AdapterInterface;
+import jp.co.honda.music.zdccore.HondaSharePreference;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,7 +32,7 @@ import jp.co.honda.music.model.Media;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public class IPodFragment extends Fragment implements View.OnClickListener{
+public class IPodFragment extends Fragment implements View.OnClickListener,AdapterInterface{
 
     // Logger
     protected final Logger log = new Logger(IPodFragment.class.getSimpleName(), true);
@@ -63,7 +64,7 @@ public class IPodFragment extends Fragment implements View.OnClickListener{
         //mediaList = storage.loadTrackList();
         mediaList = TrackUtil.getTrackList(getActivity());
         RadioAdapter trackAdapter = new RadioAdapter(getActivity(), getActivity(),R.layout.radio
-                , mediaList, HondaConstants.DETECT_FRAGMENT_IPOD,trackListView);
+                , mediaList, HondaConstants.DETECT_FRAGMENT_IPOD,trackListView,this);
         //mRadioRecyclerAdapter = new RadioRecyclerViewAdapter(getActivity(), mediaList);
 
         trackListView.setAdapter(trackAdapter);
@@ -121,5 +122,10 @@ public class IPodFragment extends Fragment implements View.OnClickListener{
                 ((HomeBaseFragment)getActivity()).setSelection(3);
                 break;
         }
+    }
+
+    @Override
+    public void updateArtAlbum(int pos) {
+
     }
 }

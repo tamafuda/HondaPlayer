@@ -29,6 +29,7 @@ import jp.co.honda.music.dialog.PopupUtils;
 import jp.co.honda.music.model.ChanelRadio;
 import jp.co.honda.music.player.HomeBaseFragment;
 import jp.co.honda.music.player.R;
+import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.CheckSystemPermissions;
 import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.HondaSharePreference;
@@ -43,28 +44,29 @@ import static jp.co.honda.music.common.HondaConstants.PERMISSION_REQUEST_CODE;
  * Activities that contain this fragment must implement the
  * create an instance of this fragment.
  */
-public class AMFMFragment extends Fragment implements View.OnClickListener {
+public class AMFMFragment extends Fragment implements View.OnClickListener, AdapterInterface {
     protected final Logger log = new Logger(AMFMFragment.class.getSimpleName(), true);
     private ArrayList<Media> mediaList;
     private ListView trackListView;
 
-    TextView mPlaylist1;
-    TextView mPlaylist2;
+    private TextView mPlaylist1;
+    private TextView mPlaylist2;
+    private TextView mRF;
+    private TextView mChanel;
 
-    TextView mRF;
-    TextView mChanel;
-
-    Button mBtnChanelUp;
-    Button mBtnChanelDown;
+    private Button mBtnChanelUp;
+    private Button mBtnChanelDown;
+    private ImageView albumArt;
 
     boolean isPermission;
-    RadioAdapter trackAdapter;
+    private RadioAdapter trackAdapter;
 
-    ArrayList<ChanelRadio> listChanel;
+    private ArrayList<ChanelRadio> listChanel;
     private HondaSharePreference storage;
     private Handler handler;
     private Dialog mDialog;
     private Thread thread;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,7 +89,7 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
         }
 
         trackAdapter = new RadioAdapter(getActivity(), getActivity(), R.layout.radio
-                , mediaList, HondaConstants.DETECT_FRAGMENT_FMAM, trackListView);
+                , mediaList, HondaConstants.DETECT_FRAGMENT_FMAM, trackListView, this);
         //trackAdapter.notifyDataSetChanged();
         trackListView.setAdapter(trackAdapter);
         mPlaylist1 = (TextView) v.findViewById(R.id.id_playlist_fmam_1);
@@ -98,13 +100,7 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
         mPlaylist2.setPaintFlags(mPlaylist2.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         //ComponentUtils.setUnderlineTextView(mPlaylist1);
 
-        ImageView albumArt = (ImageView) v.findViewById(R.id.album_art);
-        for (Media m : mediaList) {
-            if (m.getBitmap() != null ) {
-                albumArt.setImageBitmap(m.getBitmap());
-                break;
-            }
-        }
+        albumArt = (ImageView) v.findViewById(R.id.album_art);
 
         // Implement chanel
         mRF = (TextView) v.findViewById(R.id.id_radio_way);
@@ -259,11 +255,11 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
         mDialog.show();
     }
 
-    private void customHandle(){
-        handler = new Handler(){
+    private void customHandle() {
+        handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                switch (msg.what){
+                switch (msg.what) {
                     case 1:
                         //Toast.makeText(getActivity(),"cool",Toast.LENGTH_SHORT).show();
                         showNotify();
@@ -278,13 +274,13 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
         thread = new Thread() {
             @Override
             public void run() {
-                try{
+                try {
                     sleep(50000);
                     Message message = new Message();
                     message.what = 1;
                     handler.sendMessage(message);
 
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     thread.interrupt();
                 }
@@ -296,7 +292,7 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroy() {
         log.d("Fragment destroy");
-        if(mDialog != null) {
+        if (mDialog != null) {
             mDialog.dismiss();
             mDialog = null;
         }
@@ -307,4 +303,14 @@ public class AMFMFragment extends Fragment implements View.OnClickListener {
         super.onDestroy();
     }
 
+    @Override
+    public void updateArtAlbum(int pos) {
+        Media m = mediaList.get(pos);
+//        if (m.getBitmap() != null) {
+//            albumArt.setImageBitmap(m.getBitmap());
+//        }else{
+//            albumArt.setImageResource(R.drawable.dark_default_album_artwork);
+//        }
+        albumArt.setImageResource(R.drawable.dark_default_album_artwork);
+    }
 }

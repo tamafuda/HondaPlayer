@@ -16,6 +16,7 @@ import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.model.Media;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.util.TrackUtil;
+import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 import jp.co.honda.music.adapter.RadioAdapter;
 
@@ -24,7 +25,7 @@ import jp.co.honda.music.adapter.RadioAdapter;
  * Activities that contain this fragment must implement the
  * create an instance of this fragment.
  */
-public class InternetRadioFragment extends Fragment {
+public class InternetRadioFragment extends Fragment implements AdapterInterface{
 
     private ArrayList<Media> mediaList;
     private ListView trackListView;
@@ -46,12 +47,12 @@ public class InternetRadioFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_internet_radio, container, false);
         trackListView = (ListView) v.findViewById(R.id.song_list);
         // Get song list from device
-        //mediaList = TrackUtil.getTrackList(getActivity());
+        mediaList = TrackUtil.getTrackList(getActivity());
         storage = new HondaSharePreference(getActivity());
         //mediaList = storage.loadTrackList();
-        mediaList = TrackUtil.getTrackList(getActivity());
+        //mediaList = TrackUtil.getTrackList(getActivity());
         RadioAdapter trackAdapter = new RadioAdapter(getActivity(),getActivity(), R.layout.radio
-                , mediaList, HondaConstants.DETECT_FRAGMENT_NETRADIO,trackListView);
+                , mediaList, HondaConstants.DETECT_FRAGMENT_NETRADIO,trackListView,this);
         trackListView.setAdapter(trackAdapter);
 
         artSinger = (ImageView) v.findViewById(R.id.bgr_singer);
@@ -96,4 +97,8 @@ public class InternetRadioFragment extends Fragment {
     };
 
 
+    @Override
+    public void updateArtAlbum(int pos) {
+
+    }
 }

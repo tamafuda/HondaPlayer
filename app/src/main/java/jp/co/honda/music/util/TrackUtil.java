@@ -5,13 +5,11 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import jp.co.honda.music.model.Media;
@@ -32,7 +30,9 @@ public final class TrackUtil {
         //query external audio
         ContentResolver musicResolver = context.getContentResolver();
         Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        String selection = MediaStore.Audio.Media.IS_MUSIC + "!= 0";
+        //String selection = MediaStore.Audio.Media.IS_MUSIC + "!= 0";
+        String selection = MediaStore.Audio.Media.DATA
+                + " LIKE '/storage/emulated/0/Music/%' AND " + MediaStore.Audio.Media.IS_MUSIC + "!= 0";
         String sortOrder = MediaStore.Audio.Media.TITLE + " ASC";
         Cursor musicCursor = musicResolver.query(musicUri, null, selection, null, sortOrder);
 
@@ -67,28 +67,41 @@ public final class TrackUtil {
 
                 Uri sArtworkUri = Uri
                         .parse("content://media/external/audio/albumart");
-                Uri albumArtUri = ContentUris.withAppendedId(sArtworkUri, albumId);
+                String albumArtUri = ContentUris.withAppendedId(sArtworkUri, albumId).getPath();
+                Log.d("ABC", albumArtUri);
 
                 Bitmap bitmap = null;
-                try {
-                    bitmap = MediaStore.Images.Media.getBitmap(
-                            context.getContentResolver(), albumArtUri);
-                    bitmap = Bitmap.createScaledBitmap(bitmap, 30, 30, true);
-
-                } catch (FileNotFoundException exception) {
-                    exception.printStackTrace();
+                //bitmap = PlayerUtils.decodeBitmap(context,albumArtUri,4);
+                /*try {
+                    bitmap = PlayerUtils.decodeSampledBitmapFromUri(context, albumArtUri, 30, 30);
+                }catch (FileNotFoundException e) {
+                    e.printStackTrace();
                     bitmap = BitmapFactory.decodeResource(context.getResources(),
                             R.drawable.dark_default_album_artwork);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                }*/
 
-                mediaList.add(new Media(trackID, dataTrack, trackTitle, trackArtist, trackAlbum, trackDuration,albumArtUri,bitmap));
+                /*try
+                {
+                    if (albumArtUri != null)
+                    {
+                        bitmap = BitmapUtils.decodeSampledBitmapFromFile(albumArtUri.getPath(), 30, 30); // JH: Seems to be a reasonable limit for any fullscreen
+// artwork
+                    }
+                    else
+                    {
+                        bitmap = BitmapUtils.decodeSampledBitmapFromResource(context.getResources(), R.drawable.dark_default_album_artwork, 30, 30);
+                    }
+                }
+                catch (OutOfMemoryError e)
+                {
+                    log.e("Out of memory loading album artwork" *//* , e *//*);
+                }*/
+                mediaList.add(new Media(trackID, dataTrack, trackTitle, trackArtist, trackAlbum, trackDuration,albumArtUri));
             }
             while (musicCursor.moveToNext());
         }
         musicCursor.close();
-        if(storage.loadTrackList() != null) {
+        if(storage.loadTrackList() == null) {
             storage.storeTrackList(mediaList);
         }
     }
@@ -133,10 +146,19 @@ public final class TrackUtil {
 
                 Uri sArtworkUri = Uri
                         .parse("content://media/external/audio/albumart");
-                Uri albumArtUri = ContentUris.withAppendedId(sArtworkUri, albumId);
-
+                String albumArtUri = ContentUris.withAppendedId(sArtworkUri, albumId).getPath();
+                Log.d("ABC", albumArtUri);
+                /*
                 Bitmap bitmap = null;
+                //bitmap = PlayerUtils.decodeBitmap(context,albumArtUri,4);
                 try {
+                    bitmap = PlayerUtils.decodeSampledBitmapFromUri(context, albumArtUri, 30, 30);
+                }catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    bitmap = BitmapFactory.decodeResource(context.getResources(),
+                            R.drawable.dark_default_album_artwork);
+                }*/
+                /*try {
                     bitmap = MediaStore.Images.Media.getBitmap(
                             context.getContentResolver(), albumArtUri);
                     bitmap = Bitmap.createScaledBitmap(bitmap, 30, 30, true);
@@ -147,8 +169,8 @@ public final class TrackUtil {
                             R.drawable.dark_default_album_artwork);
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
-                mediaList.add(new Media(trackID, dataTrack, trackTitle, trackArtist, trackAlbum, trackDuration,albumArtUri,bitmap));
+                }*/
+                mediaList.add(new Media(trackID, dataTrack, trackTitle, trackArtist, trackAlbum, trackDuration,albumArtUri));
             }
             while (musicCursor.moveToNext());
         }
@@ -260,7 +282,7 @@ public final class TrackUtil {
         for (MediaMetadataRetriever obj:metadataRetrievers) {
             String title = obj.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
             String duration = obj.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-            Media media = new Media(1, "", title, "","",Long.valueOf(duration),null,null);
+            Media media = new Media(1, "", title, "","",Long.valueOf(duration),null);
             mediaList.add(media);
         }
 

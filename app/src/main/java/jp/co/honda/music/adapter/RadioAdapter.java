@@ -24,6 +24,7 @@ import jp.co.honda.music.model.Media;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.player.HomeBaseFragment;
 import jp.co.honda.music.service.MediaPlayerService;
+import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 import jp.co.honda.music.logger.Logger;
 
@@ -58,8 +59,9 @@ public class RadioAdapter extends ArrayAdapter<Media> implements  View.OnClickLi
 
     // Detect fragment
     private String detectFragment;
+    private AdapterInterface mAdapterInterface;
 
-    public RadioAdapter(Context context, Activity activity, int resource, ArrayList<Media> mMediaList, String fragment, ListView listView) {
+    public RadioAdapter(Context context, Activity activity, int resource, ArrayList<Media> mMediaList, String fragment, ListView listView, AdapterInterface adapterInterface) {
         super(context, resource);
         this.mediaList = mMediaList;
         this.layoutResourceId = resource;
@@ -69,6 +71,7 @@ public class RadioAdapter extends ArrayAdapter<Media> implements  View.OnClickLi
         this.mActivity = activity;
         this.detectFragment = fragment;
         this.mListView = listView;
+        this.mAdapterInterface = adapterInterface;
     }
 
     @Override
@@ -93,6 +96,7 @@ public class RadioAdapter extends ArrayAdapter<Media> implements  View.OnClickLi
                     mediaList.get(previousPos).setSelect(false);
                 }
                 media.setSelect(true);
+                mAdapterInterface.updateArtAlbum(position);
                 break;
             case R.id.arrow:
 
