@@ -72,6 +72,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
             mSeekbar.setOnSeekBarChangeListener(onSeekBarChangeListener);
             log.d("SeekBar is going on !!!");
             hasSeekbar = true;
+            mSeekbar.setEnabled(false);
         }
 
         btnPrevious.setOnClickListener(mOnclick);
@@ -163,6 +164,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
             mNowPlayingSeekHelper.setPlaybackService(mPlaybackService);
             updateIconPlayPause(mPlaybackService.isPlaying());
             initSeekbar(mediaList.get(storage.loadTrackIndex()));
+            updateProgressBars();
         }
 
         @Override
@@ -319,11 +321,16 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
     };
 
     private void updateProgressBars() {
+        log.d("update Progress bars");
         if(!hasSeekbar) {
             return;
         }
+        //mHandler.removeCallbacks(mUpdatePositionRunnable);
         if (mPlaybackService != null) {
+            mHandler.postDelayed(mUpdatePositionRunnable, 1000);
+            log.d("PostDelayed after 1s");
             MediaPlayer mp = mPlaybackService.getMediaPlayer();
+            log.d("Current position is : " + String.valueOf(mp.getCurrentPosition()));
             if (mp == null) {
                 return;
             }

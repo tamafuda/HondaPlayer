@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import jp.co.honda.music.model.Media;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
+import static android.R.id.list;
 import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
 
 public class PlayerUtils
@@ -111,6 +112,9 @@ public class PlayerUtils
         }*/
 		// Case 2: Get current track from Preference . It's also OK
 		index = storage.loadTrackIndex();
+		if (index == -1){
+			index = 0;
+		}
 		ArrayList<Media> list = storage.loadTrackList();
 		Media m;
 		if (list != null && list.size() > 0) {
