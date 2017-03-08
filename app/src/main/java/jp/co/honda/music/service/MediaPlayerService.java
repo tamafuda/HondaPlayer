@@ -62,6 +62,7 @@ public class MediaPlayerService extends Service implements
     public static final String STATE_PAUSE = "PAUSE";
     public static final String STATE_NEXT = "NEXT";
     public static final String STATE_PREVIOUS = "PREVIOUS";
+    public static final String STATE_NEW = "NEW";
     private String mPlayerState;
 
     //notification id
@@ -645,6 +646,7 @@ public class MediaPlayerService extends Service implements
             if (trackIndex != -1 && trackIndex < mMediaList.size()) {
                 // Index is in a valid range
                 activeMedia = mMediaList.get(trackIndex);
+                mPlayerState = STATE_NEW;
             } else {
                 stopSelf();
             }
@@ -784,8 +786,15 @@ public class MediaPlayerService extends Service implements
             log.e("Tracklist is empty. No action will be done on completion");
             return;
         }
+        if(mPlayerState == null) {
+            stopMedia();
+            stopSelf();
+            return;
+        }
         // After play done, play to next track
-        if(mPlayerState.equals(PlayerState.NEXT.getState())) {
+        if(mPlayerState.equals(PlayerState.NEXT.getState())
+                || mPlayerState.equals(PlayerState.NEW.getState())
+                || mPlayerState.equals(PlayerState.PLAY.getState())) {
             skipToNext();
         }
 

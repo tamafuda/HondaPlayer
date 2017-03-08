@@ -78,10 +78,12 @@ public class MusicPlayActivity extends BasePlayerActivity implements AdapterInte
         if(this.checkTransitionFromNotify()) {
             Intent iPlay = new Intent(getBaseContext(), HomeBaseFragment.class);
             startActivity(iPlay);
+            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             finish();
         }else{
             Intent iPlay = new Intent(getBaseContext(), RadarMusicActivity.class);
             startActivity(iPlay);
+            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             finish();
         }
         storage.storeTransitionNotifyToPlay(false);

@@ -5,6 +5,7 @@ package jp.co.honda.music.zdccore;
  */
 
 public enum PlayerState {
+    NEW("NEW"),
     PLAY("PLAY"),
     PAUSE("PAUSE"),
     NEXT("NEXT"),

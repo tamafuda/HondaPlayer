@@ -54,6 +54,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
     private NowPlayingSeekHelper mNowPlayingSeekHelper;
 
     private int currentPosition;
+    private boolean hasSeekbar;
 
 
     @Override
@@ -69,6 +70,8 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
             mElapsedTime = (TextView) findViewById(R.id.id_time_start);
             mRemainingTime = (TextView) findViewById(R.id.id_time_end);
             mSeekbar.setOnSeekBarChangeListener(onSeekBarChangeListener);
+            log.d("SeekBar is going on !!!");
+            hasSeekbar = true;
         }
 
         btnPrevious.setOnClickListener(mOnclick);
@@ -148,6 +151,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             log.d("ServiceConnected Binder");
+
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             MediaPlayerService.MusicBinder binder = (MediaPlayerService.MusicBinder) service;
             mPlaybackService = binder.getService();
@@ -158,7 +162,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
                     mHandler, btnNext, btnPrevious, mPlaybackService, mSeekEventCallback);
             mNowPlayingSeekHelper.setPlaybackService(mPlaybackService);
             updateIconPlayPause(mPlaybackService.isPlaying());
-            initSeekbar(mediaList.get(getAudioIndex()));
+            initSeekbar(mediaList.get(storage.loadTrackIndex()));
         }
 
         @Override
@@ -234,11 +238,12 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
             Intent playerIntent = new Intent(this, MediaPlayerService.class);
             startService(playerIntent);
             bindService(playerIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+            setProgressSeekBar(0);
+            //mSeekbar.setProgress(0);
         } else {
             //Store the new audioIndex to SharedPreferences
             //HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
             //storage.storeTrackIndex(getAudioIndex());
-            updateIconPlayPause(true);
             //Service is active
             //Send a broadcast to the service -> PLAY_NEW_AUDIO
             Intent broadcastIntent;
@@ -247,10 +252,15 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
                 broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_RESTORE_TRACK);
             }else {
                 broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_NEW_TRACK);
+                //mSeekbar.setProgress(0);
+                setProgressSeekBar(0);
             }
 
             sendBroadcast(broadcastIntent);
         }
+        updateIconPlayPause(true);
+
+
     }
 
     public void pause() {
@@ -261,6 +271,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
         updateIconPlayPause(false);
         Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_STOP_TRACK);
         sendBroadcast(broadcastIntent);
+        updateProgressBars();
     }
 
     public void next() {
@@ -269,6 +280,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
         //Send a broadcast to the service -> PLAY_NEW_AUDIO
         Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_NEXT_TRACK);
         sendBroadcast(broadcastIntent);
+        updateProgressBars();
     }
 
     public void previous() {
@@ -279,6 +291,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
         //Send a broadcast to the service -> PLAY_NEW_AUDIO
         Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_PREVIOUS_TRACK);
         sendBroadcast(broadcastIntent);
+        updateProgressBars();
     }
 
     private SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
@@ -306,6 +319,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
     };
 
     private void updateProgressBars() {
+        if(!hasSeekbar) {
+            return;
+        }
         if (mPlaybackService != null) {
             MediaPlayer mp = mPlaybackService.getMediaPlayer();
             if (mp == null) {
@@ -316,7 +332,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
             if (curPos < 0)
                 curPos = mp.getCurrentPosition(); // Otherwise use the current playback position
 
-            if (curPos <= 0) {
+            if (curPos == 0) {
                 curPos = mPlaybackService.getStoredCurrentPlayerPosition();
             }
 
@@ -374,5 +390,12 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
             mPlaybackService.setResumePosition(-1);
         }
         pause();
+    }
+
+    private void setProgressSeekBar(int value) {
+        if (hasSeekbar) {
+            mSeekbar.setProgress(value);
+            updateProgressBars();
+        }
     }
 }
