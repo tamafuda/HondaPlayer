@@ -51,6 +51,9 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_test_fragment);
         // Setup notification
+        if (savedInstanceState == null) {
+            selectFrag(0);
+        }
         setupNotification();
         storage = new HondaSharePreference(this);
 

@@ -16,6 +16,7 @@ public final class HondaConstants {
     public static final String PREFERENCE_MPL_SERVICE_STATUS = "MPL_SERVICE_STATUS";
 
     //
+    public static final String BROADCAST_UNBIND_SERVICE = "jp.co.honda.music.HondaConstants.UNBIND";
     public static final String BROADCAST_AI_RECOMMEND = "jp.co.honda.music.HondaConstants.BROADCAST_AI_RECOMMEND";
     public static final String BROADCAST_PLAY_NEW_TRACK = "jp.co.honda.music.HondaConstants.PLAY_NEW_TRACK";
     public static final String BROADCAST_PLAY_RESTORE_TRACK = "jp.co.honda.music.HondaConstants.PLAY_RESTORE_TRACK";

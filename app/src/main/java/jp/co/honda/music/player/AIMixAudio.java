@@ -41,6 +41,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
     String titleOriginIntent;
     private HondaSharePreference storage;
     private MediaPlayer mediaPlayer;
+    private boolean isNeedKeepSrc = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +84,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
 
     @Override
     protected boolean isNeedKeepMediaSrv() {
-        return false;
+        return isNeedKeepSrc;
     }
 
     /**
@@ -114,6 +115,8 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
                         mediaPlayer.release();
                         mediaPlayer = null;
                     }
+                    AIMixAudio.super.stopFromChild();
+                    isNeedKeepSrc = true;
                     // Save audio after mixed
                     LayoutInflater layoutInflater = LayoutInflater.from(mContext);
                     View view = layoutInflater.inflate(R.layout.input_dialog_mix,null);
@@ -237,9 +240,4 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
         super.playFromAdapter();
     }
 
-    @Override
-    protected void onDestroy() {
-        log.d("AIMixAudio onDestroy");
-        super.onDestroy();
-    }
 }

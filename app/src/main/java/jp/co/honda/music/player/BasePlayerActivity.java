@@ -174,9 +174,11 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
         log.d("Do Unbind service !");
         if(mPlaybackService != null) {
             log.d("Release media player");
-            mPlaybackService.getMediaPlayer().stop();
-            mPlaybackService.getMediaPlayer().reset();
+            mPlaybackService.stopSelf();
         }
+        //stopService(new Intent(this,MediaPlayerService.class));
+        /*Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_UNBIND_SERVICE);
+        sendBroadcast(broadcastIntent);*/
         unbindService(serviceConnection);
         serviceBound = false;
         storage.storeMPLServiceStatus(false);
@@ -365,5 +367,11 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
             mPlaybackService.setResumePosition(-1);
         }
         play();
+    }
+    public void stopFromChild() {
+        if (mPlaybackService != null) {
+            mPlaybackService.setResumePosition(-1);
+        }
+        pause();
     }
 }

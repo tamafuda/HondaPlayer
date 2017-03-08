@@ -300,6 +300,7 @@ public class AMFMFragment extends Fragment implements View.OnClickListener, Adap
             log.d("Interrupt thread");
             thread.interrupt();
         }
+        //getActivity().getFragmentManager().beginTransaction().remove(this).commit();
         super.onDestroy();
     }
 

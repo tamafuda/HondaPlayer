@@ -28,11 +28,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import jp.co.honda.music.common.HondaConstants;
+import jp.co.honda.music.logger.Logger;
+import jp.co.honda.music.model.Media;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.zdccore.HondaSharePreference;
-import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.zdccore.PlaybackStatus;
-import jp.co.honda.music.model.Media;
 import jp.co.honda.music.zdccore.PlayerState;
 
 import static android.R.attr.action;
@@ -336,7 +336,7 @@ public class MediaPlayerService extends Service implements
         }
 
         Bitmap largeIcon = BitmapFactory.decodeResource(getResources(),
-                R.drawable.image5); //replace with your own image
+                R.drawable.hikaru1); //replace with your own image
 
         // Create a new Notification
         NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
@@ -574,7 +574,21 @@ public class MediaPlayerService extends Service implements
                 playMedia();
                 updateMetaData();
                 buildNotification(PlaybackStatus.PLAYING);
+            }else if (action.equals(HondaConstants.BROADCAST_UNBIND_SERVICE)) {
+                // Play new music
+                log.d("UNBIND SERVICE");
+                mPlayerState = STATE_PAUSE;
+                onDestroy();
+                //onUnbind(this);
+//                stopMedia();
+//                mediaPlayer.reset();
+//                initMediaPlayer();
+//                playMedia();
+//                updateMetaData();
+//                buildNotification(PlaybackStatus.PLAYING);
+
             }
+
         }
     };
 
@@ -605,6 +619,11 @@ public class MediaPlayerService extends Service implements
     private void register_newAudio() {
         //Register playNewMedia receiver
         IntentFilter filter = new IntentFilter(HondaConstants.BROADCAST_PLAY_NEW_TRACK);
+        registerReceiver(playBroadCastReceiver, filter);
+    }
+    private void unbind_service() {
+        //Register playNewMedia receiver
+        IntentFilter filter = new IntentFilter(HondaConstants.BROADCAST_UNBIND_SERVICE);
         registerReceiver(playBroadCastReceiver, filter);
     }
 
@@ -664,6 +683,7 @@ public class MediaPlayerService extends Service implements
         register_pauseAudio();
         register_previousAudio();
         register_newAudio();
+        unbind_service();
     }
 
     @Override
@@ -686,6 +706,7 @@ public class MediaPlayerService extends Service implements
 
     @Override
     public boolean onUnbind(Intent intent) {
+        log.d("MediaPlayerService onUnbind");
         mediaSession.release();
         removeNotification();
         return super.onUnbind(intent);
@@ -696,6 +717,7 @@ public class MediaPlayerService extends Service implements
     public IBinder onBind(Intent intent) {
         // Fix problem that onServiceConnected method is not called
         // Instead of return null -> Return IBinder
+        log.d("MediaPlayerService onBind");
         return musicBind;
         //return null;
     }
