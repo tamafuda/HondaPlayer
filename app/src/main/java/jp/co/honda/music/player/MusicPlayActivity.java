@@ -10,12 +10,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import jp.co.honda.music.util.TrackUtil;
-import jp.co.honda.music.zdccore.AdapterInterface;
-import jp.co.honda.music.zdccore.HondaSharePreference;
+import jp.co.honda.music.adapter.TrackAdapter;
 import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.Media;
-import jp.co.honda.music.adapter.TrackAdapter;
+import jp.co.honda.music.zdccore.AdapterInterface;
+import jp.co.honda.music.zdccore.HondaSharePreference;
 
 /**
  * @Author: Hoang Vu
@@ -52,8 +51,11 @@ public class MusicPlayActivity extends BasePlayerActivity implements AdapterInte
         // Get song list from device
         //mediaList = TrackUtil.getTrackList(getApplicationContext());
         storage = new HondaSharePreference(this);
-        //mediaList = storage.loadTrackList();
-        mediaList = TrackUtil.getTrackList(getApplicationContext());
+        mediaList = storage.loadTrackList();
+        //mediaList = TrackUtil.getTrackList(getApplicationContext());
+        if(mediaList == null) {
+            mediaList = new ArrayList<Media>();
+        }
         TrackAdapter trackAdapter = new TrackAdapter(this, R.layout.song, mediaList,this, this);
         trackListView.setAdapter(trackAdapter);
     }

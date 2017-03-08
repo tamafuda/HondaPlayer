@@ -24,18 +24,18 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import jp.co.honda.music.adapter.RadioAdapter;
 import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.dialog.PopupUtils;
+import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.ChanelRadio;
+import jp.co.honda.music.model.Media;
 import jp.co.honda.music.player.HomeBaseFragment;
 import jp.co.honda.music.player.R;
+import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.CheckSystemPermissions;
-import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.HondaSharePreference;
-import jp.co.honda.music.logger.Logger;
-import jp.co.honda.music.adapter.RadioAdapter;
-import jp.co.honda.music.model.Media;
 
 import static jp.co.honda.music.common.HondaConstants.PERMISSION_REQUEST_CODE;
 
@@ -81,9 +81,12 @@ public class AMFMFragment extends Fragment implements View.OnClickListener, Adap
             isPermission = true;
         }
         if (isPermission) {
-            //TrackUtil.synTrackListDatabase(getActivity());
-            //mediaList = storage.loadTrackList();
-            mediaList = TrackUtil.getTrackList(getActivity());
+            if (storage.loadTrackList() == null) {
+                mediaList = TrackUtil.synTrackListDatabase(getActivity());
+            }else{
+                mediaList = storage.loadTrackList();
+            }
+            //mediaList = TrackUtil.getTrackList(getActivity());
         } else {
             mediaList = new ArrayList<Media>();
         }

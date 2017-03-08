@@ -48,9 +48,12 @@ public class InternetRadioFragment extends Fragment implements AdapterInterface{
         View v = inflater.inflate(R.layout.fragment_internet_radio, container, false);
         trackListView = (ListView) v.findViewById(R.id.song_list);
         // Get song list from device
-        mediaList = TrackUtil.getTrackList(getActivity());
+        //mediaList = TrackUtil.getTrackList(getActivity());
         storage = new HondaSharePreference(getActivity());
-        //mediaList = storage.loadTrackList();
+        mediaList = storage.loadTrackList();
+        if(mediaList == null) {
+            mediaList = new ArrayList<Media>();
+        }
         //mediaList = TrackUtil.getTrackList(getActivity());
         RadioAdapter trackAdapter = new RadioAdapter(getActivity(),getActivity(), R.layout.radio
                 , mediaList, HondaConstants.DETECT_FRAGMENT_NETRADIO,trackListView,this);

@@ -22,7 +22,6 @@ import jp.co.honda.music.model.Media;
 import jp.co.honda.music.player.HomeBaseFragment;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.util.SystemUtils;
-import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
@@ -61,8 +60,11 @@ public class IPodFragment extends Fragment implements View.OnClickListener,Adapt
         // Get song list from device
         //mediaList = TrackUtil.getTrackList(getActivity());
         storage = new HondaSharePreference(getActivity());
-        //mediaList = storage.loadTrackList();
-        mediaList = TrackUtil.getTrackList(getActivity());
+        mediaList = storage.loadTrackList();
+        if(mediaList == null) {
+            mediaList = new ArrayList<Media>();
+        }
+        //mediaList = TrackUtil.getTrackList(getActivity());
         RadioAdapter trackAdapter = new RadioAdapter(getActivity(), getActivity(),R.layout.radio
                 , mediaList, HondaConstants.DETECT_FRAGMENT_IPOD,trackListView,this);
         //mRadioRecyclerAdapter = new RadioRecyclerViewAdapter(getActivity(), mediaList);

@@ -704,7 +704,7 @@ public class MediaPlayerService extends Service implements
         unregisterReceiver(playBroadCastReceiver);
 
         // Clear cache track list
-        new HondaSharePreference(getApplicationContext()).clearCachedTrackPlayList();
+        //new HondaSharePreference(getApplicationContext()).clearCachedTrackPlayList();
     }
 
     @Override

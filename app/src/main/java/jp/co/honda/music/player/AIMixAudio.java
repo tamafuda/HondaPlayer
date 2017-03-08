@@ -21,10 +21,11 @@ import java.util.ArrayList;
 
 import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.model.Media;
+import jp.co.honda.music.model.TrackInfo;
+import jp.co.honda.music.util.PlayerUtils;
 import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
-import jp.co.honda.music.model.TrackInfo;
 
 public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnCompletionListener,AdapterInterface{
 
@@ -133,7 +134,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
                                               if(arrangeMusic.isEmpty()) {
                                                   arrangeMusic = musicChangeName.getHint().toString();
                                               }
-                                              //synTrackListChanged(arrangeMusic);
+                                              PlayerUtils.addOneMediaArrange(getBaseContext(),arrangeMusic);
                                               Intent iController = new Intent(getBaseContext(), MusicPlayActivity.class);
                                               startActivity(iController);
                                               finish();

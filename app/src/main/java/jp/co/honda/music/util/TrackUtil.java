@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -24,7 +23,7 @@ import jp.co.honda.music.zdccore.HondaSharePreference;
 
 public final class TrackUtil {
 
-    public static void synTrackListDatabase(Context context) {
+    public static ArrayList<Media> synTrackListDatabase(Context context) {
         HondaSharePreference storage = new HondaSharePreference(context);
         ArrayList<Media> mediaList = new ArrayList<Media>();
         //query external audio
@@ -70,7 +69,7 @@ public final class TrackUtil {
                 String albumArtUri = ContentUris.withAppendedId(sArtworkUri, albumId).getPath();
                 Log.d("ABC", albumArtUri);
 
-                Bitmap bitmap = null;
+                //Bitmap bitmap = null;
                 //bitmap = PlayerUtils.decodeBitmap(context,albumArtUri,4);
                 /*try {
                     bitmap = PlayerUtils.decodeSampledBitmapFromUri(context, albumArtUri, 30, 30);
@@ -104,9 +103,11 @@ public final class TrackUtil {
         if(storage.loadTrackList() == null) {
             storage.storeTrackList(mediaList);
         }
+        return mediaList;
     }
 
     public static ArrayList<Media> getTrackList(Context context) {
+        HondaSharePreference storage = new HondaSharePreference(context);
         ArrayList<Media> mediaList = new ArrayList<Media>();
         //query external audio
         ContentResolver musicResolver = context.getContentResolver();

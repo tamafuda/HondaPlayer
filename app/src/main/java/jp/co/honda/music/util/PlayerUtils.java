@@ -9,6 +9,10 @@ import android.util.Log;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+
+import jp.co.honda.music.model.Media;
+import jp.co.honda.music.zdccore.HondaSharePreference;
 
 import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
 
@@ -94,5 +98,31 @@ public class PlayerUtils
 		// Decode bitmap with inSampleSize set
 		options.inJustDecodeBounds = false;
 		return BitmapFactory.decodeStream(iStream, null, options);
+	}
+
+	public static void addOneMediaArrange(Context context, String titleChange) {
+		HondaSharePreference storage = new HondaSharePreference(context);
+		// Case 1 : Send track index param from PlayMusic screen
+		int index = 0;
+        /*Bundle extras = getIntent().getExtras();
+        int index = 0;
+        if (extras != null) {
+            index = extras.getInt(HondaConstants.INTENT_AIMIXAUDIO);
+        }*/
+		// Case 2: Get current track from Preference . It's also OK
+		index = storage.loadTrackIndex();
+		ArrayList<Media> list = storage.loadTrackList();
+		Media m;
+		if (list != null && list.size() > 0) {
+			m = new Media(list.get(index).getID()
+					,list.get(index).getData()
+					,titleChange
+					,list.get(index).getArtist()
+					,list.get(index).getAlbum()
+					,list.get(index).getDuration()
+					,list.get(index).getAlbumArtUri());
+			list.add(0,m);
+			storage.storeTrackList(list);
+		}
 	}
 }

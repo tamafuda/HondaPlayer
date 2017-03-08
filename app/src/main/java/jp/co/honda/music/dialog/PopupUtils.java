@@ -16,6 +16,8 @@ import java.util.TimerTask;
 
 import jp.co.honda.music.player.MusicPlayActivity;
 import jp.co.honda.music.player.R;
+import jp.co.honda.music.player.RadarMusicActivity;
+import jp.co.honda.music.util.PlayerUtils;
 import jp.co.honda.music.util.SystemUtils;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
@@ -92,7 +94,14 @@ public class PopupUtils{
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+                if(mContext instanceof RadarMusicActivity) {
+                    PlayerUtils.addOneMediaArrange(mContext,"COME BACK TO ME DL済");
+                    Intent iPlay = new Intent(mContext, MusicPlayActivity.class);
+                    mContext.startActivity(iPlay);
+                    ((RadarMusicActivity)mContext).finish();
+                    dialog.dismiss();
+                }
+
             }
         });
         builder.create();
