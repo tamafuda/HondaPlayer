@@ -315,4 +315,9 @@ public class AMFMFragment extends Fragment implements View.OnClickListener, Adap
 //        }
         albumArt.setImageResource(R.drawable.dark_default_album_artwork);
     }
+
+    @Override
+    public void keepSrv(boolean isKeep) {
+
+    }
 }

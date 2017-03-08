@@ -116,7 +116,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
                         mediaPlayer = null;
                     }
                     AIMixAudio.super.stopFromChild();
-                    isNeedKeepSrc = true;
+                    isNeedKeepSrc = false;
                     // Save audio after mixed
                     LayoutInflater layoutInflater = LayoutInflater.from(mContext);
                     View view = layoutInflater.inflate(R.layout.input_dialog_mix,null);
@@ -229,9 +229,9 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
 
     @Override
     public void onBackPressed() {
-        Intent iPlay = new Intent(getBaseContext(), MusicPlayActivity.class);
+        /*Intent iPlay = new Intent(getBaseContext(), MusicPlayActivity.class);
         startActivity(iPlay);
-        finish();
+        finish();*/
     }
 
     @Override
@@ -240,4 +240,8 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
         super.playFromAdapter();
     }
 
+    @Override
+    public void keepSrv(boolean isKeep) {
+
+    }
 }

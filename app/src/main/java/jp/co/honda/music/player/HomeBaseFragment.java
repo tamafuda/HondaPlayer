@@ -80,7 +80,7 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
                     Intent iPlay = new Intent(getBaseContext(), RadarMusicActivity.class);
                     iPlay.putExtra(HondaConstants.DETECTED_SCREEN_FLING, true);
                     startActivity(iPlay);
-                    //finish();
+                    finish();
                     return true;
 
                 }

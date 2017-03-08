@@ -35,6 +35,7 @@ public class MusicPlayActivity extends BasePlayerActivity implements AdapterInte
     private TextView mTitle;
     private HondaSharePreference storage;
     private boolean isTrans;
+    private boolean isNeedKeepSrv = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,7 @@ public class MusicPlayActivity extends BasePlayerActivity implements AdapterInte
 
     @Override
     protected boolean isNeedKeepMediaSrv() {
-        return true;
+        return isNeedKeepSrv;
     }
 
     @Override
@@ -104,4 +105,8 @@ public class MusicPlayActivity extends BasePlayerActivity implements AdapterInte
         super.playFromAdapter();
     }
 
+    @Override
+    public void keepSrv(boolean isKeep) {
+        isNeedKeepSrv = isKeep;
+    }
 }

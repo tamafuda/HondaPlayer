@@ -102,4 +102,9 @@ public class InternetRadioFragment extends Fragment implements AdapterInterface{
     public void updateArtAlbum(int pos) {
         ((HomeBaseFragment)getActivity()).playMusicInList(pos);
     }
+
+    @Override
+    public void keepSrv(boolean isKeep) {
+
+    }
 }

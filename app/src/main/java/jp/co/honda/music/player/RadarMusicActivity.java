@@ -84,7 +84,7 @@ public class RadarMusicActivity extends AppCompatActivity {
                     iPlay.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     //Intent iPlay = new Intent(getBaseContext(), PlayMediaActivity.class);
                     iPlay.putExtra("MainActivity", true);
-                    setResult(RESULT_OK, iPlay);
+                    startActivity(iPlay);
                     finish();
                     //startActivity(iPlay);
                     return true;
@@ -137,6 +137,7 @@ public class RadarMusicActivity extends AppCompatActivity {
                     Intent iPlay = new Intent(getBaseContext(), MusicPlayActivity.class);
                     iPlay.putExtra("MainActivity", true);
                     startActivity(iPlay);
+                    finish();
                     break;
                 case R.id.download_music:
                     ProgressDialogTask task = new ProgressDialogTask(RadarMusicActivity.this, true, R.string.popup_downloading);

@@ -669,6 +669,7 @@ public class MediaPlayerService extends Service implements
         }
         //Handle Intent action from MediaSession.TransportControls
         handleIncomingActions(intent);
+        //return START_STICKY;
         return super.onStartCommand(intent, flags, startId);
     }
 

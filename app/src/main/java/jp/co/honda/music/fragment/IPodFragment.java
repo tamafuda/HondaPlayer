@@ -128,4 +128,9 @@ public class IPodFragment extends Fragment implements View.OnClickListener,Adapt
     public void updateArtAlbum(int pos) {
         ((HomeBaseFragment)getActivity()).playMusicInList(pos);
     }
+
+    @Override
+    public void keepSrv(boolean isKeep) {
+
+    }
 }

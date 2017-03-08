@@ -205,6 +205,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
             log.d("BasePlayerActivity still keep service");
             return;
         }
+
         if (storage.loadMPLServiceStatus() && serviceConnection != null) {
             log.d("onDestroy - Unbind service ");
             doUnbindService();
@@ -219,7 +220,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
 
     public void play() {
         //Check is service is active
-        if (!serviceBound) {
+        if (!storage.loadMPLServiceStatus()) {
             log.d("MediaPlayService serviceBound is not started !");
             //Store Serializable audioList to SharedPreferences
             //HondaSharePreference storage = new HondaSharePreference(getApplicationContext());

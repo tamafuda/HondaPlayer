@@ -81,8 +81,8 @@ public class TrackAdapter extends ArrayAdapter<Media> implements  View.OnClickLi
                 Intent iController = new Intent(context, AIMixAudio.class);
                 iController.putExtra(HondaConstants.INTENT_AIMIXAUDIO, position);
                 mActivity.startActivity(iController);
-                //mActivity.finish();
-
+                mActivity.finish();
+                //mAdapterInterface.keepSrv(true);
                 break;
             case R.id.song_title:
                 Toast.makeText(context,"Title click", Toast.LENGTH_SHORT).show();
