@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bg_all"
     tools:context="jp.co.honda.music.player.MusicPlayActivity">
 
     <include
@@ -17,6 +18,8 @@
         android:layout_weight="4">
         <ListView
             android:id="@+id/song_list"
+            android:divider="@color/color_list_row"
+            android:dividerHeight="0.5dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" >
         </ListView>

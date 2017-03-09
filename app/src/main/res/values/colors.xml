@@ -9,6 +9,7 @@
     <color name="bg_list_view">#484848</color>
     <color name="bg_thin_line">#339900</color>
     <color name="color_text_white">#fff</color>
+    <color name="color_list_row">#274288</color>
 
     <!-- dark -->
     <color name="md_teal_500_primary">#009688</color>
