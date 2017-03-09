@@ -5,7 +5,16 @@
     android:orientation="vertical"
     tools:context="jp.co.honda.music.fragment.IPodFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_line"/>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,8 +68,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/bg_thin_line"/>
+            android:layout_height="1dp"
+            android:background="@color/color_line"/>
     </LinearLayout>
 
     <LinearLayout
@@ -84,16 +93,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:layout_marginStart="10dp"
-                android:text="Fantoume >"
-                android:textColor="@color/md_teal_600"
+                android:text="Fantoume"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/color_text_white"
                 android:id="@+id/id_playlist_ipod_1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/md_teal_600"
-                android:text="Hiraku Utada >"
+                android:textSize="15sp"
+                android:textColor="@color/color_text_white"
+                android:text="Hiraku Utada"
                 android:id="@+id/id_playlist_ipod_2" />
 
         </LinearLayout>

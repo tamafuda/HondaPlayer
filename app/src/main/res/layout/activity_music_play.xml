@@ -18,14 +18,25 @@
             android:id="@+id/toolbar"
             layout="@layout/custom_toolbar_empty" />
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/id_view_line"
+        android:layout_below="@+id/id_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_line"/>
+    </LinearLayout>
 
     <ListView
         android:id="@+id/song_list"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_above="@+id/play_group"
-        android:layout_below="@+id/id_tool_bar"
+        android:layout_below="@+id/id_view_line"
         android:divider="@color/color_list_row"
         android:dividerHeight="0.5dp">
 

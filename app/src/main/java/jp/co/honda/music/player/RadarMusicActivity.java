@@ -137,7 +137,7 @@ public class RadarMusicActivity extends AppCompatActivity {
                     Intent iPlay = new Intent(getBaseContext(), MusicPlayActivity.class);
                     iPlay.putExtra("MainActivity", true);
                     startActivity(iPlay);
-                    overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+                    //overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
                     //overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                     finish();
                     break;

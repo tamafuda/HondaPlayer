@@ -5,7 +5,16 @@
     android:orientation="vertical"
     android:background="@android:color/transparent"
     tools:context="jp.co.honda.music.fragment.AMFMFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_line"/>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -79,8 +88,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/bg_thin_line"/>
+            android:layout_height="1dp"
+            android:background="@color/color_line"/>
     </LinearLayout>
 
     <LinearLayout
@@ -106,16 +115,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/md_teal_600"
-                android:text="Sakura >" />
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/color_text_white"
+                android:text="Sakura" />
 
             <TextView
                 android:id="@+id/id_playlist_fmam_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/md_teal_600"
-                android:text="Kimi ga iru >" />
+                android:textSize="15sp"
+                android:textColor="@color/color_text_white"
+                android:text="Kimi ga iru" />
 
         </LinearLayout>
     </LinearLayout>

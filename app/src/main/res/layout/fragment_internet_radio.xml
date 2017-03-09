@@ -6,7 +6,16 @@
     android:background="@android:color/transparent"
     tools:context="jp.co.honda.music.fragment.InternetRadioFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_line"/>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,8 +71,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/bg_thin_line"/>
+            android:layout_height="1dp"
+            android:background="@color/color_line"/>
     </LinearLayout>
 
     <LinearLayout
