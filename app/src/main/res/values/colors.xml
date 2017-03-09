@@ -10,6 +10,7 @@
     <color name="bg_thin_line">#339900</color>
     <color name="color_text_white">#fff</color>
     <color name="color_list_row">#274288</color>
+    <color name="color_seek_bar">#fee140</color>
 
     <!-- dark -->
     <color name="md_teal_500_primary">#009688</color>
@@ -49,7 +50,7 @@
     <!-- A Holo shade of purple -->
     <color name="holo_purple">#ffaa66cc</color>
     <!-- A light Holo shade of orange -->
-    <color name="holo_orange_light">#ffffbb33</color>
+    <color name="holo_orange_light">#ffbb33</color>
     <!-- A dark Holo shade of orange -->
     <color name="holo_orange_dark">#ffff8800</color>
     <!-- A really bright Holo shade of blue -->

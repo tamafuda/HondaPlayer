@@ -214,6 +214,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
 
         if (storage.loadMPLServiceStatus() && serviceConnection != null) {
             log.d("onDestroy - Unbind service ");
+            mHandler.removeCallbacks(mUpdatePositionRunnable);
             doUnbindService();
         }
 
@@ -327,13 +328,13 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
         }
         //mHandler.removeCallbacks(mUpdatePositionRunnable);
         if (mPlaybackService != null) {
-            mHandler.postDelayed(mUpdatePositionRunnable, 1000);
+            mHandler.postDelayed(mUpdatePositionRunnable, 100);
             log.d("PostDelayed after 1s");
             MediaPlayer mp = mPlaybackService.getMediaPlayer();
-            log.d("Current position is : " + String.valueOf(mp.getCurrentPosition()));
             if (mp == null) {
                 return;
             }
+            //log.d("Current position is : " + String.valueOf(mp.getCurrentPosition()));
 
             int curPos = mOverrideCurPos; // Use the position of dragged seekbar - if dragging at this moment
             if (curPos < 0)

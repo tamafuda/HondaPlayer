@@ -1,87 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <SeekBar
+        android:id="@+id/seekBar"
         android:layout_width="match_parent"
-        android:layout_height="20dp">
+        android:layout_height="wrap_content"
+        android:progressTint="@color/color_seek_bar"
+        android:thumbTint="@color/color_seek_bar" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@android:color/transparent"
+        android:orientation="horizontal">
 
         <TextView
-            android:text="0:00"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
             android:id="@+id/id_time_start"
-            android:layout_weight="1"
-            android:textAlignment="viewStart"
-            android:layout_marginStart="@dimen/btn_text_size" />
-
-        <TextView
-            android:text="03:00"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/btn_text_size"
+            android:gravity="center"
+            android:text="0:00"
+            android:textAllCaps="false"
+            android:textColor="@color/color_text_white" />
+
+        <TextView
             android:id="@+id/id_time_end"
-            android:layout_weight="1"
-            android:textAlignment="viewEnd"
-            android:layout_marginEnd="@dimen/btn_text_size" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/btn_text_size"
+            android:gravity="center"
+            android:text="03:00"
+            android:textAllCaps="false"
+            android:textColor="@color/color_text_white" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <SeekBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:progressTint="@android:color/holo_orange_dark"
-            android:thumbTint="@android:color/holo_red_dark"
-            android:id="@+id/seekBar" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_weight="0.01"
-        android:layout_height="50dp">
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="horizontal">
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_dark_previous_pressed"
-            android:layout_weight="1"
-            android:contentDescription="@string/txt_play"
-            android:id="@+id/btn_previous" />
+            android:id="@+id/btn_previous"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="60dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/bg_button_previous"
+            android:contentDescription="@string/txt_previous" />
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/bg_button_play"
-            android:contentDescription="@string/txt_play"
-            android:layout_weight="1"
-            android:id="@+id/btn_play" />
+            android:id="@+id/btn_play"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:adjustViewBounds="true"
+            android:background="@drawable/bg_button_play"
+            android:contentDescription="@string/txt_play" />
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/bg_button_pause"
-            android:layout_weight="1"
-            android:contentDescription="@string/txt_play"
-            android:visibility="gone"
-            android:id="@+id/btn_pause" />
+            android:id="@+id/btn_pause"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:adjustViewBounds="true"
+            android:background="@drawable/bg_button_pause"
+            android:contentDescription="@string/txt_pause"
+            android:visibility="gone" />
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/bg_button_next"
-            android:contentDescription="@string/txt_play"
-            android:layout_weight="1"
-            android:id="@+id/btn_next" />
+            android:id="@+id/btn_next"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="60dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/bg_button_next"
+            android:contentDescription="@string/txt_next" />
 
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>
