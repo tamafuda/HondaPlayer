@@ -17,7 +17,7 @@
         android:background="@android:drawable/screen_background_dark">
 
         <TextView
-            android:id="@+id/audio_title"
+            android:id="@+id/radio_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="music title"
@@ -27,7 +27,7 @@
             android:textStyle="bold"
             android:tag="title_tag" />
         <TextView
-            android:id="@+id/arrow"
+            android:id="@+id/radio_duration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=">"

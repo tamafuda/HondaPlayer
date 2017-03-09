@@ -2,6 +2,7 @@ package jp.co.honda.music.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,10 +53,11 @@ public class TitleNavigationAdapter extends BaseAdapter {
         
         imgIcon = (ImageView) convertView.findViewById(R.id.imgIcon);
         txtTitle = (TextView) convertView.findViewById(R.id.txtTitle);
-        
+
         imgIcon.setImageResource(spinnerNavItem.get(position).getIcon());
-        imgIcon.setVisibility(View.GONE);
+        //imgIcon.setVisibility(View.GONE);
         txtTitle.setText(spinnerNavItem.get(position).getTitle());
+        txtTitle.setTextColor(ContextCompat.getColor(context,R.color.color_text_white));
         return convertView;
 	}
 	
@@ -70,9 +72,12 @@ public class TitleNavigationAdapter extends BaseAdapter {
         
         imgIcon = (ImageView) convertView.findViewById(R.id.imgIcon);
         txtTitle = (TextView) convertView.findViewById(R.id.txtTitle);
-        
-        imgIcon.setImageResource(spinnerNavItem.get(position).getIcon());        
+        imgIcon.setVisibility(View.GONE);
+        //imgIcon.setImageResource(spinnerNavItem.get(position).getIcon());
         txtTitle.setText(spinnerNavItem.get(position).getTitle());
+        //RelativeLayout rl = (RelativeLayout) txtTitle.getParent();
+        //rl.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_blue_bright));
+        //convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
         return convertView;
 	}
 

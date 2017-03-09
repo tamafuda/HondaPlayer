@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@android:drawable/screen_background_dark"
+    android:background="@android:color/transparent"
     android:orientation="horizontal"
     android:tag="taglistview"
     android:padding="5dp">
@@ -10,30 +10,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="10dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:tag="taglistview">
 
         <TextView
-            android:id="@+id/audio_title"
-            android:layout_width="300dp"
+            android:id="@+id/radio_title"
+            android:layout_width="0dp"
+            android:layout_weight="4"
             android:layout_height="wrap_content"
-            android:text="music title"
             android:ellipsize="end"
             android:lines="1"
-            android:textColor="@android:color/holo_green_dark"
+            android:textColor="@android:color/white"
             android:textSize="15sp"
             android:textStyle="bold"
             android:tag="title_tag" />
 
         <TextView
-            android:id="@+id/arrow"
-            android:layout_width="match_parent"
+            android:id="@+id/radio_duration"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text=">"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:tag="duration_tag" />
+        <TextView
+            android:id="@+id/radio_arrow"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:gravity="right"
-            android:textColor="@android:color/holo_orange_dark"
-            android:textSize="20sp"
-            android:tag="artist_tag" />
+            android:gravity="end"
+            android:text=">"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:tag="arrow_tag" />
     </LinearLayout>
 </LinearLayout>

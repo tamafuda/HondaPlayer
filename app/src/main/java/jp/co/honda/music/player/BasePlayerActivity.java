@@ -65,15 +65,13 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
         btnPlay = (ImageButton) findViewById(R.id.btn_play);
         btnPause = (ImageButton) findViewById(R.id.btn_pause);
         btnNext = (ImageButton) findViewById(R.id.btn_next);
-        if(getLayoutResourceId() != R.layout.activity_test_fragment) {
-            mSeekbar = (SeekBar) findViewById(R.id.seekBar);
-            mElapsedTime = (TextView) findViewById(R.id.id_time_start);
-            mRemainingTime = (TextView) findViewById(R.id.id_time_end);
-            mSeekbar.setOnSeekBarChangeListener(onSeekBarChangeListener);
-            log.d("SeekBar is going on !!!");
-            hasSeekbar = true;
-            mSeekbar.setEnabled(false);
-        }
+        mSeekbar = (SeekBar) findViewById(R.id.seekBar);
+        mElapsedTime = (TextView) findViewById(R.id.id_time_start);
+        mRemainingTime = (TextView) findViewById(R.id.id_time_end);
+        mSeekbar.setOnSeekBarChangeListener(onSeekBarChangeListener);
+        log.d("SeekBar is going on !!!");
+        hasSeekbar = true;
+        mSeekbar.setEnabled(false);
 
         btnPrevious.setOnClickListener(mOnclick);
         btnPlay.setOnClickListener(mOnclick);
@@ -250,6 +248,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
             //Service is active
             //Send a broadcast to the service -> PLAY_NEW_AUDIO
             Intent broadcastIntent;
+            if(mPlaybackService == null) {
+                return;
+            }
             log.d("isResume play or not: " + String.valueOf(mPlaybackService.getResumePosition()));
             if(mPlaybackService.getResumePosition() != -1) {
                 broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_RESTORE_TRACK);

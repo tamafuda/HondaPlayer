@@ -100,8 +100,8 @@ public class RadioRecyclerViewAdapter extends RecyclerView.Adapter<RadioRecycler
             v.setSelected(true);
         }
         switch (v.getId()) {
-            case R.id.audio_title:
-                TextView audioTitle = (TextView) v.findViewById(R.id.audio_title);
+            case R.id.radio_title:
+                TextView audioTitle = (TextView) v.findViewById(R.id.radio_title);
                 audioTitle.setTextColor(ContextCompat.getColor(mContext,R.color.holo_orange_dark));
                 play(pos);
                 break;
@@ -125,8 +125,8 @@ public class RadioRecyclerViewAdapter extends RecyclerView.Adapter<RadioRecycler
 
         public RadioViewHolder(View view) {
             super(view);
-            this.textView = (TextView) view.findViewById(R.id.audio_title);
-            this.arrow = (TextView) view.findViewById(R.id.arrow);
+            this.textView = (TextView) view.findViewById(R.id.radio_title);
+            this.arrow = (TextView) view.findViewById(R.id.radio_duration);
         }
 
     }

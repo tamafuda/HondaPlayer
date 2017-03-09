@@ -5,7 +5,7 @@
     android:id="@+id/toolbar"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimaryDark"
+    android:background="@android:drawable/screen_background_dark"
     android:minHeight="?attr/actionBarSize"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     >
