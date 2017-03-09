@@ -16,6 +16,7 @@
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:textColor="@color/color_text_white"
             android:text="端末名" />
 
         <TextView
@@ -23,7 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:textColor="@color/md_teal_600"
+            android:textSize="20sp"
+            android:textColor="@color/holo_blue_bright"
             android:text="80.0MHz" />
     </LinearLayout>
 
@@ -37,6 +39,7 @@
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:textColor="@color/color_text_white"
             android:text="曲数" />
 
         <TextView
@@ -44,7 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:textColor="@color/md_teal_600"
+            android:textSize="20sp"
+            android:textColor="@color/holo_blue_bright"
             android:text="TOKYO FM" />
     </LinearLayout>
 

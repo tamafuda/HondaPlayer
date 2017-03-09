@@ -116,6 +116,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
                         mediaPlayer.release();
                         mediaPlayer = null;
                     }
+                    //btnSave.setTextColor(ContextCompat.getColor(mContext, R.color.holo_blue_bright));
                     AIMixAudio.super.stopFromChild();
                     isNeedKeepSrc = false;
                     // Save audio after mixed

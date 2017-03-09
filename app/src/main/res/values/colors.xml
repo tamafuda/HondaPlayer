@@ -12,6 +12,9 @@
     <color name="color_list_row">#274288</color>
     <color name="color_seek_bar">#fee140</color>
 
+    <color name="dark_seek_bar_bg">#c3c3c3</color>
+    <color name="dark_seek_bar_progress">#b83e3e</color>
+
     <!-- dark -->
     <color name="md_teal_500_primary">#009688</color>
     <!-- light -->
