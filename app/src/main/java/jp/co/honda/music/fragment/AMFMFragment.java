@@ -114,8 +114,8 @@ public class AMFMFragment extends Fragment implements View.OnClickListener, Adap
         mBtnChanelUp.setOnClickListener(this);
         listChanel = initView();
         // Auto show popup notification
-        showAINofity();
-        customHandle();
+        //showAINofity();
+        //customHandle();
         return v;
     }
 
@@ -316,7 +316,7 @@ public class AMFMFragment extends Fragment implements View.OnClickListener, Adap
 //        }else{
 //            albumArt.setImageResource(R.drawable.dark_default_album_artwork);
 //        }
-        albumArt.setImageResource(R.drawable.dark_default_album_artwork);
+        albumArt.setImageResource(R.drawable.img_cover);
     }
 
     @Override

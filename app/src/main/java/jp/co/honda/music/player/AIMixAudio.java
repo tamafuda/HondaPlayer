@@ -20,14 +20,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import jp.co.honda.music.common.HondaConstants;
+import jp.co.honda.music.dialog.ProgressDialogTask;
 import jp.co.honda.music.model.Media;
 import jp.co.honda.music.model.TrackInfo;
 import jp.co.honda.music.util.PlayerUtils;
 import jp.co.honda.music.util.TrackUtil;
+import jp.co.honda.music.zdccore.AIMixInterface;
 import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
-public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnCompletionListener,AdapterInterface{
+public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnCompletionListener,AdapterInterface,AIMixInterface{
 
     Button btnGhita;
     Button btnBass;
@@ -35,6 +37,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
     Button btnPop;
     Button btnCancel;
     ArrayList<TrackInfo> trackInfoList;
+    ArrayList<TrackInfo> mediaPlayList;
     TextView mTitle;
 
     Button btnSave;
@@ -70,7 +73,9 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
         //btnCancel.setOnClickListener(mOnclick);
 
         trackInfoList = TrackUtil.getRawToMix(getApplicationContext());
+        mediaPlayList = new ArrayList<TrackInfo>();
         //titleOriginIntent = getArrangeMusicIntent();
+        super.setAIInterface(this);
     }
 
     @Override
@@ -90,7 +95,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
 
     @Override
     protected String detectScreenID() {
-        return null;
+        return HondaConstants.DETECTED_SCREEN_ARRANGE;
     }
 
     /**
@@ -105,22 +110,21 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
             switch (id) {
                 case R.id.id_ghita:
                     tag = btnGhita.getTag().toString();
+                    btnGhita.setSelected(!btnGhita.isSelected());
                     break;
                 case R.id.id_bass:
                     tag = btnBass.getTag().toString();
+                    btnBass.setSelected(!btnBass.isSelected());
                     break;
                 case R.id.id_jazz:
                     tag = btnJazz.getTag().toString();
+                    btnJazz.setSelected(!btnJazz.isSelected());
                     break;
                 case R.id.id_pop:
                     tag = btnPop.getTag().toString();
+                    btnPop.setSelected(!btnPop.isSelected());
                     break;
                 case R.id.btn_save:
-                    // Release the media player
-                    if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                        mediaPlayer.release();
-                        mediaPlayer = null;
-                    }
                     //btnSave.setTextColor(ContextCompat.getColor(mContext, R.color.holo_blue_bright));
                     AIMixAudio.super.stopFromChild();
                     isNeedKeepSrc = false;
@@ -207,6 +211,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
         }
         for (TrackInfo t : trackInfoList) {
             if (t.getId().equals(tag)){
+                mediaPlayList.add(t);
                 return t;
             }
         }
@@ -236,9 +241,12 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
 
     @Override
     public void onBackPressed() {
-        /*Intent iPlay = new Intent(getBaseContext(), MusicPlayActivity.class);
-        startActivity(iPlay);
-        finish();*/
+        //super.onBackPressed();
+        releaseMediaPlayer();
+        Intent iController = new Intent(getBaseContext(), RadarMusicActivity.class);
+        startActivity(iController);
+        finish();
+        super.onBackPressed();
     }
 
     @Override
@@ -249,6 +257,61 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
 
     @Override
     public void keepSrv(boolean isKeep) {
+
+    }
+
+    private void releaseMediaPlayer() {
+        // Release the media player
+
+        for (TrackInfo t : mediaPlayList) {
+            if (t.getMp() != null) {
+                log.d("Mix Audio mediaplayer release !");
+                t.getMp().reset();
+                t.getMp().release();
+                t.setMp(null);
+            }
+        }
+    }
+
+    @Override
+    public void shareMedia() {
+        log.d("Share media");
+        ProgressDialogTask task = new ProgressDialogTask(mContext, false, R.string.popup_sharing);
+        task.execute(0);
+    }
+
+    @Override
+    public void saveMedia() {
+        log.d("Save media");
+        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+        View view = layoutInflater.inflate(R.layout.input_dialog_mix,null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
+        alertDialogBuilder.setView(view);
+
+        final EditText musicChangeName = (EditText) view.findViewById(R.id.input_dialog_edittext);
+        musicChangeName.setHint("アレンジ");
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String arrangeMusic = musicChangeName.getText().toString();
+                        if(arrangeMusic.isEmpty()) {
+                            arrangeMusic = musicChangeName.getHint().toString();
+                        }
+                        PlayerUtils.addOneMediaArrange(getBaseContext(),arrangeMusic);
+                        Intent iController = new Intent(getBaseContext(), RadarMusicActivity.class);
+                        startActivity(iController);
+                        finish();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        AlertDialog alertDialogAndroid = alertDialogBuilder.create();
+        alertDialogAndroid.show();
 
     }
 }

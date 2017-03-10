@@ -32,6 +32,10 @@ public class TrackInfo {
         return mp;
     }
 
+    public void setMp(MediaPlayer mp) {
+        this.mp = mp;
+    }
+
     public int getPosition() {
         return position;
     }
@@ -47,4 +51,5 @@ public class TrackInfo {
     public void setPause(boolean pause) {
         isPause = pause;
     }
+
 }

@@ -84,7 +84,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp">
+        android:layout_marginTop="10dp">
 
         <View
             android:layout_width="match_parent"
@@ -123,7 +123,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
-                    android:background="@drawable/bg_button_up_chanel" />
+                    android:background="@drawable/ic_album_name" />
                 <TextView
                     android:id="@+id/id_playlist_fmam_1"
                     android:layout_width="match_parent"
@@ -152,7 +152,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
-                    android:background="@drawable/bg_button_up_chanel" />
+                    android:background="@drawable/ic_singer" />
                 <TextView
                     android:id="@+id/id_playlist_fmam_2"
                     android:layout_width="match_parent"
@@ -179,6 +179,8 @@
 
         <ListView
             android:id="@+id/song_list"
+            android:divider="@color/color_list_row"
+            android:dividerHeight="0.5dp"
             android:layout_width="fill_parent"
             android:layout_height="match_parent" >
         </ListView>

@@ -27,6 +27,7 @@ import jp.co.honda.music.model.Media;
 import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.util.PlayerUtils;
 import jp.co.honda.music.util.TrackUtil;
+import jp.co.honda.music.zdccore.AIMixInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
 public abstract class BasePlayerActivity extends AppCompatActivity {
@@ -36,6 +37,8 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     private ImageButton btnPlay;
     private ImageButton btnPause;
     private ImageButton btnNext;
+    private ImageButton btnSave;
+    private ImageButton btnShare;
     private SeekBar mSeekbar;
     private TextView mElapsedTime;
     private TextView mRemainingTime;
@@ -57,15 +60,20 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
 
     private int currentPosition;
     private boolean hasSeekbar;
+    private AIMixInterface mAIMixInterface;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResourceId());
+        if(getLayoutResourceId() == R.layout.activity_aimix_audio) {
+            initScreen();
+        }
         // Get song list from device
         mediaList = TrackUtil.getTrackList(this);
         storage = new HondaSharePreference(this);
+        //initScreen();
         //mediaList = storage.loadTrackList();
     }
 
@@ -118,6 +126,12 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
                     break;
                 case R.id.btn_next:
                     next();
+                    break;
+                case R.id.btn_save:
+                    mAIMixInterface.saveMedia();
+                    break;
+                case R.id.btn_share:
+                    mAIMixInterface.shareMedia();
                     break;
             }
         }
@@ -404,19 +418,15 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
      * Other case , show all
      */
     public void initScreen() {
-        LinearLayout ln = (LinearLayout) findViewById(R.id.play_layout);
+
         if (!detectScreenID().equals(HondaConstants.DETECT_FRAGMENT_FMAM)) {
-            ln.setVisibility(View.VISIBLE);
-            // Gets the layout params that will allow you to resize the layout
-            LinearLayout frame = (LinearLayout) findViewById(R.id.frame_layout);
-            ViewGroup.LayoutParams params = frame.getLayoutParams();
-            // Changes the height and width to the specified *pixels*
-            params.height = 400;
-            frame.setLayoutParams(params);
             btnPrevious = (ImageButton) findViewById(R.id.btn_previous);
             btnPlay = (ImageButton) findViewById(R.id.btn_play);
             btnPause = (ImageButton) findViewById(R.id.btn_pause);
             btnNext = (ImageButton) findViewById(R.id.btn_next);
+            btnSave = (ImageButton) findViewById(R.id.btn_save);
+            btnShare = (ImageButton) findViewById(R.id.btn_share);
+
             mSeekbar = (SeekBar) findViewById(R.id.seekBar);
             mElapsedTime = (TextView) findViewById(R.id.id_time_start);
             mRemainingTime = (TextView) findViewById(R.id.id_time_end);
@@ -424,13 +434,31 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             log.d("SeekBar is going on !!!");
             hasSeekbar = true;
             mSeekbar.setEnabled(false);
-
-            btnPrevious.setOnClickListener(mOnclick);
             btnPlay.setOnClickListener(mOnclick);
             btnPause.setOnClickListener(mOnclick);
-            btnNext.setOnClickListener(mOnclick);
+
+            if(!detectScreenID().equals(HondaConstants.DETECTED_SCREEN_ARRANGE)) {
+                LinearLayout ln = (LinearLayout) findViewById(R.id.play_layout);
+                ln.setVisibility(View.VISIBLE);
+                // Gets the layout params that will allow you to resize the layout
+                LinearLayout frame = (LinearLayout) findViewById(R.id.frame_layout);
+                ViewGroup.LayoutParams params = frame.getLayoutParams();
+                // Changes the height and width to the specified *pixels*
+                params.height = 400;
+                frame.setLayoutParams(params);
+                btnPrevious.setOnClickListener(mOnclick);
+                btnNext.setOnClickListener(mOnclick);
+            }else{
+                btnSave.setVisibility(View.VISIBLE);
+                btnShare.setVisibility(View.VISIBLE);
+                btnPrevious.setVisibility(View.GONE);
+                btnNext.setVisibility(View.GONE);
+                btnSave.setOnClickListener(mOnclick);
+                btnShare.setOnClickListener(mOnclick);
+            }
 
         } else {
+            LinearLayout ln = (LinearLayout) findViewById(R.id.play_layout);
             ln.setVisibility(View.GONE);
             // Gets the layout params that will allow you to resize the layout
             LinearLayout frame = (LinearLayout) findViewById(R.id.frame_layout);
@@ -439,5 +467,15 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             params.height = ViewGroup.LayoutParams.MATCH_PARENT;
             frame.setLayoutParams(params);
         }
+    }
+
+    /**
+     * Interface to get action save/share button and send to AIMix
+     * Stupid implementation because of change spec VERY VERY late
+     * Anyway, stupid changed spec !!!
+     * @param aiInterface
+     */
+    public void setAIInterface(AIMixInterface aiInterface) {
+        this.mAIMixInterface = aiInterface;
     }
 }

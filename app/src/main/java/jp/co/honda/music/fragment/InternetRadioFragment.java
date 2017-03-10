@@ -1,7 +1,6 @@
 package jp.co.honda.music.fragment;
 
 import android.app.Fragment;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +11,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import jp.co.honda.music.adapter.RadioAdapter;
 import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.model.Media;
 import jp.co.honda.music.player.HomeBaseFragment;
 import jp.co.honda.music.player.R;
-import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
-import jp.co.honda.music.adapter.RadioAdapter;
 
 /**
  * A simple {@link Fragment} subclass.

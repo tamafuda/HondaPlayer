@@ -48,7 +48,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
-                    android:background="@drawable/bg_button_up_chanel" />
+                    android:background="@drawable/ic_album_name" />
 
                 <TextView
                     android:id="@+id/id_playlist_ipod_1"
@@ -76,7 +76,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
-                    android:background="@drawable/bg_button_up_chanel" />
+                    android:background="@drawable/ic_singer" />
 
                 <TextView
                     android:id="@+id/id_playlist_ipod_2"
@@ -103,7 +103,10 @@
         <ListView
             android:id="@+id/song_list"
             android:layout_width="fill_parent"
-            android:layout_height="match_parent"></ListView>
+            android:layout_height="match_parent"
+            android:divider="@color/color_list_row"
+            android:dividerHeight="0.5dp">
+        </ListView>
 
     </LinearLayout>
 </LinearLayout>

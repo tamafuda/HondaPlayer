@@ -62,6 +62,17 @@
             android:adjustViewBounds="true"
             android:background="@drawable/bg_button_previous"
             android:contentDescription="@string/txt_previous" />
+        <ImageButton
+            android:id="@+id/btn_share"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="60dp"
+            android:adjustViewBounds="true"
+            android:visibility="gone"
+            android:background="@drawable/bg_button_share"
+            android:contentDescription="@string/txt_previous" />
 
         <ImageButton
             android:id="@+id/btn_play"
@@ -91,6 +102,17 @@
             android:layout_marginEnd="60dp"
             android:adjustViewBounds="true"
             android:background="@drawable/bg_button_next"
+            android:contentDescription="@string/txt_next" />
+        <ImageButton
+            android:id="@+id/btn_save"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="60dp"
+            android:adjustViewBounds="true"
+            android:visibility="gone"
+            android:background="@drawable/bg_button_save"
             android:contentDescription="@string/txt_next" />
 
     </RelativeLayout>
