@@ -60,14 +60,14 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
         btnBass = (Button) findViewById(R.id.id_bass);
         btnJazz = (Button) findViewById(R.id.id_jazz);
         btnPop = (Button) findViewById(R.id.id_pop);
-        btnSave = (Button) findViewById(R.id.btn_save);
-        btnCancel = (Button) findViewById(R.id.btn_cancel);
+        //btnSave = (Button) findViewById(R.id.btn_save);
+        //btnCancel = (Button) findViewById(R.id.btn_cancel);
         btnGhita.setOnClickListener(mOnclick);
         btnBass.setOnClickListener(mOnclick);
         btnJazz.setOnClickListener(mOnclick);
         btnPop.setOnClickListener(mOnclick);
-        btnSave.setOnClickListener(mOnclick);
-        btnCancel.setOnClickListener(mOnclick);
+        //btnSave.setOnClickListener(mOnclick);
+        //btnCancel.setOnClickListener(mOnclick);
 
         trackInfoList = TrackUtil.getRawToMix(getApplicationContext());
         //titleOriginIntent = getArrangeMusicIntent();

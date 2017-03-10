@@ -146,7 +146,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             mNowPlayingSeekHelper = new NowPlayingSeekHelper(mUpdatePositionRunnable,
                     mHandler, btnNext, btnPrevious, mPlaybackService, mSeekEventCallback);
             mNowPlayingSeekHelper.setPlaybackService(mPlaybackService);
-            updateIconPlayPause(mPlaybackService.isPlaying());
+            updateIconPlayPause(hasSeekbar, mPlaybackService.isPlaying());
             initSeekbar(mediaList.get(storage.loadTrackIndex()));
             updateProgressBars();
         }
@@ -204,8 +204,10 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
 
     }
 
-    private void updateIconPlayPause(boolean isPlaying) {
-        PlayerViewHelper.setPlayPauseButtonVisibility(btnPlay, btnPause, isPlaying);
+    private void updateIconPlayPause(boolean isButtonController, boolean isPlaying) {
+        if (isButtonController) {
+            PlayerViewHelper.setPlayPauseButtonVisibility(btnPlay, btnPause, isPlaying);
+        }
     }
 
 
@@ -248,7 +250,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
 
             sendBroadcast(broadcastIntent);
         }
-        updateIconPlayPause(true);
+        updateIconPlayPause(hasSeekbar, true);
 
 
     }
@@ -258,14 +260,14 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         //storage.storeTrackIndex(getAudioIndex());
         //Service is active
         //Send a broadcast to the service -> PLAY_NEW_AUDIO
-        updateIconPlayPause(false);
+        updateIconPlayPause(hasSeekbar, false);
         Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_STOP_TRACK);
         sendBroadcast(broadcastIntent);
         updateProgressBars();
     }
 
     public void next() {
-        updateIconPlayPause(true);
+        updateIconPlayPause(hasSeekbar, true);
         //Service is active
         //Send a broadcast to the service -> PLAY_NEW_AUDIO
         Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_NEXT_TRACK);
@@ -276,7 +278,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     public void previous() {
 
         //storage.storeTrackIndex(getAudioIndex());
-        updateIconPlayPause(true);
+        updateIconPlayPause(hasSeekbar, true);
         //Service is active
         //Send a broadcast to the service -> PLAY_NEW_AUDIO
         Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_PREVIOUS_TRACK);

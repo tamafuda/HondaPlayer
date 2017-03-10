@@ -16,76 +16,20 @@
             android:layout_height="1dp"
             android:background="@color/color_line"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:layout_marginTop="10dp">
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:textColor="@color/color_text_white"
-            android:text="ドメイン" />
-
-        <TextView
-            android:id="@+id/id_radio_domain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:textSize="15sp"
-            android:textColor="@color/holo_blue_bright"
-            android:text="www.chofuradio.fm" />
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:layout_marginTop="2dp">
-
-        <TextView
-            android:id="@+id/textView21"
-            android:layout_width="70dp"
-            android:textColor="@color/color_text_white"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="局名" />
-
-        <TextView
-            android:id="@+id/id_count_audio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="@color/holo_blue_bright"
-            android:layout_marginStart="40dp"
-            android:text="調布市放送ラジオ局" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/color_line"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp">
+        android:layout_marginTop="5dp">
 
         <ImageView
             android:id="@+id/bgr_singer"
             android:src="@drawable/art_fm_am"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:contentDescription="@string/app_name"
             android:layout_width="match_parent"
-            android:layout_height="150dp"/>
+            android:layout_height="200dp"/>
     </LinearLayout>
 
     <LinearLayout

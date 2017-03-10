@@ -11,8 +11,8 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
-import jp.co.honda.music.player.MusicPlayActivity;
 import jp.co.honda.music.player.R;
+import jp.co.honda.music.player.RadarMusicActivity;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -69,7 +69,7 @@ public class AINotificationIntentService extends IntentService {
                 .setSmallIcon(R.drawable.icon_honda)
                 .setContentText("音楽アレンジでお盛り上がろう!");
 
-        Intent mainIntent = new Intent(this, MusicPlayActivity.class);
+        Intent mainIntent = new Intent(this, RadarMusicActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 NOTIFICATION_ID,
                 mainIntent,

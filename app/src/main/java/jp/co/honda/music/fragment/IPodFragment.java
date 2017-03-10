@@ -21,7 +21,6 @@ import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.Media;
 import jp.co.honda.music.player.HomeBaseFragment;
 import jp.co.honda.music.player.R;
-import jp.co.honda.music.util.SystemUtils;
 import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
@@ -37,8 +36,8 @@ public class IPodFragment extends Fragment implements View.OnClickListener,Adapt
     protected final Logger log = new Logger(IPodFragment.class.getSimpleName(), true);
     private ArrayList<Media> mediaList;
     private ListView trackListView;
-    private TextView mDeviceInfo;
-    private TextView mAudioAmount;
+    /*private TextView mDeviceInfo;
+    private TextView mAudioAmount;*/
     private RecyclerView mRecyclerView;
     RadioRecyclerViewAdapter mRadioRecyclerAdapter;
 
@@ -72,13 +71,13 @@ public class IPodFragment extends Fragment implements View.OnClickListener,Adapt
         trackListView.setAdapter(trackAdapter);
         //mRecyclerView.setAdapter(mRadioRecyclerAdapter);
         //mRadioRecyclerAdapter.
-
+/*
         mDeviceInfo = (TextView) v.findViewById(R.id.id_device_info);
         mDeviceInfo.setText(SystemUtils.getDeviceInfo());
 
         mAudioAmount = (TextView) v.findViewById(R.id.id_count_audio);
         String amountAudio = String.valueOf(mediaList.size()) + "曲";
-        mAudioAmount.setText(amountAudio);
+        mAudioAmount.setText(amountAudio);*/
 
         mPlaylist1 = (TextView) v.findViewById(R.id.id_playlist_ipod_1);
         mPlaylist2 = (TextView) v.findViewById(R.id.id_playlist_ipod_2);

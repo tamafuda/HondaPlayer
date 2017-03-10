@@ -69,8 +69,8 @@ public class InternetRadioFragment extends Fragment implements AdapterInterface{
         image3.setOnClickListener(mOnclick);
         image4.setOnClickListener(mOnclick);
 
-        radioDomain = (TextView) v.findViewById(R.id.id_radio_domain);
-        radioDomain.setPaintFlags(radioDomain.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        //radioDomain = (TextView) v.findViewById(R.id.id_radio_domain);
+        //radioDomain.setPaintFlags(radioDomain.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         return v;
     }

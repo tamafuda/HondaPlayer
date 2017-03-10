@@ -16,7 +16,7 @@
 
         <include
             android:id="@+id/toolbar"
-            layout="@layout/custom_toolbar_with_button" />
+            layout="@layout/custom_toolbar_empty" />
     </LinearLayout>
 
 

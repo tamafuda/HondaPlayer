@@ -14,10 +14,8 @@ import android.widget.Button;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import jp.co.honda.music.player.MusicPlayActivity;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.player.RadarMusicActivity;
-import jp.co.honda.music.util.PlayerUtils;
 import jp.co.honda.music.util.SystemUtils;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
@@ -56,7 +54,7 @@ public class PopupUtils{
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent iPlay = new Intent(activity.getBaseContext(), MusicPlayActivity.class);
+                Intent iPlay = new Intent(activity.getBaseContext(), RadarMusicActivity.class);
                 //iPlay.putExtra(HondaConstants.INTENT_NOTIFY_TO_MUSICPLAY_SRC,true);
                 activity.startActivity(iPlay);
                 HondaSharePreference storage = new HondaSharePreference(mContext);
@@ -95,10 +93,10 @@ public class PopupUtils{
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(mContext instanceof RadarMusicActivity) {
-                    PlayerUtils.addOneMediaArrange(mContext,"COME BACK TO ME DL済");
-                    Intent iPlay = new Intent(mContext, MusicPlayActivity.class);
+                    /*PlayerUtils.addOneMediaArrange(mContext,"COME BACK TO ME DL済");
+                    Intent iPlay = new Intent(mContext, AIMixAudio.class);
                     mContext.startActivity(iPlay);
-                    ((RadarMusicActivity)mContext).finish();
+                    ((RadarMusicActivity)mContext).finish();*/
                     dialog.dismiss();
                 }
 

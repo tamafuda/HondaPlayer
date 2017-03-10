@@ -83,7 +83,7 @@ public class RadarMusicActivity extends AppCompatActivity {
                     Intent iPlay = new Intent(getBaseContext(), HomeBaseFragment.class);
                     iPlay.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     //Intent iPlay = new Intent(getBaseContext(), PlayMediaActivity.class);
-                    iPlay.putExtra("MainActivity", true);
+                    iPlay.putExtra("RadarMusicActivity", true);
                     startActivity(iPlay);
                     finish();
                     //startActivity(iPlay);
@@ -134,7 +134,7 @@ public class RadarMusicActivity extends AppCompatActivity {
             int resoureId = 0;
             switch (id) {
                 case R.id.ai_recommend:
-                    Intent iPlay = new Intent(getBaseContext(), MusicPlayActivity.class);
+                    Intent iPlay = new Intent(getBaseContext(), AIMixAudio.class);
                     iPlay.putExtra("MainActivity", true);
                     startActivity(iPlay);
                     //overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
@@ -144,7 +144,7 @@ public class RadarMusicActivity extends AppCompatActivity {
                 case R.id.download_music:
                     ProgressDialogTask task = new ProgressDialogTask(RadarMusicActivity.this, true, R.string.popup_downloading);
                     task.execute(0);
-
+                    mDownload.setVisibility(View.GONE);
                     break;
                 case R.id.id_screen_bg:
                     mDownload.setVisibility(View.VISIBLE);
