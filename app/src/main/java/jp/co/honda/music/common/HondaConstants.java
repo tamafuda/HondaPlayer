@@ -45,7 +45,7 @@ public final class HondaConstants {
     public static final String INTENT_BASE = "jp.co.honda.music.HondaConstants.BasePlayerActivity";
 
     // NOTIFICATION
-    public static final int NOTIFICATIONS_INTERVAL_IN_MINUTE = 3;
+    public static final int NOTIFICATIONS_INTERVAL_IN_MINUTE = 15;
     public static final int AUDIO_FOCUS_CHANGE = 1987;
 
 

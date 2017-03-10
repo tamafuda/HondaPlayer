@@ -114,8 +114,8 @@ public class AMFMFragment extends Fragment implements View.OnClickListener, Adap
         mBtnChanelUp.setOnClickListener(this);
         listChanel = initView();
         // Auto show popup notification
-        //showAINofity();
-        //customHandle();
+        showAINofity();
+        customHandle();
         return v;
     }
 
