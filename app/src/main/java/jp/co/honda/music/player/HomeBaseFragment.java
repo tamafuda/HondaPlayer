@@ -45,6 +45,7 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
     private ImageButton mPlay;
     private ImageButton mPause;
     private HondaSharePreference storage;
+    private boolean isRecreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +142,7 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
                 String item = parent.getItemAtPosition(position).toString();
                 Log.d("TEST", String.valueOf(position));
                 selectFrag(position);
+                HomeBaseFragment.super.initScreen();
             }
 
             @Override
@@ -233,6 +235,32 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
         log.d("Play when user touch on listview ");
         storage.storeTrackIndex(pos);
         super.playFromAdapter();
+    }
+
+    private String detectFragment(int detect) {
+        String returnScreen = "";
+        switch (detect) {
+            case 0:
+                returnScreen = HondaConstants.DETECT_FRAGMENT_FMAM;
+                break;
+            case 1:
+                returnScreen = HondaConstants.DETECT_FRAGMENT_IPOD;
+                break;
+            case 2:
+                returnScreen = HondaConstants.DETECT_FRAGMENT_FMAM;
+                break;
+            case 3:
+                returnScreen = HondaConstants.DETECT_FRAGMENT_NETRADIO;
+                break;
+            default:
+                returnScreen = HondaConstants.DETECT_FRAGMENT_FMAM;
+        }
+        return returnScreen;
+    }
+
+    @Override
+    protected String detectScreenID() {
+        return detectFragment(detectScreen);
     }
 }
 

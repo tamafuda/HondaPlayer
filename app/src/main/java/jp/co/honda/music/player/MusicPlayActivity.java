@@ -113,4 +113,9 @@ public class MusicPlayActivity extends BasePlayerActivity implements AdapterInte
     public void keepSrv(boolean isKeep) {
         isNeedKeepSrv = isKeep;
     }
+
+    @Override
+    protected String detectScreenID() {
+        return null;
+    }
 }

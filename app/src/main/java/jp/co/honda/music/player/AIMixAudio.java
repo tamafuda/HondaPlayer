@@ -88,6 +88,11 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
         return isNeedKeepSrc;
     }
 
+    @Override
+    protected String detectScreenID() {
+        return null;
+    }
+
     /**
      *
      * @param v

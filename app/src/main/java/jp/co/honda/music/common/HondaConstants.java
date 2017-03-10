@@ -25,17 +25,11 @@ public final class HondaConstants {
     public static final String BROADCAST_PLAY_STOP_TRACK = "jp.co.honda.music.HondaConstants.BROADCAST_PLAY_STOP_TRACK";
     public static final int WAIT_LENGTH = 5000;
     public static final int WAIT_CLOSE_LENGTH = 5000;
-    public static final String DETECTED_SCREEN_IPOD = "DETECTED_SCREEN_IPOD";
-    public static final String DETECTED_SCREEN_INTERNET_AUDIO = "DETECTED_SCREEN_INTERNET_AUDIO";
 
     public static final String DETECTED_SCREEN_FLING = "jp.co.honda.music.HondaConstants.DETECTED_SCREEN_FLING";
 
     public static final int FLING_RESULT_CODE = 0;
 
-    public static final String DETECT_FRAGMENT_IPOD = "jp.co.honda.music.fragment.IPodFragment";
-    public static final String DETECT_FRAGMENT_FMAM = "jp.co.honda.music.fragment.AMFMFragment";
-    public static final String DETECT_FRAGMENT_NETRADIO = "jp.co.honda.music.fragment.InternetRadioFragment";
-    public static final String DETECT_FRAGMENT_BLUETOOTH = "jp.co.honda.music.fragment.BluetoothFragment";
     public static final String INTENT_AIMIXAUDIO = "jp.co.honda.music.HondaConstants.AIMixAudio";
     public static final String INTENT_NOTIFY_TO_MUSICPLAY_SRC = "jp.co.honda.music.HondaConstants.MusicPlayActivity";
     public static final String INTENT_TEST_FRAGMENT = "jp.co.honda.music.HondaConstants.HomeBaseFragment";
@@ -48,6 +42,14 @@ public final class HondaConstants {
     public static final int NOTIFICATIONS_INTERVAL_IN_MINUTE = 15;
     public static final int AUDIO_FOCUS_CHANGE = 1987;
 
+
+    // Define key to detect screen
+    public static final String DETECTED_SCREEN_CAPSUL = "jp.co.honda.music.player.RadarMusicActivity";
+    public static final String DETECTED_SCREEN_ARRANGE = "jp.co.honda.music.player.AIMixAudio";
+    public static final String DETECT_FRAGMENT_IPOD = "jp.co.honda.music.fragment.IPodFragment";
+    public static final String DETECT_FRAGMENT_FMAM = "jp.co.honda.music.fragment.AMFMFragment";
+    public static final String DETECT_FRAGMENT_NETRADIO = "jp.co.honda.music.fragment.InternetRadioFragment";
+    public static final String DETECT_FRAGMENT_BLUETOOTH = "jp.co.honda.music.fragment.BluetoothFragment";
 
 
 

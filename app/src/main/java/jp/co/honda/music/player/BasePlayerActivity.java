@@ -11,7 +11,9 @@ import android.os.IBinder;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -27,7 +29,7 @@ import jp.co.honda.music.util.PlayerUtils;
 import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
-public abstract class BasePlayerActivity extends AppCompatActivity{
+public abstract class BasePlayerActivity extends AppCompatActivity {
     // Logger
     protected final Logger log = new Logger(MusicPlayActivity.class.getSimpleName(), true);
     private ImageButton btnPrevious;
@@ -61,22 +63,6 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResourceId());
-        btnPrevious = (ImageButton) findViewById(R.id.btn_previous);
-        btnPlay = (ImageButton) findViewById(R.id.btn_play);
-        btnPause = (ImageButton) findViewById(R.id.btn_pause);
-        btnNext = (ImageButton) findViewById(R.id.btn_next);
-        mSeekbar = (SeekBar) findViewById(R.id.seekBar);
-        mElapsedTime = (TextView) findViewById(R.id.id_time_start);
-        mRemainingTime = (TextView) findViewById(R.id.id_time_end);
-        mSeekbar.setOnSeekBarChangeListener(onSeekBarChangeListener);
-        log.d("SeekBar is going on !!!");
-        hasSeekbar = true;
-        mSeekbar.setEnabled(false);
-
-        btnPrevious.setOnClickListener(mOnclick);
-        btnPlay.setOnClickListener(mOnclick);
-        btnPause.setOnClickListener(mOnclick);
-        btnNext.setOnClickListener(mOnclick);
         // Get song list from device
         mediaList = TrackUtil.getTrackList(this);
         storage = new HondaSharePreference(this);
@@ -176,7 +162,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
 
     private void doUnbindService() {
         log.d("Do Unbind service !");
-        if(mPlaybackService != null) {
+        if (mPlaybackService != null) {
             log.d("Release media player");
             mPlaybackService.stopSelf();
         }
@@ -205,7 +191,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
     protected void onDestroy() {
         log.d("BasePlayerActivity onDestroy");
         super.onDestroy();
-        if(isNeedKeepMediaSrv()){
+        if (isNeedKeepMediaSrv()) {
             log.d("BasePlayerActivity still keep service");
             return;
         }
@@ -230,7 +216,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
             //Store Serializable audioList to SharedPreferences
             //HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
             currentPosition = storage.loadTrackIndex();
-            if(currentPosition == -1) {
+            if (currentPosition == -1) {
                 currentPosition = 0;
                 storage.storeTrackIndex(0);
             }
@@ -248,13 +234,13 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
             //Service is active
             //Send a broadcast to the service -> PLAY_NEW_AUDIO
             Intent broadcastIntent;
-            if(mPlaybackService == null) {
+            if (mPlaybackService == null) {
                 return;
             }
             log.d("isResume play or not: " + String.valueOf(mPlaybackService.getResumePosition()));
-            if(mPlaybackService.getResumePosition() != -1) {
+            if (mPlaybackService.getResumePosition() != -1) {
                 broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_RESTORE_TRACK);
-            }else {
+            } else {
                 broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_NEW_TRACK);
                 //mSeekbar.setProgress(0);
                 setProgressSeekBar(0);
@@ -324,7 +310,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
 
     private void updateProgressBars() {
         log.d("update Progress bars");
-        if(!hasSeekbar) {
+        if (!hasSeekbar) {
             return;
         }
         //mHandler.removeCallbacks(mUpdatePositionRunnable);
@@ -378,22 +364,22 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
     protected abstract int getAudioIndex();
 
 
-
-/*    @Override
-    public void onBackPressed() {
-        Intent iPlay = new Intent(getBaseContext(), RadarMusicActivity.class);
-        //iPlay.putExtra(HondaConstants.DETECTED_SCREEN_FLING, true);
-        startActivity(iPlay);
-        finish();
-    }*/
+    /*    @Override
+        public void onBackPressed() {
+            Intent iPlay = new Intent(getBaseContext(), RadarMusicActivity.class);
+            //iPlay.putExtra(HondaConstants.DETECTED_SCREEN_FLING, true);
+            startActivity(iPlay);
+            finish();
+        }*/
     protected abstract boolean isNeedKeepMediaSrv();
 
-    public void playFromAdapter(){
+    public void playFromAdapter() {
         if (mPlaybackService != null) {
             mPlaybackService.setResumePosition(-1);
         }
         play();
     }
+
     public void stopFromChild() {
         if (mPlaybackService != null) {
             mPlaybackService.setResumePosition(-1);
@@ -405,6 +391,51 @@ public abstract class BasePlayerActivity extends AppCompatActivity{
         if (hasSeekbar) {
             mSeekbar.setProgress(value);
             updateProgressBars();
+        }
+    }
+
+    protected abstract String detectScreenID();
+
+    /**
+     * This method will init view screen depend on screen typ
+     * From AMFM/Bluetooth screen , does not show play media button group
+     * Other case , show all
+     */
+    public void initScreen() {
+        LinearLayout ln = (LinearLayout) findViewById(R.id.play_layout);
+        if (!detectScreenID().equals(HondaConstants.DETECT_FRAGMENT_FMAM)) {
+            ln.setVisibility(View.VISIBLE);
+            // Gets the layout params that will allow you to resize the layout
+            LinearLayout frame = (LinearLayout) findViewById(R.id.frame_layout);
+            ViewGroup.LayoutParams params = frame.getLayoutParams();
+            // Changes the height and width to the specified *pixels*
+            params.height = 400;
+            frame.setLayoutParams(params);
+            btnPrevious = (ImageButton) findViewById(R.id.btn_previous);
+            btnPlay = (ImageButton) findViewById(R.id.btn_play);
+            btnPause = (ImageButton) findViewById(R.id.btn_pause);
+            btnNext = (ImageButton) findViewById(R.id.btn_next);
+            mSeekbar = (SeekBar) findViewById(R.id.seekBar);
+            mElapsedTime = (TextView) findViewById(R.id.id_time_start);
+            mRemainingTime = (TextView) findViewById(R.id.id_time_end);
+            mSeekbar.setOnSeekBarChangeListener(onSeekBarChangeListener);
+            log.d("SeekBar is going on !!!");
+            hasSeekbar = true;
+            mSeekbar.setEnabled(false);
+
+            btnPrevious.setOnClickListener(mOnclick);
+            btnPlay.setOnClickListener(mOnclick);
+            btnPause.setOnClickListener(mOnclick);
+            btnNext.setOnClickListener(mOnclick);
+
+        } else {
+            ln.setVisibility(View.GONE);
+            // Gets the layout params that will allow you to resize the layout
+            LinearLayout frame = (LinearLayout) findViewById(R.id.frame_layout);
+            ViewGroup.LayoutParams params = frame.getLayoutParams();
+            // Changes the height and width to the specified *pixels*
+            params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            frame.setLayoutParams(params);
         }
     }
 }
