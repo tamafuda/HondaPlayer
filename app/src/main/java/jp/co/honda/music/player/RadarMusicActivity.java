@@ -27,8 +27,12 @@ public class RadarMusicActivity extends AppCompatActivity {
 
     TextView mTitle;
     Button mAIRecommend;
-    Button mDownload;
-    Button mMusic;
+    Button mDownload1;
+    Button mDownload2;
+    Button mDownload3;
+    Button mMusic1;
+    Button mMusic2;
+    Button mMusic3;
     ImageView mScreenBg;
     Context context;
 
@@ -56,16 +60,24 @@ public class RadarMusicActivity extends AppCompatActivity {
 
 
         mAIRecommend = (Button) findViewById(R.id.ai_recommend);
-        mDownload = (Button) findViewById(R.id.download_music);
         mScreenBg = (ImageView) findViewById(R.id.id_screen_bg);
-        mMusic = (Button) findViewById(R.id.ic_music);
+        mDownload1 = (Button) findViewById(R.id.download_music1);
+        mMusic1 = (Button) findViewById(R.id.ic_music1);
+        mDownload2 = (Button) findViewById(R.id.download_music2);
+        mMusic2 = (Button) findViewById(R.id.ic_music2);
+        mDownload3 = (Button) findViewById(R.id.download_music3);
+        mMusic3 = (Button) findViewById(R.id.ic_music3);
         // Can not set one view with 2 event listener
         // Ex : screenBg with onClickListener and onTouchListener
         // Should be prepare each button music to handle
         mScreenBg.setOnClickListener(mOnclick);
-        mDownload.setOnClickListener(mOnclick);
         mAIRecommend.setOnClickListener(mOnclick);
-        mMusic.setOnClickListener(mOnclick);
+        mMusic1.setOnClickListener(mOnclick);
+        mMusic2.setOnClickListener(mOnclick);
+        mMusic3.setOnClickListener(mOnclick);
+        mDownload1.setOnClickListener(mOnclick);
+        mDownload2.setOnClickListener(mOnclick);
+        mDownload3.setOnClickListener(mOnclick);
 
         // Fling screen
         //View v = findViewById(R.id.activity_radar_music);
@@ -141,16 +153,32 @@ public class RadarMusicActivity extends AppCompatActivity {
                     //overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                     finish();
                     break;
-                case R.id.download_music:
-                    ProgressDialogTask task = new ProgressDialogTask(RadarMusicActivity.this, true, R.string.popup_downloading);
-                    task.execute(0);
-                    mDownload.setVisibility(View.GONE);
+                case R.id.download_music1:
+                    ProgressDialogTask task1 = new ProgressDialogTask(RadarMusicActivity.this, true, R.string.popup_downloading);
+                    task1.execute(0);
+                    mDownload1.setVisibility(View.GONE);
+                    break;
+                case R.id.download_music2:
+                    ProgressDialogTask task2 = new ProgressDialogTask(RadarMusicActivity.this, true, R.string.popup_downloading);
+                    task2.execute(0);
+                    mDownload2.setVisibility(View.GONE);
+                    break;
+                case R.id.download_music3:
+                    ProgressDialogTask task3 = new ProgressDialogTask(RadarMusicActivity.this, true, R.string.popup_downloading);
+                    task3.execute(0);
+                    mDownload3.setVisibility(View.GONE);
                     break;
                 case R.id.id_screen_bg:
-                    mDownload.setVisibility(View.VISIBLE);
+                    mDownload1.setVisibility(View.VISIBLE);
                     break;
-                case R.id.ic_music:
-                    mDownload.setVisibility(View.VISIBLE);
+                case R.id.ic_music1:
+                    mDownload1.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.ic_music2:
+                    mDownload2.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.ic_music3:
+                    mDownload3.setVisibility(View.VISIBLE);
                     break;
                 // even more buttons here
             }
