@@ -44,7 +44,7 @@
             android:gravity="end"
             android:text=">"
             android:textColor="@android:color/white"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:tag="arrow_tag" />
     </LinearLayout>
 </LinearLayout>

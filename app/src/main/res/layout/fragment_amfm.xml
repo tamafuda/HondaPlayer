@@ -40,7 +40,7 @@
 
         <Button
             android:id="@+id/chanel_up"
-            android:background="@drawable/triangle_up"
+            android:background="@drawable/bg_button_up_chanel"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="10dp"
@@ -74,7 +74,7 @@
 
         <Button
             android:id="@+id/chanel_down"
-            android:background="@drawable/triangle_down"
+            android:background="@drawable/bg_button_down_chanel"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="10dp"

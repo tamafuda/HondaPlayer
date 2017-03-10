@@ -152,6 +152,7 @@ public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickLis
         viewHolder.duration.setText(duration);
         viewHolder.duration.setTag(position);
         viewHolder.arrow.setText(">");
+        viewHolder.arrow.setTag(position);
         viewHolder.arrow.setOnClickListener(this);
         //log.d("Position loaded is : " + String.valueOf(position));
         return convertView;
