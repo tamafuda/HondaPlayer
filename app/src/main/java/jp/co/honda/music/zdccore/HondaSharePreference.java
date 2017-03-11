@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import jp.co.honda.music.common.HondaConstants;
+import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.Media;
 
 /**
@@ -18,6 +19,8 @@ import jp.co.honda.music.model.Media;
  */
 
 public class HondaSharePreference {
+
+    protected final Logger log = new Logger(HondaSharePreference.class.getSimpleName(), true);
 
     private final String STORAGE = "jp.co.honda.music.zdccore.STORAGE";
     private SharedPreferences preferences;
@@ -40,6 +43,7 @@ public class HondaSharePreference {
         SharedPreferences.Editor editor = preferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(arrayList);
+        log.d("Json store track: " + json);
         editor.putString(HondaConstants.PREFERENCE_TRACK_LIST, json);
         editor.apply();
     }

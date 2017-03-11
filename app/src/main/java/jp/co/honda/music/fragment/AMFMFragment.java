@@ -181,11 +181,12 @@ public class AMFMFragment extends Fragment implements View.OnClickListener, Adap
                     //Snackbar.make(mView,"Permission Granted, Now you can access location data.", Snackbar.LENGTH_LONG).show();
                     isPermission = true;
                     //ArrayList<Media> list = storage.loadTrackList();
-                    ArrayList<Media> list = TrackUtil.getTrackList(getActivity());
+                    ArrayList<Media> list = TrackUtil.synTrackListDatabase(getActivity());
                     mediaList.clear();
                     mediaList.addAll(list);
                     //trackAdapter = new RadioAdapter(getActivity(),R.layout.radio,mediaList);
                     trackAdapter.notifyDataSetChanged();
+                    ((HomeBaseFragment)getActivity()).setMediaListToBaseActivity();
 
 
                 } else {

@@ -34,7 +34,7 @@ import jp.co.honda.music.notification.AIRecommendReceiver;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
 public class HomeBaseFragment extends BasePlayerActivity implements View.OnClickListener{
-    protected final Logger log = new Logger(MusicPlayActivity.class.getSimpleName(), true);
+    protected final Logger log = new Logger(HomeBaseFragment.class.getSimpleName(), true);
     private Toolbar mToolbar;
     private Spinner mSpinner;
     // Navigation adapter
@@ -235,6 +235,10 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
         log.d("Play when user touch on listview ");
         storage.storeTrackIndex(pos);
         super.playFromAdapter();
+    }
+
+    public void setMediaListToBaseActivity() {
+        super.setMediaListToBaseActivity();
     }
 
     private String detectFragment(int detect) {

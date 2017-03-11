@@ -11,6 +11,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.Media;
 import jp.co.honda.music.model.TrackInfo;
 import jp.co.honda.music.player.R;
@@ -22,6 +23,8 @@ import jp.co.honda.music.zdccore.HondaSharePreference;
  */
 
 public final class TrackUtil {
+
+    protected static final Logger log = new Logger(TrackUtil.class.getSimpleName(), true);
 
     public static ArrayList<Media> synTrackListDatabase(Context context) {
         HondaSharePreference storage = new HondaSharePreference(context);
@@ -100,9 +103,7 @@ public final class TrackUtil {
             while (musicCursor.moveToNext());
         }
         musicCursor.close();
-        if(storage.loadTrackList() == null) {
-            storage.storeTrackList(mediaList);
-        }
+        storage.storeTrackList(mediaList);
         return mediaList;
     }
 

@@ -26,13 +26,12 @@ import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.Media;
 import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.util.PlayerUtils;
-import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.AIMixInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
 public abstract class BasePlayerActivity extends AppCompatActivity {
     // Logger
-    protected final Logger log = new Logger(MusicPlayActivity.class.getSimpleName(), true);
+    protected final Logger log = new Logger(BasePlayerActivity.class.getSimpleName(), true);
     private ImageButton btnPrevious;
     private ImageButton btnPlay;
     private ImageButton btnPause;
@@ -66,13 +65,11 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        storage = new HondaSharePreference(this);
         setContentView(getLayoutResourceId());
         if(getLayoutResourceId() == R.layout.activity_aimix_audio) {
             initScreen();
         }
-        // Get song list from device
-        mediaList = TrackUtil.getTrackList(this);
-        storage = new HondaSharePreference(this);
         //initScreen();
         //mediaList = storage.loadTrackList();
     }
@@ -226,8 +223,14 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
 
 
     public void play() {
+        if(mediaList ==  null || mediaList.size() == 0){
+            mediaList = storage.loadTrackList();
+            if (mediaList == null || mediaList.size() == 0) {
+                return;
+            }
+        }
         //Check is service is active
-        if (!storage.loadMPLServiceStatus()) {
+        if (!serviceBound) {
             log.d("MediaPlayService serviceBound is not started !");
             //Store Serializable audioList to SharedPreferences
             //HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
@@ -449,6 +452,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
                 btnPrevious.setOnClickListener(mOnclick);
                 btnNext.setOnClickListener(mOnclick);
             }else{
+                setMediaListToBaseActivity();
                 btnSave.setVisibility(View.VISIBLE);
                 btnShare.setVisibility(View.VISIBLE);
                 btnPrevious.setVisibility(View.GONE);
@@ -477,5 +481,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
      */
     public void setAIInterface(AIMixInterface aiInterface) {
         this.mAIMixInterface = aiInterface;
+    }
+
+    public void setMediaListToBaseActivity() {
+        mediaList = storage.loadTrackList();
     }
 }
