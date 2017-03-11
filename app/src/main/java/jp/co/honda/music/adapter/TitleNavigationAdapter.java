@@ -54,7 +54,7 @@ public class TitleNavigationAdapter extends BaseAdapter {
         imgIcon = (ImageView) convertView.findViewById(R.id.imgIcon);
         txtTitle = (TextView) convertView.findViewById(R.id.txtTitle);
 
-        imgIcon.setImageResource(R.drawable.ic_menu);
+        imgIcon.setImageResource(R.drawable.ic_menu_bar);
         //imgIcon.setVisibility(View.GONE);
         txtTitle.setText(spinnerNavItem.get(position).getTitle());
         txtTitle.setTextColor(ContextCompat.getColor(context,R.color.color_text_white));
