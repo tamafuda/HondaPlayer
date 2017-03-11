@@ -54,6 +54,7 @@ public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickLis
     Activity mActivity;
     private ListView mListView;
     private int previousPos = -1;
+    private int savePreviousPos = -1;
 
     // Detect fragment
     private String detectFragment;
@@ -79,6 +80,7 @@ public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickLis
         log.d("Child count is : " + String.valueOf(mListView.getChildCount()));
 
         Media media = mediaList.get(position);
+        media.setSelect(true);
         switch (v.getId()) {
             case R.id.radio_title:
             case R.id.radio_duration:
@@ -86,15 +88,17 @@ public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickLis
                 TextView txtRadio = (TextView) v.findViewById(R.id.radio_title);
                 txtRadio.setTextColor(ContextCompat.getColor(context, R.color.colorYellow));
                 //setNotifyOnChange(true);
+                log.d("Previous pos is : " +String.valueOf(previousPos));
+                log.d("Current pos is : " +String.valueOf(position));
                 if (previousPos != -1 && previousPos != position) {
                     if (mListView.getChildAt(previousPos) != null) {
                         TextView txt = (TextView) mListView.getChildAt(previousPos).findViewById(R.id.radio_title);
-                        log.d("Tag of textview is : " + String.valueOf(txt.getTag()));
                         txt.setTextColor(ContextCompat.getColor(context, R.color.color_text_white));
                     }
-                    mediaList.get(previousPos).setSelect(false);
+                    ((Media)mediaList.get(previousPos)).setSelect(false);
+                    previousPos = position;
                 }
-                media.setSelect(true);
+                log.d("After previous pos is : " +String.valueOf(previousPos));
                 mAdapterInterface.updateArtAlbum(position);
                 break;
             case R.id.radio_arrow:
@@ -146,9 +150,15 @@ public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickLis
         //viewHolder.trackTitle.setText(media.getTitle());
         viewHolder.trackTitle.setOnClickListener(this);
         viewHolder.trackTitle.setTag(position);
-        /*if (!media.isSelect()) {
-            viewHolder.trackTitle.setTextColor(ContextCompat.getColor(context, R.color.holo_green_dark));
-        }*/
+//        if (position == savePreviousPos) {
+//            viewHolder.trackTitle.setTextColor(ContextCompat.getColor(context, R.color.holo_green_dark));
+//            savePreviousPos = -1;
+//        }
+        if (media.isSelect()){
+            viewHolder.trackTitle.setTextColor(ContextCompat.getColor(context, R.color.colorYellow));
+        }else {
+            viewHolder.trackTitle.setTextColor(ContextCompat.getColor(context, R.color.color_text_white));
+        }
         viewHolder.duration.setText(duration);
         viewHolder.duration.setTag(position);
         viewHolder.arrow.setText(">");
@@ -158,51 +168,16 @@ public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickLis
         return convertView;
 
     }
-/*
-    //Binding this Client to the AudioPlayer Service
-    private ServiceConnection serviceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            // We've bound to LocalService, cast the IBinder and get LocalService instance
-            log.d("ServiceBound is true");
-            MediaPlayerService.MusicBinder binder = (MediaPlayerService.MusicBinder) service;
-            player = binder.getService();
-            serviceBound = true;
-            storage.storeMPLServiceStatus(true);
-        }
 
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            log.d("ServiceBound is false");
-            serviceBound = false;
-            storage.storeMPLServiceStatus(false);
-        }
-    };
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
 
-    private void play(int trackID) {
-
-        //boolean serviceBound = storage.loadMPLServiceStatus();
-        if (!serviceBound) {
-            //Store Serializable audioList to SharedPreferences
-            //HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
-            storage.storeTrackList(mediaList);
-            storage.storeTrackIndex(trackID);
-
-            Intent playerIntent = new Intent(context,MediaPlayerService.class);
-            context.startService(playerIntent);
-            context.bindService(playerIntent, serviceConnection, Context.BIND_AUTO_CREATE);
-        } else {
-            //Store the new audioIndex to SharedPreferences
-            //HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
-            storage.storeTrackIndex(trackID);
-
-            //Service is active
-            //Send a broadcast to the service -> PLAY_NEW_AUDIO
-            Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_NEW_TRACK);
-            context.sendBroadcast(broadcastIntent);
-        }
-
-    }*/
+    @Override
+    public int getViewTypeCount() {
+        return getCount();
+    }
 
     @Override
     public int getCount() {

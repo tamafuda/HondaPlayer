@@ -311,7 +311,14 @@ public class AMFMFragment extends Fragment implements View.OnClickListener, Adap
     @Override
     public void updateArtAlbum(int pos) {
         Media m = mediaList.get(pos);
+//        for (Media a : mediaList) {
+//            a.setSelect(false);
+//        }
         ((HomeBaseFragment)getActivity()).playMusicInList(pos);
+//        ((Media)mediaList.get(pos)).setSelect(true);
+//        trackAdapter.clear();
+//        trackAdapter.addAll(mediaList);
+//        trackAdapter.notifyDataSetChanged();
 //        if (m.getBitmap() != null) {
 //            albumArt.setImageBitmap(m.getBitmap());
 //        }else{
