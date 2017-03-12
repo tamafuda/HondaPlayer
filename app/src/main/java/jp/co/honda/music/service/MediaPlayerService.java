@@ -792,9 +792,7 @@ public class MediaPlayerService extends Service implements
             return;
         }
         // After play done, play to next track
-        if(mPlayerState.equals(PlayerState.NEXT.getState())
-                || mPlayerState.equals(PlayerState.NEW.getState())
-                || mPlayerState.equals(PlayerState.PLAY.getState())) {
+        if(mPlayerState.equals(PlayerState.NEXT.getState())) {
             skipToNext();
         }
 

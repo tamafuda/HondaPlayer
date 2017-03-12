@@ -176,7 +176,7 @@ public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickLis
 
     @Override
     public int getViewTypeCount() {
-        return getCount();
+        return 1;
     }
 
     @Override

@@ -31,6 +31,7 @@ import jp.co.honda.music.fragment.InternetRadioFragment;
 import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.SpinnerNavItem;
 import jp.co.honda.music.notification.AIRecommendReceiver;
+import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
 public class HomeBaseFragment extends BasePlayerActivity implements View.OnClickListener{
@@ -193,6 +194,8 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
     @Override
     public void onBackPressed() {
         log.d("Debug");
+        stopService(new Intent(HomeBaseFragment.this, MediaPlayerService.class));
+        super.isStopService(true);
         this.finish();
         //this.onDestroy();
         //super.onBackPressed();
@@ -266,5 +269,7 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
     protected String detectScreenID() {
         return detectFragment(detectScreen);
     }
+
+
 }
 

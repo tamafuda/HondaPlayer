@@ -61,6 +61,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     private boolean hasSeekbar;
     private AIMixInterface mAIMixInterface;
 
+    private boolean mIsStopMusic;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,19 +205,43 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     protected void onDestroy() {
         log.d("BasePlayerActivity onDestroy");
         super.onDestroy();
+        if(mIsStopMusic) {
+            if (storage.loadMPLServiceStatus() && serviceConnection != null) {
+                log.d("onDestroy - Unbind service ");
+                mHandler.removeCallbacks(mUpdatePositionRunnable);
+                doUnbindService();
+            }
+        }
+
+        /*if (isNeedKeepMediaSrv()) {
+            log.d("BasePlayerActivity still keep service");
+            return;
+        }
+        if (storage.loadMPLServiceStatus() && serviceConnection != null) {
+            log.d("onDestroy - Unbind service ");
+            mHandler.removeCallbacks(mUpdatePositionRunnable);
+            doUnbindService();
+        }*/
+
+    }
+
+    public void stopService() {
         if (isNeedKeepMediaSrv()) {
             log.d("BasePlayerActivity still keep service");
             return;
         }
-
         if (storage.loadMPLServiceStatus() && serviceConnection != null) {
             log.d("onDestroy - Unbind service ");
             mHandler.removeCallbacks(mUpdatePositionRunnable);
             doUnbindService();
         }
-
     }
 
+    /**
+     * isButtonController is true when seekbar is going on
+     * @param isButtonController
+     * @param isPlaying
+     */
     private void updateIconPlayPause(boolean isButtonController, boolean isPlaying) {
         if (isButtonController) {
             PlayerViewHelper.setPlayPauseButtonVisibility(btnPlay, btnPause, isPlaying);
@@ -268,7 +295,6 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             sendBroadcast(broadcastIntent);
         }
         updateIconPlayPause(hasSeekbar, true);
-
 
     }
 
@@ -485,5 +511,14 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
 
     public void setMediaListToBaseActivity() {
         mediaList = storage.loadTrackList();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    public void isStopService(boolean isStop){
+        this.mIsStopMusic = isStop;
     }
 }
