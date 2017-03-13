@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -136,6 +137,7 @@ public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickLis
             viewHolder.trackTitle = (TextView) convertView.findViewById(R.id.radio_title);
             viewHolder.duration = (TextView) convertView.findViewById(R.id.radio_duration);
             viewHolder.arrow = (TextView) convertView.findViewById(R.id.radio_arrow);
+            viewHolder.image = (ImageView) convertView.findViewById(R.id.id_album_ie);
             result = convertView;
             convertView.setTag(viewHolder);
             log.d("Position new load is : " + String.valueOf(position));
@@ -144,8 +146,15 @@ public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickLis
             result = convertView;
             log.d("Position loaded is : " + String.valueOf(position));
         }
+
         String mTitle = String.valueOf(position + 1) + "    " + media.getTitle();
-        viewHolder.trackTitle.setText(mTitle);
+        if(detectFragment.equals(HondaConstants.DETECT_FRAGMENT_NETRADIO)) {
+            viewHolder.trackTitle.setText(media.getTitle());
+            viewHolder.image.setVisibility(View.VISIBLE);
+        }else{
+            viewHolder.trackTitle.setText(mTitle);
+            viewHolder.image.setVisibility(View.GONE);
+        }
         String duration = TrackUtil.covertDuration(media.getDuration());
         //viewHolder.trackTitle.setText(media.getTitle());
         viewHolder.trackTitle.setOnClickListener(this);
@@ -196,6 +205,7 @@ public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickLis
         TextView trackTitle;
         TextView duration;
         TextView arrow;
+        ImageView image;
     }
 
 

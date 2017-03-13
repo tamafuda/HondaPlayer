@@ -24,7 +24,7 @@
 
         <ImageView
             android:id="@+id/bgr_singer"
-            android:src="@drawable/art_fm_am"
+            android:src="@drawable/cover_fantome"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:contentDescription="@string/app_name"
@@ -38,12 +38,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/textView34"
+            android:id="@+id/id_album_artist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_text_white"
+            android:textColor="@color/holo_blue_bright"
             android:gravity="center_horizontal|center_vertical|center"
-            android:text="Fantome / Hiraku Utada >" />
+            android:text="Fantome / Hiraku Utada" />
 
     </LinearLayout>
     <LinearLayout
@@ -53,30 +53,83 @@
         android:layout_marginEnd="5dp"
         android:layout_marginTop="5dp"
         android:layout_height="70dp">
-        <ImageView
-            android:src="@drawable/hikaru1"
+        <RelativeLayout
             android:layout_weight="1"
-            android:id="@+id/horizontal_image1"
-            android:layout_width="70dp"
-            android:layout_height="match_parent" />
-        <ImageView
-            android:src="@drawable/hikaru2"
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/cover_fantome"
+                android:layout_width="match_parent"
+                android:id="@+id/horizontal_image1"
+                android:layout_height="55dp" />
+            <TextView
+                android:id="@+id/id_cover_fantome"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/holo_blue_bright"
+                android:gravity="center_horizontal"
+                android:layout_height="15dp"
+                android:text="Fantome"/>
+        </RelativeLayout>
+        <RelativeLayout
             android:layout_weight="1"
-            android:id="@+id/horizontal_image2"
-            android:layout_width="70dp"
-            android:layout_height="match_parent" />
-        <ImageView
-            android:src="@drawable/nhuquynh3"
-            android:id="@+id/horizontal_image3"
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/cover_distance"
+                android:id="@+id/horizontal_image2"
+                android:layout_width="match_parent"
+                android:layout_height="55dp" />
+            <TextView
+                android:id="@+id/id_cover_distance"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/color_text_white"
+                android:gravity="center_horizontal"
+                android:layout_height="15dp"
+                android:text="Distance"/>
+            </RelativeLayout>
+        <RelativeLayout
             android:layout_weight="1"
-            android:layout_width="70dp"
-            android:layout_height="match_parent" />
-        <ImageView
-            android:src="@drawable/ikimonogakiri"
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/cover_chouchou"
+                android:id="@+id/horizontal_image3"
+                android:layout_width="match_parent"
+                android:layout_height="55dp" />
+            <TextView
+                android:id="@+id/id_cover_chouchou"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/color_text_white"
+                android:gravity="center_horizontal"
+                android:layout_height="15dp"
+                android:text="Chouchou"/>
+            </RelativeLayout>
+        <RelativeLayout
             android:layout_weight="1"
-            android:id="@+id/horizontal_image4"
-            android:layout_width="70dp"
-            android:layout_height="match_parent" />
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/cover_firstlove"
+                android:id="@+id/horizontal_image4"
+                android:layout_width="match_parent"
+                android:layout_height="55dp" />
+            <TextView
+                android:id="@+id/id_cover_firstlove"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/color_text_white"
+                android:gravity="center_horizontal"
+                android:layout_height="15dp"
+                android:text="Firstlove"/>
+        </RelativeLayout>
+
 
     </LinearLayout>
 

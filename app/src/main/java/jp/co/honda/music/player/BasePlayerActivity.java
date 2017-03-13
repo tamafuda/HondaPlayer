@@ -267,7 +267,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
                 currentPosition = 0;
                 storage.storeTrackIndex(0);
             }
-            storage.storeTrackList(mediaList);
+            if(!detectScreenID().equals(HondaConstants.DETECT_FRAGMENT_FMAM)) {
+                storage.storeTrackList(mediaList);
+            }
             //storage.storeTrackIndex(getAudioIndex());
             Intent playerIntent = new Intent(this, MediaPlayerService.class);
             startService(playerIntent);
@@ -356,15 +358,14 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     };
 
     private void updateProgressBars() {
-        log.d("update Progress bars");
         if (!hasSeekbar) {
-            mHandler.removeCallbacks(mUpdatePositionRunnable);
+            stopUpdateSeekbar();
             return;
         }
+        log.d("Seekbar is available!");
         //mHandler.removeCallbacks(mUpdatePositionRunnable);
         if (mPlaybackService != null) {
-            mHandler.postDelayed(mUpdatePositionRunnable, 100);
-            log.d("PostDelayed after 1s");
+            mHandler.postDelayed(mUpdatePositionRunnable, 1000);
             MediaPlayer mp = mPlaybackService.getMediaPlayer();
             if (mp == null) {
                 return;
@@ -437,6 +438,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
 
     private void setProgressSeekBar(int value) {
         if (hasSeekbar) {
+            log.d("Seekbar is available!");
             mSeekbar.setProgress(value);
             updateProgressBars();
         }
@@ -452,6 +454,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     public void initScreen() {
 
         if (!detectScreenID().equals(HondaConstants.DETECT_FRAGMENT_FMAM)) {
+            mediaList = storage.loadTrackList();
             btnPrevious = (ImageButton) findViewById(R.id.btn_previous);
             btnPlay = (ImageButton) findViewById(R.id.btn_play);
             btnPause = (ImageButton) findViewById(R.id.btn_pause);
@@ -528,5 +531,6 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
 
     public void stopUpdateSeekbar() {
         mHandler.removeCallbacks(mUpdatePositionRunnable);
+        mHandler.removeCallbacksAndMessages(null);
     }
 }

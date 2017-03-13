@@ -80,6 +80,10 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 if (e1.getX() - e2.getX() > 50) {
                     Toast.makeText(getBaseContext(), "SwipLeft", Toast.LENGTH_SHORT).show();
+                    if(detectScreen == 0 || detectScreen == 3) {
+                        HomeBaseFragment.super.stopUpdateSeekbar();
+                        stopService(new Intent(HomeBaseFragment.this, MediaPlayerService.class));
+                    }
                     Intent iPlay = new Intent(getBaseContext(), RadarMusicActivity.class);
                     iPlay.putExtra(HondaConstants.DETECTED_SCREEN_FLING, true);
                     startActivity(iPlay);
@@ -167,7 +171,7 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
 
          // Bluetooth
         } else if (position == 2) {
-            fr = new AMFMFragment();
+            fr = new IPodFragment();
             detectScreen = position;
         } else if (position == 3) {
             fr = new InternetRadioFragment();
@@ -254,7 +258,7 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
                 returnScreen = HondaConstants.DETECT_FRAGMENT_IPOD;
                 break;
             case 2:
-                returnScreen = HondaConstants.DETECT_FRAGMENT_FMAM;
+                returnScreen = HondaConstants.DETECT_FRAGMENT_IPOD;
                 break;
             case 3:
                 returnScreen = HondaConstants.DETECT_FRAGMENT_NETRADIO;

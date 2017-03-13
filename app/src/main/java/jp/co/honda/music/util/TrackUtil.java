@@ -303,7 +303,7 @@ public final class TrackUtil {
         media = new Media(1, listMedias.get(0).getData(), "TOKYO FM 80.0Mhz", "","",listMedias.get(0).getDuration(),null);
         listRadioStation.add(media);
         String data;
-        if(listMedias.get(1) != null) {
+        if(listMedias.size() > 1 && listMedias.get(1) != null) {
             data = listMedias.get(1).getData();
         }else{
             data = listMedias.get(0).getData();
@@ -311,7 +311,7 @@ public final class TrackUtil {
         media = new Media(2, data , "J-WAVE   76.1Mhz", "","",listMedias.get(0).getDuration(),null);
         listRadioStation.add(media);
 
-        if(listMedias.get(2) != null) {
+        if(listMedias.size() > 2 && listMedias.get(2) != null) {
             data = listMedias.get(2).getData();
         }else{
             data = listMedias.get(0).getData();
@@ -319,7 +319,7 @@ public final class TrackUtil {
         media = new Media(3, data, "bayFM    78.0Mhz", "","",listMedias.get(0).getDuration(),null);
         listRadioStation.add(media);
 
-        if(listMedias.get(3) != null) {
+        if(listMedias.size() > 3 && listMedias.get(3) != null) {
             data = listMedias.get(3).getData();
         }else{
             data = listMedias.get(0).getData();
@@ -327,7 +327,7 @@ public final class TrackUtil {
         media = new Media(4, data, "RADIO BERRY 76.4Mhz", "","",listMedias.get(1).getDuration(),null);
         listRadioStation.add(media);
 
-        if(listMedias.get(4) != null) {
+        if(listMedias.size() > 4 && listMedias.get(4) != null) {
             data = listMedias.get(4).getData();
         }else{
             data = listMedias.get(0).getData();
@@ -335,7 +335,7 @@ public final class TrackUtil {
         media = new Media(5, data, "FM yokohama 84.7Mhz", "","",listMedias.get(1).getDuration(),null);
         listRadioStation.add(media);
 
-        if(listMedias.get(5) != null) {
+        if(listMedias.size() > 5 && listMedias.get(5) != null) {
             data = listMedias.get(5).getData();
         }else{
             data = listMedias.get(0).getData();
@@ -343,7 +343,7 @@ public final class TrackUtil {
         media = new Media(6, data, "FM-FUJI     83.0Mhz", "","",listMedias.get(1).getDuration(),null);
         listRadioStation.add(media);
 
-        if(listMedias.get(6) != null) {
+        if(listMedias.size() > 6 && listMedias.get(6) != null) {
             data = listMedias.get(6).getData();
         }else{
             data = listMedias.get(0).getData();
@@ -351,7 +351,7 @@ public final class TrackUtil {
         media = new Media(7, data, "FMぐんま    86.3Mhz", "","",listMedias.get(1).getDuration(),null);
         listRadioStation.add(media);
 
-        if(listMedias.get(7) != null) {
+        if(listMedias.size() > 8 && listMedias.get(7) != null) {
             data = listMedias.get(7).getData();
         }else{
             data = listMedias.get(0).getData();
@@ -359,7 +359,7 @@ public final class TrackUtil {
         media = new Media(8, data, "TBSラジオ   95.4Mhz", "","",listMedias.get(1).getDuration(),null);
         listRadioStation.add(media);
 
-        if(listMedias.get(8) != null) {
+        if(listMedias.size() > 9 && listMedias.get(8) != null) {
             data = listMedias.get(8).getData();
         }else{
             data = listMedias.get(0).getData();
@@ -367,7 +367,7 @@ public final class TrackUtil {
         media = new Media(9, data, "ニッポン放送 1242Mhz", "","",listMedias.get(1).getDuration(),null);
         listRadioStation.add(media);
 
-        if(listMedias.get(9) != null) {
+        if(listMedias.size() > 10 && listMedias.get(9) != null) {
             data = listMedias.get(9).getData();
         }else{
             data = listMedias.get(0).getData();
@@ -375,7 +375,7 @@ public final class TrackUtil {
         media = new Media(10, data, "ラジオ日本  1422Mhz", "","",listMedias.get(1).getDuration(),null);
         listRadioStation.add(media);
 
-        if(listMedias.get(10) != null) {
+        if(listMedias.size() > 11 && listMedias.get(10) != null) {
             data = listMedias.get(10).getData();
         }else{
             data = listMedias.get(0).getData();
@@ -383,7 +383,7 @@ public final class TrackUtil {
         media = new Media(11, data, "栃木放送    864Mhz", "","",listMedias.get(1).getDuration(),null);
         listRadioStation.add(media);
 
-        if(listMedias.get(11) != null) {
+        if(listMedias.size() > 12 && listMedias.get(11) != null) {
             data = listMedias.get(11).getData();
         }else{
             data = listMedias.get(0).getData();
@@ -391,7 +391,7 @@ public final class TrackUtil {
         media = new Media(12, data, "NHK東京第１放送 594Mhz", "","",listMedias.get(1).getDuration(),null);
         listRadioStation.add(media);
 
-        if(listMedias.get(12) != null) {
+        if(listMedias.size() > 13 && listMedias.get(12) != null) {
             data = listMedias.get(12).getData();
         }else{
             data = listMedias.get(0).getData();
@@ -399,7 +399,7 @@ public final class TrackUtil {
         media = new Media(13, data, "NHK山梨第２放送 1602Mhz", "","",listMedias.get(1).getDuration(),null);
         listRadioStation.add(media);
 
-        if(listMedias.get(13) != null) {
+        if(listMedias.size() > 14 && listMedias.get(13) != null) {
             data = listMedias.get(13).getData();
         }else{
             data = listMedias.get(0).getData();

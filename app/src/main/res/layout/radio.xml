@@ -13,6 +13,16 @@
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:tag="taglistview">
+        
+        <ImageView
+            android:id="@+id/id_album_ie"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:visibility="gone"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/img_cover"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="1dp" />
 
         <TextView
             android:id="@+id/radio_title"
