@@ -82,9 +82,11 @@ public class AMFMFragment extends Fragment implements View.OnClickListener, Adap
         }
         if (isPermission) {
             if (storage.loadTrackList() == null) {
-                mediaList = TrackUtil.synTrackListDatabase(getActivity());
+                TrackUtil.synTrackListDatabase(getActivity());
+                mediaList = TrackUtil.getRadioStationList(getActivity());
             }else{
-                mediaList = storage.loadTrackList();
+                //mediaList = storage.loadTrackList();
+                mediaList = TrackUtil.getRadioStationList(getActivity());
             }
             //mediaList = TrackUtil.getTrackList(getActivity());
         } else {
@@ -181,7 +183,8 @@ public class AMFMFragment extends Fragment implements View.OnClickListener, Adap
                     //Snackbar.make(mView,"Permission Granted, Now you can access location data.", Snackbar.LENGTH_LONG).show();
                     isPermission = true;
                     //ArrayList<Media> list = storage.loadTrackList();
-                    ArrayList<Media> list = TrackUtil.synTrackListDatabase(getActivity());
+                    TrackUtil.synTrackListDatabase(getActivity());
+                    ArrayList<Media> list = TrackUtil.getRadioStationList(getActivity());
                     mediaList.clear();
                     mediaList.addAll(list);
                     //trackAdapter = new RadioAdapter(getActivity(),R.layout.radio,mediaList);

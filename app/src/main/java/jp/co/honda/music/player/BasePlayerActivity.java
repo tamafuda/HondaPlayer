@@ -26,6 +26,7 @@ import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.Media;
 import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.util.PlayerUtils;
+import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.AIMixInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
@@ -307,6 +308,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_STOP_TRACK);
         sendBroadcast(broadcastIntent);
         updateProgressBars();
+        mHandler.removeCallbacks(mUpdatePositionRunnable);
     }
 
     public void next() {
@@ -356,6 +358,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     private void updateProgressBars() {
         log.d("update Progress bars");
         if (!hasSeekbar) {
+            mHandler.removeCallbacks(mUpdatePositionRunnable);
             return;
         }
         //mHandler.removeCallbacks(mUpdatePositionRunnable);
@@ -488,6 +491,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             }
 
         } else {
+            mediaList = TrackUtil.getRadioStationList(getBaseContext());
             LinearLayout ln = (LinearLayout) findViewById(R.id.play_layout);
             ln.setVisibility(View.GONE);
             // Gets the layout params that will allow you to resize the layout
@@ -520,5 +524,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
 
     public void isStopService(boolean isStop){
         this.mIsStopMusic = isStop;
+    }
+
+    public void stopUpdateSeekbar() {
+        mHandler.removeCallbacks(mUpdatePositionRunnable);
     }
 }

@@ -162,8 +162,10 @@ public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickLis
             log.d("Display color of text or not : NO ");
             viewHolder.trackTitle.setTextColor(ContextCompat.getColor(context, R.color.color_text_white));
         }
-        viewHolder.duration.setText(duration);
-        viewHolder.duration.setTag(position);
+        if(!detectFragment.equals(HondaConstants.DETECT_FRAGMENT_FMAM)) {
+            viewHolder.duration.setText(duration);
+            viewHolder.duration.setTag(position);
+        }
         viewHolder.arrow.setText(">");
         viewHolder.arrow.setTag(position);
         viewHolder.arrow.setOnClickListener(this);

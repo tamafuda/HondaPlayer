@@ -295,6 +295,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        AIMixAudio.super.stopUpdateSeekbar();
                         String arrangeMusic = musicChangeName.getText().toString();
                         if(arrangeMusic.isEmpty()) {
                             arrangeMusic = musicChangeName.getHint().toString();
