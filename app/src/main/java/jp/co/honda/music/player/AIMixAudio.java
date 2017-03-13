@@ -23,6 +23,7 @@ import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.dialog.ProgressDialogTask;
 import jp.co.honda.music.model.Media;
 import jp.co.honda.music.model.TrackInfo;
+import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.util.PlayerUtils;
 import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.AIMixInterface;
@@ -145,7 +146,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
                                                   arrangeMusic = musicChangeName.getHint().toString();
                                               }
                                               PlayerUtils.addOneMediaArrange(getBaseContext(),arrangeMusic);
-                                              Intent iController = new Intent(getBaseContext(), MusicPlayActivity.class);
+                                              Intent iController = new Intent(getBaseContext(), RadarMusicActivity.class);
                                               startActivity(iController);
                                               finish();
                                           }
@@ -299,6 +300,8 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
                             arrangeMusic = musicChangeName.getHint().toString();
                         }
                         PlayerUtils.addOneMediaArrange(getBaseContext(),arrangeMusic);
+                        releaseMediaPlayer();
+                        stopService(new Intent(AIMixAudio.this, MediaPlayerService.class));
                         Intent iController = new Intent(getBaseContext(), RadarMusicActivity.class);
                         startActivity(iController);
                         finish();

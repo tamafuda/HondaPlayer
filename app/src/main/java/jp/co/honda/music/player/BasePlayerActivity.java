@@ -209,7 +209,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             if (storage.loadMPLServiceStatus() && serviceConnection != null) {
                 log.d("onDestroy - Unbind service ");
                 mHandler.removeCallbacks(mUpdatePositionRunnable);
-                doUnbindService();
+                //doUnbindService();
             }
         }
 

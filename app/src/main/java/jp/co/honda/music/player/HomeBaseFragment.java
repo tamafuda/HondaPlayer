@@ -197,7 +197,7 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
         stopService(new Intent(HomeBaseFragment.this, MediaPlayerService.class));
         super.isStopService(true);
         this.finish();
-        //this.onDestroy();
+        //super.onDestroy();
         //super.onBackPressed();
     }
 
