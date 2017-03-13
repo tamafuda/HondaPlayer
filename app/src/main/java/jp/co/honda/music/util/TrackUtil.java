@@ -299,112 +299,193 @@ public final class TrackUtil {
         if (listMedias == null || listMedias.size() == 0) {
             return null;
         }
-
-        media = new Media(1, listMedias.get(0).getData(), "TOKYO FM 80.0Mhz", "","",listMedias.get(0).getDuration(),null);
+        String data = "";
+        String album = "";
+        String artist = "";
+        long duration = 0;
+        media = new Media(1, listMedias.get(0).getData(), "TOKYO FM 80.0Mhz", listMedias.get(0).getAlbum(),listMedias.get(0).getArtist(),listMedias.get(0).getDuration(),null);
         listRadioStation.add(media);
-        String data;
         if(listMedias.size() > 1 && listMedias.get(1) != null) {
             data = listMedias.get(1).getData();
+            album = listMedias.get(1).getAlbum();
+            artist = listMedias.get(1).getArtist();
+            duration = listMedias.get(1).getDuration();
         }else{
             data = listMedias.get(0).getData();
+            album = listMedias.get(0).getAlbum();
+            artist = listMedias.get(0).getArtist();
+            duration = listMedias.get(0).getDuration();
         }
-        media = new Media(2, data , "J-WAVE   76.1Mhz", "","",listMedias.get(0).getDuration(),null);
+        media = new Media(2, data , "J-WAVE   76.1Mhz", album,artist,duration,null);
         listRadioStation.add(media);
 
         if(listMedias.size() > 2 && listMedias.get(2) != null) {
             data = listMedias.get(2).getData();
+            album = listMedias.get(2).getAlbum();
+            artist = listMedias.get(2).getArtist();
+            duration = listMedias.get(2).getDuration();
         }else{
             data = listMedias.get(0).getData();
+            album = listMedias.get(0).getAlbum();
+            artist = listMedias.get(0).getArtist();
+            duration = listMedias.get(0).getDuration();
         }
-        media = new Media(3, data, "bayFM    78.0Mhz", "","",listMedias.get(0).getDuration(),null);
+        media = new Media(3, data, "bayFM    78.0Mhz", album,artist,duration,null);
         listRadioStation.add(media);
 
         if(listMedias.size() > 3 && listMedias.get(3) != null) {
             data = listMedias.get(3).getData();
+            album = listMedias.get(3).getAlbum();
+            artist = listMedias.get(3).getArtist();
+            duration = listMedias.get(3).getDuration();
+
         }else{
             data = listMedias.get(0).getData();
+            album = listMedias.get(0).getAlbum();
+            artist = listMedias.get(0).getArtist();
+            duration = listMedias.get(0).getDuration();
         }
-        media = new Media(4, data, "RADIO BERRY 76.4Mhz", "","",listMedias.get(1).getDuration(),null);
+        media = new Media(4, data, "RADIO BERRY 76.4Mhz", album,artist,duration,null);
         listRadioStation.add(media);
 
         if(listMedias.size() > 4 && listMedias.get(4) != null) {
             data = listMedias.get(4).getData();
+            album = listMedias.get(4).getAlbum();
+            artist = listMedias.get(4).getArtist();
+            duration = listMedias.get(4).getDuration();
         }else{
             data = listMedias.get(0).getData();
+            album = listMedias.get(0).getAlbum();
+            artist = listMedias.get(0).getArtist();
+            duration = listMedias.get(0).getDuration();
         }
-        media = new Media(5, data, "FM yokohama 84.7Mhz", "","",listMedias.get(1).getDuration(),null);
+        media = new Media(5, data, "FM yokohama 84.7Mhz", album,artist,duration,null);
         listRadioStation.add(media);
 
         if(listMedias.size() > 5 && listMedias.get(5) != null) {
             data = listMedias.get(5).getData();
+            album = listMedias.get(5).getAlbum();
+            artist = listMedias.get(5).getArtist();
+            duration = listMedias.get(5).getDuration();
         }else{
             data = listMedias.get(0).getData();
+            album = listMedias.get(0).getAlbum();
+            artist = listMedias.get(0).getArtist();
+            duration = listMedias.get(0).getDuration();
         }
-        media = new Media(6, data, "FM-FUJI     83.0Mhz", "","",listMedias.get(1).getDuration(),null);
+        media = new Media(6, data, "FM-FUJI     83.0Mhz",album,artist,duration,null);
         listRadioStation.add(media);
 
         if(listMedias.size() > 6 && listMedias.get(6) != null) {
             data = listMedias.get(6).getData();
+            album = listMedias.get(6).getAlbum();
+            artist = listMedias.get(6).getArtist();
+            duration = listMedias.get(6).getDuration();
         }else{
             data = listMedias.get(0).getData();
+            album = listMedias.get(0).getAlbum();
+            artist = listMedias.get(0).getArtist();
+            duration = listMedias.get(0).getDuration();
         }
-        media = new Media(7, data, "FMぐんま    86.3Mhz", "","",listMedias.get(1).getDuration(),null);
+        media = new Media(7, data, "FMぐんま    86.3Mhz", album,artist,duration,null);
         listRadioStation.add(media);
 
         if(listMedias.size() > 8 && listMedias.get(7) != null) {
             data = listMedias.get(7).getData();
+            album = listMedias.get(7).getAlbum();
+            artist = listMedias.get(7).getArtist();
+            duration = listMedias.get(7).getDuration();
         }else{
             data = listMedias.get(0).getData();
+            album = listMedias.get(0).getAlbum();
+            artist = listMedias.get(0).getArtist();
+            duration = listMedias.get(0).getDuration();
         }
-        media = new Media(8, data, "TBSラジオ   95.4Mhz", "","",listMedias.get(1).getDuration(),null);
+        media = new Media(8, data, "TBSラジオ   95.4Mhz", album,artist,duration,null);
         listRadioStation.add(media);
 
         if(listMedias.size() > 9 && listMedias.get(8) != null) {
             data = listMedias.get(8).getData();
+            album = listMedias.get(8).getAlbum();
+            artist = listMedias.get(8).getArtist();
+            duration = listMedias.get(8).getDuration();
         }else{
             data = listMedias.get(0).getData();
+            album = listMedias.get(0).getAlbum();
+            artist = listMedias.get(0).getArtist();
+            duration = listMedias.get(0).getDuration();
         }
-        media = new Media(9, data, "ニッポン放送 1242Mhz", "","",listMedias.get(1).getDuration(),null);
+        media = new Media(9, data, "ニッポン放送 1242Mhz", album,artist,duration,null);
         listRadioStation.add(media);
 
         if(listMedias.size() > 10 && listMedias.get(9) != null) {
             data = listMedias.get(9).getData();
+            album = listMedias.get(9).getAlbum();
+            artist = listMedias.get(9).getArtist();
+            duration = listMedias.get(9).getDuration();
         }else{
             data = listMedias.get(0).getData();
+            album = listMedias.get(0).getAlbum();
+            artist = listMedias.get(0).getArtist();
+            duration = listMedias.get(0).getDuration();
         }
-        media = new Media(10, data, "ラジオ日本  1422Mhz", "","",listMedias.get(1).getDuration(),null);
+        media = new Media(10, data, "ラジオ日本  1422Mhz", album,artist,duration,null);
         listRadioStation.add(media);
 
         if(listMedias.size() > 11 && listMedias.get(10) != null) {
             data = listMedias.get(10).getData();
+            album = listMedias.get(10).getAlbum();
+            artist = listMedias.get(10).getArtist();
+            duration = listMedias.get(10).getDuration();
         }else{
             data = listMedias.get(0).getData();
+            album = listMedias.get(0).getAlbum();
+            artist = listMedias.get(0).getArtist();
+            duration = listMedias.get(0).getDuration();
         }
-        media = new Media(11, data, "栃木放送    864Mhz", "","",listMedias.get(1).getDuration(),null);
+        media = new Media(11, data, "栃木放送    864Mhz", album,artist,duration,null);
         listRadioStation.add(media);
 
         if(listMedias.size() > 12 && listMedias.get(11) != null) {
             data = listMedias.get(11).getData();
+            album = listMedias.get(11).getAlbum();
+            artist = listMedias.get(11).getArtist();
+            duration = listMedias.get(11).getDuration();
         }else{
             data = listMedias.get(0).getData();
+            album = listMedias.get(0).getAlbum();
+            artist = listMedias.get(0).getArtist();
+            duration = listMedias.get(0).getDuration();
         }
-        media = new Media(12, data, "NHK東京第１放送 594Mhz", "","",listMedias.get(1).getDuration(),null);
+        media = new Media(12, data, "NHK東京第１放送 594Mhz", album,artist,duration,null);
         listRadioStation.add(media);
 
         if(listMedias.size() > 13 && listMedias.get(12) != null) {
             data = listMedias.get(12).getData();
+            album = listMedias.get(12).getAlbum();
+            artist = listMedias.get(12).getArtist();
+            duration = listMedias.get(12).getDuration();
         }else{
             data = listMedias.get(0).getData();
+            album = listMedias.get(0).getAlbum();
+            artist = listMedias.get(0).getArtist();
+            duration = listMedias.get(0).getDuration();
         }
-        media = new Media(13, data, "NHK山梨第２放送 1602Mhz", "","",listMedias.get(1).getDuration(),null);
+        media = new Media(13, data, "NHK山梨第２放送 1602Mhz", album,artist,duration,null);
         listRadioStation.add(media);
 
         if(listMedias.size() > 14 && listMedias.get(13) != null) {
             data = listMedias.get(13).getData();
+            album = listMedias.get(13).getAlbum();
+            artist = listMedias.get(13).getArtist();
+            duration = listMedias.get(13).getDuration();
         }else{
             data = listMedias.get(0).getData();
+            album = listMedias.get(0).getAlbum();
+            artist = listMedias.get(0).getArtist();
+            duration = listMedias.get(0).getDuration();
         }
-        media = new Media(14, data, "茨城放送  1197Mhz", "","",listMedias.get(1).getDuration(),null);
+        media = new Media(14, data, "茨城放送  1197Mhz", album,artist,duration,null);
         listRadioStation.add(media);
 
         return listRadioStation;

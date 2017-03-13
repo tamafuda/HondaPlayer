@@ -95,7 +95,7 @@ public class RadarMusicActivity extends AppCompatActivity {
                     Intent iPlay = new Intent(getBaseContext(), HomeBaseFragment.class);
                     iPlay.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     //Intent iPlay = new Intent(getBaseContext(), PlayMediaActivity.class);
-                    iPlay.putExtra("RadarMusicActivity", true);
+                    iPlay.putExtra(HondaConstants.DETECTED_SCREEN_CAPSUL, true);
                     startActivity(iPlay);
                     finish();
                     //startActivity(iPlay);
@@ -198,7 +198,7 @@ public class RadarMusicActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent iPlay = new Intent(getBaseContext(), HomeBaseFragment.class);
-        //iPlay.putExtra(HondaConstants.DETECTED_SCREEN_FLING, true);
+        iPlay.putExtra(HondaConstants.DETECTED_SCREEN_CAPSUL, true);
         startActivity(iPlay);
         finish();
     }

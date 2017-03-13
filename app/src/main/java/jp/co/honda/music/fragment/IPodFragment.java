@@ -127,7 +127,20 @@ public class IPodFragment extends Fragment implements View.OnClickListener,Adapt
 
     @Override
     public void updateArtAlbum(int pos) {
+        Media m = mediaList.get(pos);
         ((HomeBaseFragment)getActivity()).playMusicInList(pos);
+        if(m.getAlbum() != null && !m.getAlbum().isEmpty()){
+            mPlaylist1.setText(m.getAlbum());
+        }else{
+            mPlaylist1.setText("Unknown");
+        }
+        if(m.getArtist() != null && !m.getArtist().isEmpty()){
+            mPlaylist2.setText(m.getArtist());
+        }else{
+            mPlaylist2.setText("Unknown");
+        }
+
+
     }
 
     @Override

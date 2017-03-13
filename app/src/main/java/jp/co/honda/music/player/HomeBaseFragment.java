@@ -54,6 +54,15 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_test_fragment);
         // Setup notification
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            boolean isRadar = extras.getBoolean(HondaConstants.DETECTED_SCREEN_CAPSUL,false);
+            if(isRadar) {
+                super.stopUpdateSeekbar();
+                stopService(new Intent(HomeBaseFragment.this, MediaPlayerService.class));
+            }
+        }
+
         if (savedInstanceState == null) {
             selectFrag(0);
         }
@@ -80,8 +89,8 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 if (e1.getX() - e2.getX() > 50) {
                     Toast.makeText(getBaseContext(), "SwipLeft", Toast.LENGTH_SHORT).show();
+                    HomeBaseFragment.super.stopUpdateSeekbar();
                     if(detectScreen == 0 || detectScreen == 3) {
-                        HomeBaseFragment.super.stopUpdateSeekbar();
                         stopService(new Intent(HomeBaseFragment.this, MediaPlayerService.class));
                     }
                     Intent iPlay = new Intent(getBaseContext(), RadarMusicActivity.class);
@@ -249,6 +258,7 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
     }
 
     private String detectFragment(int detect) {
+        log.d("DetectFragment");
         String returnScreen = "";
         switch (detect) {
             case 0:
@@ -271,7 +281,16 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
 
     @Override
     protected String detectScreenID() {
+        log.d("detectScreenID");
         return detectFragment(detectScreen);
+    }
+
+    public boolean detectPopupWindow() {
+        if(detectScreenID().equals(HondaConstants.DETECT_FRAGMENT_FMAM)
+                || detectScreenID().equals(HondaConstants.DETECT_FRAGMENT_NETRADIO)) {
+            return true;
+        }
+        return false;
     }
 
 

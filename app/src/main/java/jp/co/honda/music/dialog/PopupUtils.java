@@ -14,8 +14,10 @@ import android.widget.Button;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import jp.co.honda.music.player.HomeBaseFragment;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.player.RadarMusicActivity;
+import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.util.SystemUtils;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
@@ -54,6 +56,11 @@ public class PopupUtils{
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                boolean detectPopupWd = ((HomeBaseFragment)activity).detectPopupWindow();
+                ((HomeBaseFragment) activity).stopUpdateSeekbar();
+                if(detectPopupWd) {
+                    activity.stopService(new Intent(activity, MediaPlayerService.class));
+                }
                 Intent iPlay = new Intent(activity.getBaseContext(), RadarMusicActivity.class);
                 //iPlay.putExtra(HondaConstants.INTENT_NOTIFY_TO_MUSICPLAY_SRC,true);
                 activity.startActivity(iPlay);

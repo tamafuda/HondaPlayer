@@ -244,6 +244,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
     public void onBackPressed() {
         //super.onBackPressed();
         releaseMediaPlayer();
+        super.stopUpdateSeekbar();
         Intent iController = new Intent(getBaseContext(), RadarMusicActivity.class);
         startActivity(iController);
         finish();

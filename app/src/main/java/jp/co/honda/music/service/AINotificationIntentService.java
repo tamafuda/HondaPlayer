@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
@@ -68,7 +69,11 @@ public class AINotificationIntentService extends IntentService {
                 .setSound(uri)
                 .setSmallIcon(R.drawable.icon_honda)
                 .setContentText("音楽アレンジでお盛り上がろう!");
-
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder.setSmallIcon(R.drawable.notify_icon);
+        } else {
+            builder.setSmallIcon(R.drawable.icon_honda);
+        }
         Intent mainIntent = new Intent(this, RadarMusicActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 NOTIFICATION_ID,

@@ -69,10 +69,14 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        log.d("onCreate");
         storage = new HondaSharePreference(this);
         setContentView(getLayoutResourceId());
         if(getLayoutResourceId() == R.layout.activity_aimix_audio) {
             initScreen();
+        }
+        if (detectScreenID()!= null && detectScreenID().equals(HondaConstants.DETECT_FRAGMENT_FMAM)) {
+            hasSeekbar = false;
         }
         //initScreen();
         //mediaList = storage.loadTrackList();
@@ -142,7 +146,8 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     private final Runnable mUpdatePositionRunnable = new Runnable() {
         @Override
         public void run() {
-            updateProgressBars();
+            log.d("run  mUpdatePositionRunnable");
+                updateProgressBars();
         }
     };
 
@@ -158,9 +163,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             serviceBound = true;
             storage.storeMPLServiceStatus(true);
 
-            mNowPlayingSeekHelper = new NowPlayingSeekHelper(mUpdatePositionRunnable,
+            /*mNowPlayingSeekHelper = new NowPlayingSeekHelper(mUpdatePositionRunnable,
                     mHandler, btnNext, btnPrevious, mPlaybackService, mSeekEventCallback);
-            mNowPlayingSeekHelper.setPlaybackService(mPlaybackService);
+            mNowPlayingSeekHelper.setPlaybackService(mPlaybackService);*/
             updateIconPlayPause(hasSeekbar, mPlaybackService.isPlaying());
             initSeekbar(mediaList.get(storage.loadTrackIndex()));
             updateProgressBars();
@@ -207,9 +212,11 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         log.d("BasePlayerActivity onDestroy");
         super.onDestroy();
         if(mIsStopMusic) {
+            storage.clearCachedTrackPlayList();
             if (storage.loadMPLServiceStatus() && serviceConnection != null) {
                 log.d("onDestroy - Unbind service ");
                 mHandler.removeCallbacks(mUpdatePositionRunnable);
+                storage.storeMPLServiceStatus(false);
                 //doUnbindService();
             }
         }
@@ -289,6 +296,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             log.d("isResume play or not: " + String.valueOf(mPlaybackService.getResumePosition()));
             if (mPlaybackService.getResumePosition() != -1) {
                 broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_RESTORE_TRACK);
+                updateProgressBars();
             } else {
                 broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_NEW_TRACK);
                 //mSeekbar.setProgress(0);
@@ -376,9 +384,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             if (curPos < 0)
                 curPos = mp.getCurrentPosition(); // Otherwise use the current playback position
 
-            if (curPos == 0) {
+            /*if (curPos == 0) {
                 curPos = mPlaybackService.getStoredCurrentPlayerPosition();
-            }
+            }*/
 
             if (mElapsedTime != null && mRemainingTime != null) {
                 mElapsedTime.setText(PlayerUtils.getTimeHoursMinutesSecondsString(curPos));
@@ -437,6 +445,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     }
 
     private void setProgressSeekBar(int value) {
+        log.d("setProgressSeekBar");
         if (hasSeekbar) {
             log.d("Seekbar is available!");
             mSeekbar.setProgress(value);
@@ -452,9 +461,11 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
      * Other case , show all
      */
     public void initScreen() {
+        log.d("DetectScreenID is : " + detectScreenID());
 
         if (!detectScreenID().equals(HondaConstants.DETECT_FRAGMENT_FMAM)) {
             mediaList = storage.loadTrackList();
+            log.d("It's not AMFM screen");
             btnPrevious = (ImageButton) findViewById(R.id.btn_previous);
             btnPlay = (ImageButton) findViewById(R.id.btn_play);
             btnPause = (ImageButton) findViewById(R.id.btn_pause);
@@ -468,6 +479,8 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             mSeekbar.setOnSeekBarChangeListener(onSeekBarChangeListener);
             log.d("SeekBar is going on !!!");
             hasSeekbar = true;
+            updateProgressBars();
+            log.d("Seekbar is enable");
             mSeekbar.setEnabled(false);
             btnPlay.setOnClickListener(mOnclick);
             btnPause.setOnClickListener(mOnclick);
@@ -494,6 +507,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             }
 
         } else {
+            log.d("It's AMFM screen");
+            hasSeekbar = false;
+            stopUpdateSeekbar();
             mediaList = TrackUtil.getRadioStationList(getBaseContext());
             LinearLayout ln = (LinearLayout) findViewById(R.id.play_layout);
             ln.setVisibility(View.GONE);

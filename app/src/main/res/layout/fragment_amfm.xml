@@ -132,6 +132,8 @@
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
                     android:textSize="20sp"
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:textStyle="bold"
                     android:textColor="@color/color_text_white"
                     android:text="Sakura" />
@@ -160,6 +162,8 @@
                     android:layout_height="30dp"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:textSize="20sp"
                     android:textColor="@color/color_text_white"
                     android:text="Kimi ga iru" />
