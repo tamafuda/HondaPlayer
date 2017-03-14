@@ -134,14 +134,14 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
     // add items into spinner dynamically
     public void addItemsToSpinner() {
         SpinnerNavItem spn;
-        ArrayList<SpinnerNavItem> list = new ArrayList<SpinnerNavItem>();
-        spn = new SpinnerNavItem("FM/AM", R.drawable.fm_am);
+        final ArrayList<SpinnerNavItem> list = new ArrayList<SpinnerNavItem>();
+        spn = new SpinnerNavItem("FM/AM", R.drawable.fm_am, true);
         list.add(spn);
-        spn = new SpinnerNavItem("iPod", R.drawable.ipod);
+        spn = new SpinnerNavItem("iPod", R.drawable.ipod,false);
         list.add(spn);
-        spn = new SpinnerNavItem("Bluetooth", R.drawable.bluetooth);
+        spn = new SpinnerNavItem("Bluetooth", R.drawable.bluetooth,false);
         list.add(spn);
-        spn = new SpinnerNavItem("InternetRadio", R.drawable.internet_audio);
+        spn = new SpinnerNavItem("InternetRadio", R.drawable.internet_audio,false);
         list.add(spn);
 
         // Custom ArrayAdapter with spinner item layout to set popup background
@@ -153,6 +153,9 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //TextView v = (TextView) view.findViewById(R.id.txtTitle);
+                //v.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.colorYellow));
+                storage.storeSpinnerItemSelected(position);
                 String item = parent.getItemAtPosition(position).toString();
                 Log.d("TEST", String.valueOf(position));
                 selectFrag(position);

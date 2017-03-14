@@ -36,13 +36,13 @@ public abstract class BaseActionBarActivity extends AppCompatActivity {
     public void addItemsToSpinner() {
         SpinnerNavItem spn;
         ArrayList<SpinnerNavItem> list = new ArrayList<SpinnerNavItem>();
-        spn = new SpinnerNavItem("iPod", R.drawable.ipod);
+        spn = new SpinnerNavItem("iPod", R.drawable.ipod, true);
         list.add(spn);
-        spn = new SpinnerNavItem("InternetAudio", R.drawable.internet_audio);
+        spn = new SpinnerNavItem("InternetAudio", R.drawable.internet_audio,false);
         list.add(spn);
-        spn = new SpinnerNavItem("FA/AM", R.drawable.fm_am);
+        spn = new SpinnerNavItem("FA/AM", R.drawable.fm_am,false);
         list.add(spn);
-        spn = new SpinnerNavItem("Bluetooth", R.drawable.bluetooth);
+        spn = new SpinnerNavItem("Bluetooth", R.drawable.bluetooth,false);
         list.add(spn);
 
         // Custom ArrayAdapter with spinner item layout to set popup background

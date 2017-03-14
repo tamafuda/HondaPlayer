@@ -14,6 +14,7 @@ public final class HondaConstants {
     public static final String PREFERENCE_TRACK_LIST = "jp.co.honda.music.HondaConstants.TRACK_ARRAY_LIST";
     public static final String PREFERENCE_TRACK_INDEX = "jp.co.honda.music.HondaConstants.TRACK_INDEX";
     public static final String PREFERENCE_MPL_SERVICE_STATUS = "MPL_SERVICE_STATUS";
+    public static final String PREFERENCE_SPINNER_SELECT_STATUS = "jp.co.honda.music.HondaConstants.PREFERENCE_SPINNER_SELECT_STATUS";
 
     //
     public static final String BROADCAST_UNBIND_SERVICE = "jp.co.honda.music.HondaConstants.UNBIND";

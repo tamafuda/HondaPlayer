@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import jp.co.honda.music.model.SpinnerNavItem;
 import jp.co.honda.music.player.R;
+import jp.co.honda.music.zdccore.HondaSharePreference;
 
 public class TitleNavigationAdapter extends BaseAdapter {
 
@@ -21,11 +22,13 @@ public class TitleNavigationAdapter extends BaseAdapter {
 	private TextView txtTitle;
 	private ArrayList<SpinnerNavItem> spinnerNavItem;
 	private Context context;
+    private HondaSharePreference storage;
 
 	public TitleNavigationAdapter(Context context,
 								  ArrayList<SpinnerNavItem> spinnerNavItem) {
 		this.spinnerNavItem = spinnerNavItem;
 		this.context = context;
+        storage = new HondaSharePreference(context);
 	}
 
 	@Override
@@ -58,6 +61,7 @@ public class TitleNavigationAdapter extends BaseAdapter {
         //imgIcon.setVisibility(View.GONE);
         txtTitle.setText(spinnerNavItem.get(position).getTitle());
         txtTitle.setTextColor(ContextCompat.getColor(context,R.color.color_text_white));
+        convertView.setBackgroundResource(android.R.color.transparent);
         return convertView;
 	}
 	
@@ -74,11 +78,18 @@ public class TitleNavigationAdapter extends BaseAdapter {
         txtTitle = (TextView) convertView.findViewById(R.id.txtTitle);
         imgIcon.setVisibility(View.GONE);
         //imgIcon.setImageResource(spinnerNavItem.get(position).getIcon());
+        if(storage.loadSpinnerItemSelected() == position) {
+            txtTitle.setTextColor(ContextCompat.getColor(context,R.color.colorYellow));
+        }else{
+            txtTitle.setTextColor(ContextCompat.getColor(context,R.color.color_text_white));
+        }
         txtTitle.setText(spinnerNavItem.get(position).getTitle());
+
         //RelativeLayout rl = (RelativeLayout) txtTitle.getParent();
         //rl.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_blue_bright));
         //convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
         return convertView;
 	}
+
 
 }

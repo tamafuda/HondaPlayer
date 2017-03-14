@@ -131,4 +131,15 @@ public class HondaSharePreference {
         preferences = context.getSharedPreferences(STORAGE, Context.MODE_PRIVATE);
         return preferences.getBoolean(HondaConstants.PREFERENCE_MPL_SERVICE_STATUS,false);
     }
+
+    public void storeSpinnerItemSelected(int pos) {
+        preferences = context.getSharedPreferences(STORAGE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(HondaConstants.PREFERENCE_SPINNER_SELECT_STATUS, pos);
+        editor.apply();
+    }
+    public int loadSpinnerItemSelected() {
+        preferences = context.getSharedPreferences(STORAGE, Context.MODE_PRIVATE);
+        return preferences.getInt(HondaConstants.PREFERENCE_SPINNER_SELECT_STATUS,0);
+    }
 }
