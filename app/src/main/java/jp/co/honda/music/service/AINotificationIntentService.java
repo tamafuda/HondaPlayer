@@ -67,7 +67,6 @@ public class AINotificationIntentService extends IntentService {
         builder.setContentTitle("運手がお疲れみたい！")
                 .setAutoCancel(true)
                 .setSound(uri)
-                .setSmallIcon(R.drawable.icon_honda)
                 .setContentText("音楽アレンジでお盛り上がろう!");
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder.setSmallIcon(R.drawable.notify_icon);
