@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -44,6 +45,8 @@ public class IPodFragment extends Fragment implements View.OnClickListener,Adapt
     TextView mPlaylist1;
     TextView mPlaylist2;
 
+    ImageView mArtAlbum;
+
     private HondaSharePreference storage;
 
     @Override
@@ -78,7 +81,7 @@ public class IPodFragment extends Fragment implements View.OnClickListener,Adapt
         mAudioAmount = (TextView) v.findViewById(R.id.id_count_audio);
         String amountAudio = String.valueOf(mediaList.size()) + "曲";
         mAudioAmount.setText(amountAudio);*/
-
+        mArtAlbum = (ImageView) v.findViewById(R.id.id_art_album_ipod);
         mPlaylist1 = (TextView) v.findViewById(R.id.id_playlist_ipod_1);
         mPlaylist2 = (TextView) v.findViewById(R.id.id_playlist_ipod_2);
         mPlaylist1.setPaintFlags(mPlaylist1.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -139,6 +142,12 @@ public class IPodFragment extends Fragment implements View.OnClickListener,Adapt
         }else{
             mPlaylist2.setText("Unknown");
         }
+        if(pos%2 == 0){
+            mArtAlbum.setImageResource(R.drawable.img_cover);
+        }else{
+            mArtAlbum.setImageResource(R.drawable.dark_default_album_artwork);
+        }
+
 
 
     }

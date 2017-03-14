@@ -54,7 +54,7 @@ public class ProgressDialogTask extends AsyncTask<Integer, Void, Void> {
             if(isDownload) {
                 popupUtils.downloadDialog(R.string.popup_download);
             }else {
-                popupUtils.autoCloseDialog(R.string.popup_shared);
+                popupUtils.downloadDialog(R.string.popup_shared);
             }
 
         }

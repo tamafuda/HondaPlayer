@@ -278,8 +278,11 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
     @Override
     public void shareMedia() {
         log.d("Share media");
-        ProgressDialogTask task = new ProgressDialogTask(mContext, false, R.string.popup_sharing);
-        task.execute(0);
+        //ProgressDialogTask task = new ProgressDialogTask(mContext, false, R.string.popup_sharing);
+        //task.execute(0);
+        ProgressDialogTask task1 = new ProgressDialogTask(AIMixAudio.this, false, R.string.popup_sharing);
+        task1.execute(0);
+
     }
 
     @Override

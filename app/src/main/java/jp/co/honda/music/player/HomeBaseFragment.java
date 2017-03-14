@@ -207,6 +207,7 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
     @Override
     public void onBackPressed() {
         log.d("Debug");
+        super.stopUpdateSeekbar();
         stopService(new Intent(HomeBaseFragment.this, MediaPlayerService.class));
         super.isStopService(true);
         this.finish();

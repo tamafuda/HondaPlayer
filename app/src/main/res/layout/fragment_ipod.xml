@@ -22,6 +22,7 @@
         android:layout_marginTop="10dp">
 
         <ImageView
+            android:id="@+id/id_art_album_ipod"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginStart="10dp"

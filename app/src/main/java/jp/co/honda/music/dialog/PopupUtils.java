@@ -14,6 +14,7 @@ import android.widget.Button;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import jp.co.honda.music.player.AIMixAudio;
 import jp.co.honda.music.player.HomeBaseFragment;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.player.RadarMusicActivity;
@@ -87,7 +88,7 @@ public class PopupUtils{
         t.schedule(new TimerTask() {
             public void run() {
                 dlg.dismiss(); // when the task active then close the dialog
-                t.cancel(); // also just top the timer thread, otherwise, you may receive a crash report
+                t.cancel();
             }
         }, 2000); // after 2 second (or 2000 miliseconds), the task will be active.
     }
@@ -105,6 +106,11 @@ public class PopupUtils{
                     mContext.startActivity(iPlay);
                     ((RadarMusicActivity)mContext).finish();*/
                     dialog.dismiss();
+                }else if(mContext instanceof AIMixAudio){
+                    dialog.dismiss();
+                    Intent iPlay = new Intent(mContext, RadarMusicActivity.class);
+                    mContext.startActivity(iPlay);
+                    ((AIMixAudio)mContext).finish();
                 }
 
             }
