@@ -92,11 +92,14 @@ public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickLis
                 log.d("Previous pos is : " +String.valueOf(previousPos));
                 log.d("Current pos is : " +String.valueOf(position));
                 if (previousPos != -1 && previousPos != position) {
-                    if (mListView.getChildAt(previousPos) != null) {
-                        TextView txt = (TextView) mListView.getChildAt(previousPos).findViewById(R.id.radio_title);
+                    //mListView.getChildAt(previousPos - mListView.getFirstVisiblePosition())
+
+                    if (mListView.getChildAt(previousPos - mListView.getFirstVisiblePosition()) != null) {
+                        TextView txt = (TextView) mListView.getChildAt(previousPos - mListView.getFirstVisiblePosition()).findViewById(R.id.radio_title);
                         txt.setTextColor(ContextCompat.getColor(context, R.color.color_text_white));
                     }
                     ((Media)mediaList.get(previousPos)).setSelect(false);
+                    ((Media)mediaList.get(position)).setSelect(true);
                     previousPos = position;
                 }
                 log.d("After previous pos is : " +String.valueOf(previousPos));
