@@ -114,7 +114,7 @@ public class PopupUtils{
     }
 
     public void downloadDialog(int mess) {
-        AlertDialog.Builder builder = new AlertDialog.Builder((mContext));
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setMessage(mess);
         builder.setCancelable(true);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -135,8 +135,8 @@ public class PopupUtils{
 
             }
         });
-        builder.create();
-        builder.show();
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 

@@ -373,7 +373,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         log.d("Seekbar is available!");
         //mHandler.removeCallbacks(mUpdatePositionRunnable);
         if (mPlaybackService != null) {
-            mHandler.postDelayed(mUpdatePositionRunnable, 1000);
+            mHandler.postDelayed(mUpdatePositionRunnable, 500);
             MediaPlayer mp = mPlaybackService.getMediaPlayer();
             if (mp == null) {
                 return;

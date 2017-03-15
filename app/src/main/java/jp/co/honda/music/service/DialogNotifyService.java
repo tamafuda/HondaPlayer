@@ -47,7 +47,7 @@ public class DialogNotifyService extends Service {
                 broadcastIntent.putExtra(HondaConstants.BROADCAST_SHOW_POPUP, true);
                 sendBroadcast(broadcastIntent);
             }
-        }, 5000);
+        }, 60000);
         return START_REDELIVER_INTENT;
     }
 }
