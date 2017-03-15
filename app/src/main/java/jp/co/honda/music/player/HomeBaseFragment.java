@@ -1,9 +1,13 @@
 package jp.co.honda.music.player;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -31,6 +35,7 @@ import jp.co.honda.music.fragment.InternetRadioFragment;
 import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.SpinnerNavItem;
 import jp.co.honda.music.notification.AIRecommendReceiver;
+import jp.co.honda.music.service.DialogNotifyService;
 import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
@@ -47,6 +52,9 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
     private ImageButton mPause;
     private HondaSharePreference storage;
     private boolean isRecreate;
+    private Dialog mDialog;
+
+    private IntentFilter mIntentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +62,12 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_test_fragment);
         // Setup notification
+
+        mIntentFilter = new IntentFilter();
+        mIntentFilter.addAction(HondaConstants.BROADCAST_SHOW_POPUP);
+        Intent serviceIntent = new Intent(this, DialogNotifyService.class);
+        startService(serviceIntent);
+
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             boolean isRadar = extras.getBoolean(HondaConstants.DETECTED_SCREEN_CAPSUL,false);
@@ -112,6 +126,42 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
         //mPause = (ImageButton) findViewById(R.id.btn_pause);
         //mPlay.setOnClickListener(this);
         //mPause.setOnClickListener(this);
+    }
+
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(HondaConstants.BROADCAST_SHOW_POPUP)) {
+                if (detectScreenID().equals(HondaConstants.DETECT_FRAGMENT_NETRADIO)) {
+                    PopupUtils popupUtils = new PopupUtils(HomeBaseFragment.this);
+                    mDialog = popupUtils.notifyDialogCustom(HomeBaseFragment.this, R.string.popup_notify_content);
+                    mDialog.show();
+                }else {
+                    stopService(new Intent(HomeBaseFragment.this, DialogNotifyService.class));
+                    startService(new Intent(HomeBaseFragment.this, DialogNotifyService.class));
+                }
+
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        stopService(new Intent(this,DialogNotifyService.class));
+        super.onDestroy();
+
+    }
+
+    @Override
+    protected void onPause() {
+        unregisterReceiver(mReceiver);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(mReceiver, mIntentFilter);
     }
 
     @Override

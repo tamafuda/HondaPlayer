@@ -118,8 +118,8 @@ public class AMFMFragment extends Fragment implements View.OnClickListener, Adap
 
 
         // Auto show popup notification
-        showAINofity();
-        customHandle();
+        //showAINofity();
+        //customHandle();
         return v;
     }
 

@@ -6,10 +6,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,6 +21,7 @@ import jp.co.honda.music.player.AIMixAudio;
 import jp.co.honda.music.player.HomeBaseFragment;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.player.RadarMusicActivity;
+import jp.co.honda.music.service.DialogNotifyService;
 import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.util.SystemUtils;
 import jp.co.honda.music.zdccore.HondaSharePreference;
@@ -71,7 +75,23 @@ public class PopupUtils{
                 dialog.dismiss();
             }
         });
-        dialog.getWindow().setGravity(Gravity.TOP);
+
+        FrameLayout cancel = (FrameLayout) dialog.findViewById(R.id.id_fr_dialog);
+        cancel.setVisibility(View.VISIBLE);
+        //cancel.setBackgroundColor(Color.TRANSPARENT);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((HomeBaseFragment)activity).stopService(new Intent(activity, DialogNotifyService.class));
+                ((HomeBaseFragment)activity).startService(new Intent(activity, DialogNotifyService.class));
+                dialog.dismiss();
+            }
+        });
+        int width = (int)(mContext.getResources().getDisplayMetrics().widthPixels*1.0);
+        int height = (int)(mContext.getResources().getDisplayMetrics().heightPixels*1.0);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.getWindow().setLayout(width,height);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         //dialog.show();
         return dialog;
     }

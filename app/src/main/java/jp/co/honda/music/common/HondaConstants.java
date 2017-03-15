@@ -24,6 +24,8 @@ public final class HondaConstants {
     public static final String BROADCAST_PLAY_NEXT_TRACK = "jp.co.honda.music.HondaConstants.BROADCAST_PLAY_NEXT_TRACK";
     public static final String BROADCAST_PLAY_PREVIOUS_TRACK = "jp.co.honda.music.HondaConstants.BROADCAST_PLAY_PREVIOUS_TRACK";
     public static final String BROADCAST_PLAY_STOP_TRACK = "jp.co.honda.music.HondaConstants.BROADCAST_PLAY_STOP_TRACK";
+    public static final String BROADCAST_SHOW_POPUP = "jp.co.honda.music.HondaConstants.BROADCAST_SHOW_POPUP";
+
     public static final int WAIT_LENGTH = 5000;
     public static final int WAIT_CLOSE_LENGTH = 5000;
 
