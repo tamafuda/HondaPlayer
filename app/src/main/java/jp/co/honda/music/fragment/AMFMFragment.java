@@ -329,7 +329,14 @@ public class AMFMFragment extends Fragment implements View.OnClickListener, Adap
 //        }else{
 //            albumArt.setImageResource(R.drawable.dark_default_album_artwork);
 //        }
-        albumArt.setImageResource(R.drawable.img_cover);
+        if(pos%3 == 0){
+            albumArt.setImageResource(R.drawable.img_cover);
+        }else if(pos%3 == 1){
+            albumArt.setImageResource(R.drawable.dark_default_album_artwork);
+        }else if (pos%3 == 2) {
+            albumArt.setImageResource(R.drawable.radio);
+        }
+
         if(m.getAlbum() != null && !m.getAlbum().isEmpty()){
             mPlaylist1.setText(m.getAlbum());
         }else{
