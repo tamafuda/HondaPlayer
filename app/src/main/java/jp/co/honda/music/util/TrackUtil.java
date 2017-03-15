@@ -4,15 +4,11 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import jp.co.honda.music.logger.Logger;
@@ -74,16 +70,16 @@ public final class TrackUtil {
                 Uri sArtworkUri = Uri
                         .parse("content://media/external/audio/albumart");
                 String albumArtUri = ContentUris.withAppendedId(sArtworkUri, albumId).getPath();
-                Uri mAlbumArtUri = ContentUris.withAppendedId(sArtworkUri, albumId);
+                //Uri mAlbumArtUri = ContentUris.withAppendedId(sArtworkUri, albumId);
                 Log.d("ABC", albumArtUri);
-                try{
+                /*try{
                     InputStream is = musicResolver.openInputStream(mAlbumArtUri);
                     Bitmap album_art = BitmapFactory.decodeStream(is);
                     //URIからストリームを取得してそれを画像に変換
                 }catch(FileNotFoundException e) {
                     e.printStackTrace();
                     //ストリームが開けなかったときの処理
-                }
+                }*/
 
                 //Bitmap bitmap = null;
                 //bitmap = PlayerUtils.decodeBitmap(context,albumArtUri,4);
