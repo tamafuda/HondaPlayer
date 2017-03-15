@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -500,8 +501,17 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
                 btnNext.setOnClickListener(mOnclick);
             }else{
                 setMediaListToBaseActivity();
+                RelativeLayout.LayoutParams lp;
+                lp = (RelativeLayout.LayoutParams) btnSave.getLayoutParams();
+                lp.height = (int) this.getResources().getDimension(R.dimen.dimen_save_height);
+                lp.width = (int) this.getResources().getDimension(R.dimen.dimen_save_width);
                 btnSave.setVisibility(View.VISIBLE);
+                btnSave.setLayoutParams(lp);
                 btnShare.setVisibility(View.VISIBLE);
+                lp = (RelativeLayout.LayoutParams) btnShare.getLayoutParams();
+                lp.height = (int) this.getResources().getDimension(R.dimen.dimen_save_height);
+                lp.width = (int) this.getResources().getDimension(R.dimen.dimen_save_width);
+                btnShare.setLayoutParams(lp);
                 btnPrevious.setVisibility(View.GONE);
                 btnNext.setVisibility(View.GONE);
                 btnSave.setOnClickListener(mOnclick);
