@@ -22,7 +22,6 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -102,7 +101,7 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 if (e1.getX() - e2.getX() > 50) {
-                    Toast.makeText(getBaseContext(), "SwipLeft", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getBaseContext(), "SwipLeft", Toast.LENGTH_SHORT).show();
                     HomeBaseFragment.super.stopUpdateSeekbar();
                     if(detectScreen == 0 || detectScreen == 3) {
                         stopService(new Intent(HomeBaseFragment.this, MediaPlayerService.class));
@@ -133,6 +132,9 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(HondaConstants.BROADCAST_SHOW_POPUP)) {
                 if (detectScreenID().equals(HondaConstants.DETECT_FRAGMENT_NETRADIO)) {
+                    if (mDialog != null && mDialog.isShowing()) {
+                        return;
+                    }
                     PopupUtils popupUtils = new PopupUtils(HomeBaseFragment.this);
                     mDialog = popupUtils.notifyDialogCustom(HomeBaseFragment.this, R.string.popup_notify_content);
                     mDialog.show();
@@ -340,8 +342,7 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
     }
 
     public boolean detectPopupWindow() {
-        if(detectScreenID().equals(HondaConstants.DETECT_FRAGMENT_FMAM)
-                || detectScreenID().equals(HondaConstants.DETECT_FRAGMENT_NETRADIO)) {
+        if(detectScreenID().equals(HondaConstants.DETECT_FRAGMENT_NETRADIO)) {
             return true;
         }
         return false;

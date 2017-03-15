@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -85,7 +84,7 @@ public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickLis
         switch (v.getId()) {
             case R.id.radio_title:
             case R.id.radio_duration:
-                Toast.makeText(context, "Title click: " + String.valueOf(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Title click: " + String.valueOf(position), Toast.LENGTH_SHORT).show();
                 TextView txtRadio = (TextView) v.findViewById(R.id.radio_title);
                 txtRadio.setTextColor(ContextCompat.getColor(context, R.color.colorYellow));
                 //setNotifyOnChange(true);
@@ -115,7 +114,7 @@ public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickLis
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();*/
                 if (!detectFragment.equals(HondaConstants.DETECT_FRAGMENT_NETRADIO)) {
-                    Toast.makeText(context, "Arrow click : " + String.valueOf(position), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "Arrow click : " + String.valueOf(position), Toast.LENGTH_SHORT).show();
                     ((HomeBaseFragment) mActivity).selectFrag(3);
                     ((HomeBaseFragment) mActivity).setSelection(3);
                 }

@@ -14,7 +14,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.dialog.ProgressDialogTask;
@@ -91,7 +90,7 @@ public class RadarMusicActivity extends AppCompatActivity {
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 if (e1.getX() - e2.getX() < 50) {
-                    Toast.makeText(getBaseContext(), "SwipLeft", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getBaseContext(), "SwipLeft", Toast.LENGTH_SHORT).show();
                     Intent iPlay = new Intent(getBaseContext(), HomeBaseFragment.class);
                     iPlay.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     //Intent iPlay = new Intent(getBaseContext(), PlayMediaActivity.class);

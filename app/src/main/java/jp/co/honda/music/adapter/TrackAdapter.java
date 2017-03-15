@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -71,13 +70,13 @@ public class TrackAdapter extends ArrayAdapter<Media> implements  View.OnClickLi
         Media media = mediaList.get(position);
         switch (v.getId()) {
             case R.id.btn_share:
-                Toast.makeText(context,"Share button", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context,"Share button", Toast.LENGTH_SHORT).show();
                 ProgressDialogTask task = new ProgressDialogTask(getContext(), false, R.string.popup_sharing);
                 task.execute(0);
 
                 break;
             case R.id.btn_arrange:
-                Toast.makeText(context,"Arrange button", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context,"Arrange button", Toast.LENGTH_SHORT).show();
                 Intent iController = new Intent(context, AIMixAudio.class);
                 iController.putExtra(HondaConstants.INTENT_AIMIXAUDIO, position);
                 mActivity.startActivity(iController);
@@ -85,7 +84,7 @@ public class TrackAdapter extends ArrayAdapter<Media> implements  View.OnClickLi
                 //mAdapterInterface.keepSrv(true);
                 break;
             case R.id.song_title:
-                Toast.makeText(context,"Title click", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context,"Title click", Toast.LENGTH_SHORT).show();
                 mAdapterInterface.updateArtAlbum(position);
                 break;
         }

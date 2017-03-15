@@ -571,6 +571,7 @@ public class MediaPlayerService extends Service implements
                 mPlayerState = STATE_PLAY;
                 stopMedia();
                 mediaPlayer.reset();
+                log.d("Position in Service is : " + String.valueOf(mediaPlayer.getCurrentPosition()));
                 initMediaPlayer();
                 playMedia();
                 updateMetaData();

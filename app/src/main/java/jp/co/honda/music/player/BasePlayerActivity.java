@@ -373,7 +373,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         log.d("Seekbar is available!");
         //mHandler.removeCallbacks(mUpdatePositionRunnable);
         if (mPlaybackService != null) {
-            mHandler.postDelayed(mUpdatePositionRunnable, 500);
+            mHandler.postDelayed(mUpdatePositionRunnable, 1000);
             MediaPlayer mp = mPlaybackService.getMediaPlayer();
             if (mp == null) {
                 return;
@@ -381,8 +381,10 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             //log.d("Current position is : " + String.valueOf(mp.getCurrentPosition()));
 
             int curPos = mOverrideCurPos; // Use the position of dragged seekbar - if dragging at this moment
-            if (curPos < 0)
+            if (curPos < 0){
                 curPos = mp.getCurrentPosition(); // Otherwise use the current playback position
+                log.d("Position is : " + String.valueOf(curPos));
+            }
 
             /*if (curPos == 0) {
                 curPos = mPlaybackService.getStoredCurrentPlayerPosition();
@@ -548,5 +550,12 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     public void stopUpdateSeekbar() {
         mHandler.removeCallbacks(mUpdatePositionRunnable);
         mHandler.removeCallbacksAndMessages(null);
+
+
+        /*if(mPlaybackService != null) {
+            if (mPlaybackService.getMediaPlayer() != null){
+                mPlaybackService.getMediaPlayer().getCurrentPosition()
+            }
+        }*/
     }
 }
