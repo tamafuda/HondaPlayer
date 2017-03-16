@@ -2,10 +2,10 @@ package jp.co.honda.music.player;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -15,11 +15,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.dialog.ProgressDialogTask;
 import jp.co.honda.music.logger.Logger;
+import jp.co.honda.music.model.TrackInfo;
+import jp.co.honda.music.util.TrackUtil;
 
-public class RadarMusicActivity extends AppCompatActivity {
+public class RadarMusicActivity extends BasePlayerActivity implements MediaPlayer.OnCompletionListener {
 
     // Logger
     protected final Logger log = new Logger(RadarMusicActivity.class.getSimpleName(), true);
@@ -39,19 +44,22 @@ public class RadarMusicActivity extends AppCompatActivity {
 
     private int receiveDetectSrc = 0;
     boolean detectFling = false;
+    private ArrayList<TrackInfo> trackInfoList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.activity_radar_music);
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         }
+        trackInfoList = TrackUtil.getRawToMix(getApplicationContext());
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-           detectFling = extras.getBoolean(HondaConstants.DETECTED_SCREEN_FLING);
+            detectFling = extras.getBoolean(HondaConstants.DETECTED_SCREEN_FLING);
         }
 
         mTitle = (TextView) findViewById(R.id.id_common_title);
@@ -90,6 +98,7 @@ public class RadarMusicActivity extends AppCompatActivity {
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 if (e1.getX() - e2.getX() < 50) {
+                    releaseMediaPlayer();
                     //Toast.makeText(getBaseContext(), "SwipLeft", Toast.LENGTH_SHORT).show();
                     Intent iPlay = new Intent(getBaseContext(), HomeBaseFragment.class);
                     iPlay.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -103,6 +112,7 @@ public class RadarMusicActivity extends AppCompatActivity {
                 }
                 return super.onFling(e1, e2, velocityX, velocityY);
             }
+
             @Override
             public boolean onDown(MotionEvent e) {
                 log.d(String.valueOf(e.getAction()));
@@ -136,6 +146,28 @@ public class RadarMusicActivity extends AppCompatActivity {
             }
         });
 
+        playAIMedia();
+
+    }
+
+    @Override
+    protected int getLayoutResourceId() {
+        return 0;
+    }
+
+    @Override
+    protected int getAudioIndex() {
+        return 0;
+    }
+
+    @Override
+    protected boolean isNeedKeepMediaSrv() {
+        return false;
+    }
+
+    @Override
+    protected String detectScreenID() {
+        return HondaConstants.DETECTED_SCREEN_CAPSUL;
     }
 
     private View.OnClickListener mOnclick = new View.OnClickListener() {
@@ -145,6 +177,7 @@ public class RadarMusicActivity extends AppCompatActivity {
             int resoureId = 0;
             switch (id) {
                 case R.id.ai_recommend:
+                    releaseMediaPlayer();
                     Intent iPlay = new Intent(getBaseContext(), AIMixAudio.class);
                     iPlay.putExtra("MainActivity", true);
                     startActivity(iPlay);
@@ -196,9 +229,64 @@ public class RadarMusicActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        releaseMediaPlayer();
         Intent iPlay = new Intent(getBaseContext(), HomeBaseFragment.class);
         iPlay.putExtra(HondaConstants.DETECTED_SCREEN_CAPSUL, true);
         startActivity(iPlay);
         finish();
+    }
+
+    private void playAIMedia() {
+        TrackInfo trackInfo = null;
+        MediaPlayer mediaPlayer;
+        if (trackInfoList.size() == 0) {
+            return;
+        }
+        for (TrackInfo t : trackInfoList) {
+            if (t.getId().equals("ai")){
+                trackInfo = t;
+            }
+        }
+        if (trackInfo != null) {
+            mediaPlayer = trackInfo.getMp();
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+                trackInfo.setPosition(mediaPlayer.getCurrentPosition());
+                trackInfo.setPause(true);
+            } else {
+                if (trackInfo.isPause()) {
+                    mediaPlayer.start();
+                    mediaPlayer.seekTo(trackInfo.getPosition());
+                } else {
+                    try {
+                        mediaPlayer.setDataSource(context, trackInfo.getSong());
+                        mediaPlayer.setOnCompletionListener(this);
+                        trackInfo.setPause(false);
+                        mediaPlayer.prepare();
+                        mediaPlayer.start();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    private void releaseMediaPlayer() {
+        // Release the media player
+        for (TrackInfo t : trackInfoList) {
+            if (t.getMp() != null) {
+                log.d("Mix Audio mediaplayer release !");
+                t.getMp().reset();
+                t.getMp().release();
+                t.setMp(null);
+            }
+        }
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mediaPlayer) {
+        log.d("onCompletion");
+        mediaPlayer.reset();
     }
 }

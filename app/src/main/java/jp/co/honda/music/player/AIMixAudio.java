@@ -40,7 +40,6 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
     ArrayList<TrackInfo> trackInfoList;
     ArrayList<TrackInfo> mediaPlayList;
     TextView mTitle;
-
     Button btnSave;
     final Context mContext = this;
     String titleOriginIntent;

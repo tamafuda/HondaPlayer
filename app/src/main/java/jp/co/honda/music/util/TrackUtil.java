@@ -246,52 +246,52 @@ public final class TrackUtil {
         MediaMetadataRetriever mmr = null;
         // Hard code
 
-        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a01);
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.aimusic);
         mmr = new MediaMetadataRetriever();
         mmr.setDataSource(context,mediaPath);
         metadataRetrievers.add(mmr);
 
-        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a02);
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.aimusic);
         mmr = new MediaMetadataRetriever();
         mmr.setDataSource(context,mediaPath);
         metadataRetrievers.add(mmr);
 
-        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a03);
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.aimusic);
         mmr = new MediaMetadataRetriever();
         mmr.setDataSource(context,mediaPath);
         metadataRetrievers.add(mmr);
 
-        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a04);
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.aimusic);
         mmr = new MediaMetadataRetriever();
         mmr.setDataSource(context,mediaPath);
         metadataRetrievers.add(mmr);
 
-        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a05);
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.aimusic);
         mmr = new MediaMetadataRetriever();
         mmr.setDataSource(context,mediaPath);
         metadataRetrievers.add(mmr);
 
-        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a05);
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.aimusic);
         mmr = new MediaMetadataRetriever();
         mmr.setDataSource(context,mediaPath);
         metadataRetrievers.add(mmr);
 
-        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a06);
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.aimusic);
         mmr = new MediaMetadataRetriever();
         mmr.setDataSource(context,mediaPath);
         metadataRetrievers.add(mmr);
 
-        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a07);
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.aimusic);
         mmr = new MediaMetadataRetriever();
         mmr.setDataSource(context,mediaPath);
         metadataRetrievers.add(mmr);
 
-        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a08);
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.aimusic);
         mmr = new MediaMetadataRetriever();
         mmr.setDataSource(context,mediaPath);
         metadataRetrievers.add(mmr);
 
-        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.a09);
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.aimusic);
         mmr = new MediaMetadataRetriever();
         mmr.setDataSource(context,mediaPath);
         metadataRetrievers.add(mmr);
@@ -558,6 +558,9 @@ public final class TrackUtil {
         trackList.add(trackInfo);
         mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.pop);
         trackInfo = new TrackInfo("pop", mediaPath);
+        trackList.add(trackInfo);
+        mediaPath = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.aimusic);
+        trackInfo = new TrackInfo("ai", mediaPath);
         trackList.add(trackInfo);
 
         return trackList;

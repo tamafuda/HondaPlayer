@@ -103,9 +103,10 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
                 if (e1.getX() - e2.getX() > 50) {
                     //Toast.makeText(getBaseContext(), "SwipLeft", Toast.LENGTH_SHORT).show();
                     HomeBaseFragment.super.stopUpdateSeekbar();
-                    if(detectScreen == 0 || detectScreen == 3) {
+                    /*if(detectScreen == 0 || detectScreen == 3) {
                         stopService(new Intent(HomeBaseFragment.this, MediaPlayerService.class));
-                    }
+                    }*/
+                    stopService(new Intent(HomeBaseFragment.this, MediaPlayerService.class));
                     Intent iPlay = new Intent(getBaseContext(), RadarMusicActivity.class);
                     iPlay.putExtra(HondaConstants.DETECTED_SCREEN_FLING, true);
                     startActivity(iPlay);

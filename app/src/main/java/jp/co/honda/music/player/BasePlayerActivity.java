@@ -72,6 +72,10 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         log.d("onCreate");
         storage = new HondaSharePreference(this);
+        if(detectScreenID().equals(HondaConstants.DETECTED_SCREEN_CAPSUL)) {
+            pause();
+            return;
+        }
         setContentView(getLayoutResourceId());
         if(getLayoutResourceId() == R.layout.activity_aimix_audio) {
             initScreen();
@@ -114,7 +118,6 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             mSeekbar.setMax(duration);
         }
     }
-
 
     /**
      * @param v
@@ -312,7 +315,6 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         }
         updateIconPlayPause(hasSeekbar, true);
         initSeekbar();
-
     }
 
     public void pause() {
@@ -576,4 +578,5 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             }
         }*/
     }
+
 }
