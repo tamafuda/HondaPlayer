@@ -97,7 +97,8 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
 
     };
 
-    protected void initSeekbar(Media t) {
+    protected void initSeekbar() {
+        Media t = mediaList.get(storage.loadTrackIndex());
         int duration = Integer.parseInt(String.valueOf(t.getDuration()));
         if (duration <= 0 && mPlaybackService != null) {
 
@@ -168,7 +169,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
                     mHandler, btnNext, btnPrevious, mPlaybackService, mSeekEventCallback);
             mNowPlayingSeekHelper.setPlaybackService(mPlaybackService);*/
             updateIconPlayPause(hasSeekbar, mPlaybackService.isPlaying());
-            initSeekbar(mediaList.get(storage.loadTrackIndex()));
+            initSeekbar();
             updateProgressBars();
         }
 
@@ -307,6 +308,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             sendBroadcast(broadcastIntent);
         }
         updateIconPlayPause(hasSeekbar, true);
+        initSeekbar();
 
     }
 
@@ -319,6 +321,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_STOP_TRACK);
         sendBroadcast(broadcastIntent);
         updateProgressBars();
+
         mHandler.removeCallbacks(mUpdatePositionRunnable);
     }
 
@@ -328,6 +331,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         //Send a broadcast to the service -> PLAY_NEW_AUDIO
         Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_NEXT_TRACK);
         sendBroadcast(broadcastIntent);
+        initSeekbar();
         updateProgressBars();
     }
 
@@ -339,6 +343,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         //Send a broadcast to the service -> PLAY_NEW_AUDIO
         Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_PREVIOUS_TRACK);
         sendBroadcast(broadcastIntent);
+        initSeekbar();
         updateProgressBars();
     }
 

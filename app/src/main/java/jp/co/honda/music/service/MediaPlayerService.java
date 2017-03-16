@@ -449,6 +449,9 @@ public class MediaPlayerService extends Service implements
 
 
     private void updateMetaData() {
+        if(activeMedia == null) {
+            return;
+        }
         Bitmap albumArt = BitmapFactory.decodeResource(getResources(),
                 R.drawable.image5); //replace with medias albumArt
         // Update the current metadata
