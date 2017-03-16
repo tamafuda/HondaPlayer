@@ -98,6 +98,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     };
 
     protected void initSeekbar() {
+        if(storage.loadTrackIndex() == -1) {
+            storage.storeTrackIndex(0);
+        }
         Media t = mediaList.get(storage.loadTrackIndex());
         int duration = Integer.parseInt(String.valueOf(t.getDuration()));
         if (duration <= 0 && mPlaybackService != null) {
