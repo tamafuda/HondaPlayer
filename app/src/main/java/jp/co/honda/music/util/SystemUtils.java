@@ -7,10 +7,15 @@ import java.util.Date;
 
 /**
  * @Author: Hoang Vu
- * @Date: 2017/03/03
+ * @Date: 2017/02/25
  */
 
 public class SystemUtils {
+
+    /**
+     * Get device infor such as device name, product name
+     * @return device info
+     */
     public static String getDeviceInfo() {
         String branName = Build.MANUFACTURER;      // Manufacturer will come I think, Correct me if I am wrong :)  Brand name like Samsung or Mircomax
         String myDeviceModel = android.os.Build.MODEL;
@@ -24,6 +29,10 @@ public class SystemUtils {
         return returnString;
     }
 
+    /**
+     * Get system date time
+     * @return
+     */
     public static String getSystemTimeNotify() {
         Date dt = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");

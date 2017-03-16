@@ -9,7 +9,8 @@ import jp.co.honda.music.player.R;
 import static jp.co.honda.music.common.HondaConstants.WAIT_LENGTH;
 
 /**
- * Created by v_hoang on 3/2/2017.
+ * @Author: Hoang Vu
+ * @Date: 2017/03/05
  */
 
 public class ProgressDialogTask extends AsyncTask<Integer, Void, Void> {

@@ -19,6 +19,7 @@ import jp.co.honda.music.zdccore.HondaSharePreference;
 /**
  * @Author: Hoang Vu
  * @Date:   2017/02/23
+ * This is play list screen ( It has been removed by customer requirement)
  */
 
 
@@ -89,16 +90,9 @@ public class MusicPlayActivity extends BasePlayerActivity implements AdapterInte
             finish();
         }
         storage.storeTransitionNotifyToPlay(false);
-
     }
 
     private boolean checkTransitionFromNotify() {
-        /*Bundle extras = getIntent().getExtras();
-        boolean isTransition = false;
-        if (extras != null) {
-            isTransition = extras.getBoolean(HondaConstants.INTENT_NOTIFY_TO_MUSICPLAY_SRC,false);
-        }
-        return isTransition;*/
         boolean isTransition = storage.loadTransitionNotifyToPlay();
         return isTransition;
     }

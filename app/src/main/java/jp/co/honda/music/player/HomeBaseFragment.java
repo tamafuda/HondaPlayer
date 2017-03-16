@@ -38,13 +38,18 @@ import jp.co.honda.music.service.DialogNotifyService;
 import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
+/**
+ * @Author: Hoang Vu
+ * @Date:   2017/03/10
+ * This is a base activity to include four fragments
+ * Control transition between 4 FG in this app ( AM/FM , Ipod, Bluetooth, InternetRadio)
+ */
 public class HomeBaseFragment extends BasePlayerActivity implements View.OnClickListener{
     protected final Logger log = new Logger(HomeBaseFragment.class.getSimpleName(), true);
     private Toolbar mToolbar;
     private Spinner mSpinner;
     // Navigation adapter
     private TitleNavigationAdapter spinAdapter;
-
     private GestureDetector gestureDetector;
     private int detectScreen = 0;
     private ImageButton mPlay;
@@ -52,21 +57,18 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
     private HondaSharePreference storage;
     private boolean isRecreate;
     private Dialog mDialog;
-
     private IntentFilter mIntentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         log.d("onCreate");
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_test_fragment);
-        // Setup notification
-
         mIntentFilter = new IntentFilter();
         mIntentFilter.addAction(HondaConstants.BROADCAST_SHOW_POPUP);
         Intent serviceIntent = new Intent(this, DialogNotifyService.class);
         startService(serviceIntent);
 
+        // Get bundle from Arrange screen
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             boolean isRadar = extras.getBoolean(HondaConstants.DETECTED_SCREEN_CAPSUL,false);
@@ -121,11 +123,6 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
                 return true;
             }
         });
-
-        //mPlay = (ImageButton) findViewById(R.id.btn_play);
-        //mPause = (ImageButton) findViewById(R.id.btn_pause);
-        //mPlay.setOnClickListener(this);
-        //mPause.setOnClickListener(this);
     }
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -143,7 +140,6 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
                     stopService(new Intent(HomeBaseFragment.this, DialogNotifyService.class));
                     startService(new Intent(HomeBaseFragment.this, DialogNotifyService.class));
                 }
-
             }
         }
     };
@@ -285,10 +281,8 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
         boolean iGet = intent.getBooleanExtra(HondaConstants.BROADCAST_AI_RECOMMEND,false);
         if(iGet) {
             PopupUtils popupUtils = new PopupUtils(this);
-            //popupUtils.notifyDialogCustom(R.string.popup_notify_content);
         }
     }
-
 
     @Override
     public void onClick(View view) {
@@ -342,13 +336,15 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
         return detectFragment(detectScreen);
     }
 
+    /**
+     * Detect poup is alive or not
+     * @return
+     */
     public boolean detectPopupWindow() {
         if(detectScreenID().equals(HondaConstants.DETECT_FRAGMENT_NETRADIO)) {
             return true;
         }
         return false;
     }
-
-
 }
 

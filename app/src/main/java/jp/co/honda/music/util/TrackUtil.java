@@ -22,6 +22,7 @@ import static android.content.ContentUris.withAppendedId;
 /**
  * @Author: Hoang Vu
  * @Date: 2017/02/26
+ * This class is used to get Media Playlist, prepare raw resource ,etc
  */
 
 public final class TrackUtil {
@@ -87,6 +88,11 @@ public final class TrackUtil {
         return path;
     }
 
+    /**
+     * Syn media file from device ( Music folder )
+     * @param context
+     * @return ArrayList
+     */
     public static ArrayList<Media> synTrackListDatabase(Context context) {
         HondaSharePreference storage = new HondaSharePreference(context);
         ArrayList<Media> mediaList = new ArrayList<Media>();
@@ -536,7 +542,7 @@ public final class TrackUtil {
     }
 
     /**
-     *
+     * This method is used to get raw audio file for AIMix Screen
      * @param context
      * @return
      */

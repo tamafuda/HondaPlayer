@@ -4,7 +4,8 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 
 /**
- * Created by v_hoang on 2/27/2017.
+ * @Author: Hoang Vu
+ * @Date: 2017/02/28
  */
 
 public class TrackInfo {

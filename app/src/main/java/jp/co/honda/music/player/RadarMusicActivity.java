@@ -24,24 +24,28 @@ import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.TrackInfo;
 import jp.co.honda.music.util.TrackUtil;
 
+/**
+ * @Author: Hoang Vu
+ * @Date:   2017/03/01
+ * Arrange screen , download music, navigation
+ *
+ */
 public class RadarMusicActivity extends BasePlayerActivity implements MediaPlayer.OnCompletionListener {
 
     // Logger
     protected final Logger log = new Logger(RadarMusicActivity.class.getSimpleName(), true);
 
-    TextView mTitle;
-    Button mAIRecommend;
-    Button mDownload1;
-    Button mDownload2;
-    Button mDownload3;
-    Button mMusic1;
-    Button mMusic2;
-    Button mMusic3;
-    ImageView mScreenBg;
-    Context context;
-
+    private TextView mTitle;
+    private Button mAIRecommend;
+    private Button mDownload1;
+    private Button mDownload2;
+    private Button mDownload3;
+    private Button mMusic1;
+    private Button mMusic2;
+    private Button mMusic3;
+    private ImageView mScreenBg;
+    private Context context;
     private GestureDetector gestureDetector;
-
     private int receiveDetectSrc = 0;
     boolean detectFling = false;
     private ArrayList<TrackInfo> trackInfoList;
@@ -272,6 +276,9 @@ public class RadarMusicActivity extends BasePlayerActivity implements MediaPlaye
         }
     }
 
+    /**
+     * Release all of playing media file
+     */
     private void releaseMediaPlayer() {
         // Release the media player
         for (TrackInfo t : trackInfoList) {

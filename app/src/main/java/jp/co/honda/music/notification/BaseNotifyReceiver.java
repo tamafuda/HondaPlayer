@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
- * Created by v_hoang on 3/1/2017.
+ * @Author: Hoang Vu
+ * @Date: 2017/02/25
+ * This class will be called when system is changed
+ * It defines in AndroidManifest.xml file
  */
 
 public abstract class BaseNotifyReceiver extends BroadcastReceiver {

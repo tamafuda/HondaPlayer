@@ -17,6 +17,10 @@ import jp.co.honda.music.player.R;
 
 import static android.graphics.BitmapFactory.decodeResource;
 
+/**
+ * @Author: Hoang Vu
+ * @Date: 2017/02/23
+ */
 public class BitmapUtils
 {
 

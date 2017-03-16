@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import jp.co.honda.music.model.Song;
 
 /**
- * Created by nguyenngocbinh on 2/25/17.
+ * @Author: Hoang Vu
+ * @Date: 2017/03/05
  */
 
 public class MediaControlHelper {

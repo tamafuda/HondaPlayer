@@ -31,6 +31,13 @@ import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.AIMixInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
+/**
+ * @Author: Hoang Vu
+ * @Date:   2017/02/23
+ * This is base Activity for all Player activity related
+ * We implemented all control about media such as PLAY, PAUSE, NEXT, PREVIOUS
+ *
+ */
 public abstract class BasePlayerActivity extends AppCompatActivity {
     // Logger
     protected final Logger log = new Logger(BasePlayerActivity.class.getSimpleName(), true);
@@ -44,8 +51,6 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     private TextView mElapsedTime;
     private TextView mRemainingTime;
 
-    private int mOverrideCurPos = -1;
-
     // Media list variables
     private ArrayList<Media> mediaList;
 
@@ -55,16 +60,13 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
 
     // Binding
     private boolean serviceBound = false;
-
     private HondaSharePreference storage;
     private NowPlayingSeekHelper mNowPlayingSeekHelper;
-
     private int currentPosition;
     private boolean hasSeekbar;
     private AIMixInterface mAIMixInterface;
-
     private boolean mIsStopMusic;
-
+    private int mOverrideCurPos = -1;
 
 
     @Override
@@ -83,8 +85,6 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         if (detectScreenID()!= null && detectScreenID().equals(HondaConstants.DETECT_FRAGMENT_FMAM)) {
             hasSeekbar = false;
         }
-        //initScreen();
-        //mediaList = storage.loadTrackList();
     }
 
     NowPlayingSeekHelper.SeekEventCallback mSeekEventCallback = new NowPlayingSeekHelper.SeekEventCallback() {
@@ -101,6 +101,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
 
     };
 
+    /**
+     * Init seekbar in case of pause, play a media file
+     */
     protected void initSeekbar() {
         if(storage.loadTrackIndex() == -1) {
             storage.storeTrackIndex(0);
@@ -132,7 +135,6 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
                     break;
                 case R.id.btn_play:
                     play();
-                    //updateIconPlayPause();
                     break;
                 case R.id.btn_pause:
                     pause();
@@ -228,17 +230,6 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
                 //doUnbindService();
             }
         }
-
-        /*if (isNeedKeepMediaSrv()) {
-            log.d("BasePlayerActivity still keep service");
-            return;
-        }
-        if (storage.loadMPLServiceStatus() && serviceConnection != null) {
-            log.d("onDestroy - Unbind service ");
-            mHandler.removeCallbacks(mUpdatePositionRunnable);
-            doUnbindService();
-        }*/
-
     }
 
     public void stopService() {
@@ -264,7 +255,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Play media method
+     */
     public void play() {
         if(mediaList ==  null || mediaList.size() == 0){
             mediaList = storage.loadTrackList();
@@ -285,18 +278,11 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
             if(!detectScreenID().equals(HondaConstants.DETECT_FRAGMENT_FMAM)) {
                 storage.storeTrackList(mediaList);
             }
-            //storage.storeTrackIndex(getAudioIndex());
             Intent playerIntent = new Intent(this, MediaPlayerService.class);
             startService(playerIntent);
             bindService(playerIntent, serviceConnection, Context.BIND_AUTO_CREATE);
             setProgressSeekBar(0);
-            //mSeekbar.setProgress(0);
         } else {
-            //Store the new audioIndex to SharedPreferences
-            //HondaSharePreference storage = new HondaSharePreference(getApplicationContext());
-            //storage.storeTrackIndex(getAudioIndex());
-            //Service is active
-            //Send a broadcast to the service -> PLAY_NEW_AUDIO
             Intent broadcastIntent;
             if (mPlaybackService == null) {
                 return;
@@ -317,11 +303,10 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         initSeekbar();
     }
 
+    /**
+     * Pause media method
+     */
     public void pause() {
-
-        //storage.storeTrackIndex(getAudioIndex());
-        //Service is active
-        //Send a broadcast to the service -> PLAY_NEW_AUDIO
         updateIconPlayPause(hasSeekbar, false);
         Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_STOP_TRACK);
         sendBroadcast(broadcastIntent);
@@ -330,22 +315,22 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         mHandler.removeCallbacks(mUpdatePositionRunnable);
     }
 
+    /**
+     * Next to media
+     */
     public void next() {
         updateIconPlayPause(hasSeekbar, true);
-        //Service is active
-        //Send a broadcast to the service -> PLAY_NEW_AUDIO
         Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_NEXT_TRACK);
         sendBroadcast(broadcastIntent);
         initSeekbar();
         updateProgressBars();
     }
 
+    /**
+     * Play a previous media
+     */
     public void previous() {
-
-        //storage.storeTrackIndex(getAudioIndex());
         updateIconPlayPause(hasSeekbar, true);
-        //Service is active
-        //Send a broadcast to the service -> PLAY_NEW_AUDIO
         Intent broadcastIntent = new Intent(HondaConstants.BROADCAST_PLAY_PREVIOUS_TRACK);
         sendBroadcast(broadcastIntent);
         initSeekbar();
@@ -354,7 +339,6 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
 
     private SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         Boolean moving = false;
-
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean isByUser) {
             if (moving) {
@@ -376,31 +360,29 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Update progressbar
+     * It's still not working in some case
+     * Ex : Do not update correctly pos or current pos
+     * Should be fixed in next version (IF project is accepted by customer )
+     */
     private void updateProgressBars() {
         if (!hasSeekbar) {
             stopUpdateSeekbar();
             return;
         }
         log.d("Seekbar is available!");
-        //mHandler.removeCallbacks(mUpdatePositionRunnable);
         if (mPlaybackService != null) {
             mHandler.postDelayed(mUpdatePositionRunnable, 1000);
             MediaPlayer mp = mPlaybackService.getMediaPlayer();
             if (mp == null) {
                 return;
             }
-            //log.d("Current position is : " + String.valueOf(mp.getCurrentPosition()));
-
             int curPos = mOverrideCurPos; // Use the position of dragged seekbar - if dragging at this moment
             if (curPos < 0){
                 curPos = mp.getCurrentPosition(); // Otherwise use the current playback position
                 log.d("Position is : " + String.valueOf(curPos));
             }
-
-            /*if (curPos == 0) {
-                curPos = mPlaybackService.getStoredCurrentPlayerPosition();
-            }*/
-
             if (mElapsedTime != null && mRemainingTime != null) {
                 mElapsedTime.setText(PlayerUtils.getTimeHoursMinutesSecondsString(curPos));
                 mRemainingTime.setText("-" + PlayerUtils.getTimeHoursMinutesSecondsString(mSeekbar.getMax() - curPos));
@@ -433,16 +415,11 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
 
     protected abstract int getAudioIndex();
 
-
-    /*    @Override
-        public void onBackPressed() {
-            Intent iPlay = new Intent(getBaseContext(), RadarMusicActivity.class);
-            //iPlay.putExtra(HondaConstants.DETECTED_SCREEN_FLING, true);
-            startActivity(iPlay);
-            finish();
-        }*/
     protected abstract boolean isNeedKeepMediaSrv();
 
+    /**
+     * Play media file from onClick row in listview
+     */
     public void playFromAdapter() {
         if (mPlaybackService != null) {
             mPlaybackService.setResumePosition(-1);
@@ -450,6 +427,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         play();
     }
 
+    /**
+     * Stop media from listview
+     */
     public void stopFromChild() {
         if (mPlaybackService != null) {
             mPlaybackService.setResumePosition(-1);
@@ -457,6 +437,10 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
         pause();
     }
 
+    /**
+     * Set progressbar at current pos
+     * @param value
+     */
     private void setProgressSeekBar(int value) {
         log.d("setProgressSeekBar");
         if (hasSeekbar) {
@@ -570,13 +554,6 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     public void stopUpdateSeekbar() {
         mHandler.removeCallbacks(mUpdatePositionRunnable);
         mHandler.removeCallbacksAndMessages(null);
-
-
-        /*if(mPlaybackService != null) {
-            if (mPlaybackService.getMediaPlayer() != null){
-                mPlaybackService.getMediaPlayer().getCurrentPosition()
-            }
-        }*/
     }
 
 }

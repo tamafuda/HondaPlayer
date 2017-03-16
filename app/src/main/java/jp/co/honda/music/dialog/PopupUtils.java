@@ -27,7 +27,8 @@ import jp.co.honda.music.util.SystemUtils;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
 /**
- * Created by v_hoang on 3/2/2017.
+ * @Author: Hoang Vu
+ * @Date: 2017/03/05
  */
 
 public class PopupUtils{

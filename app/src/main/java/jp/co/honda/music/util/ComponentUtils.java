@@ -11,6 +11,10 @@ import android.widget.TextView;
 
 public class ComponentUtils {
 
+    /**
+     * Set underline for textview by programmatically
+     * @param txtView
+     */
     public static void setUnderlineTextView(TextView txtView) {
         String text = String.valueOf(txtView.getText());
         SpannableString spannableString = new SpannableString(text);

@@ -41,6 +41,10 @@ import java.util.Set;
 
 import jp.co.honda.music.logger.Logger;
 
+/**
+ * @Author: Hoang Vu
+ * @Date: 2017/02/25
+ */
 public class Utils
 {
 	public static final Logger log = new Logger(Utils.class.getSimpleName(), true);

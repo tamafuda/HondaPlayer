@@ -27,15 +27,16 @@
             android:enabled="true"
             android:exported="false" />
         <service
-            android:name="jp.co.honda.music.service.MusicService"
-            android:enabled="true"
-            android:exported="false" />
-        <service
             android:name="jp.co.honda.music.service.AINotificationIntentService"
             android:exported="false" />
+        <service
+            android:name="jp.co.honda.music.service.DialogNotifyService"
+            android:enabled="true"
+            android:exported="false"/>
 
         <!-- Receiver register -->
         <receiver android:name="jp.co.honda.music.notification.AIRecommendReceiver" />
+
 
         <!--
         When device reboot , change date time.
@@ -59,13 +60,8 @@
         </activity>
         <activity android:name=".MusicPlayActivity" />
         <activity android:name=".AIMixAudio" />
-        <activity android:name=".MainActivity" />
         <activity android:name=".RadarMusicActivity" />
 
-        <service
-            android:name="jp.co.honda.music.service.DialogNotifyService"
-            android:enabled="true"
-            android:exported="true"></service>
     </application>
 
 </manifest>

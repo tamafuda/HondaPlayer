@@ -27,6 +27,9 @@ import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
 /**
+ * @Author: Hoang Vu
+ * @Date: 2017/02/25
+ *
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * to handle interaction events.

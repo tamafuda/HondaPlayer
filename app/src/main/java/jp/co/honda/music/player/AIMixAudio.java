@@ -30,19 +30,28 @@ import jp.co.honda.music.zdccore.AIMixInterface;
 import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
+/**
+ * @Author: Hoang Vu
+ * @Date:   2017/02/23
+ *
+ * AIMixAudio class is executed mixing audio file then save into device
+ * We are confusing about extends of audio file that is supported by mix
+ * Note : On this version, do a hard code for mixing media file
+ *
+ */
 public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnCompletionListener,AdapterInterface,AIMixInterface{
 
-    Button btnGhita;
-    Button btnBass;
-    Button btnJazz;
-    Button btnPop;
-    Button btnCancel;
-    ArrayList<TrackInfo> trackInfoList;
-    ArrayList<TrackInfo> mediaPlayList;
-    TextView mTitle;
-    Button btnSave;
-    final Context mContext = this;
-    String titleOriginIntent;
+    private Button btnGhita;
+    private Button btnBass;
+    private Button btnJazz;
+    private Button btnPop;
+    private Button btnCancel;
+    private ArrayList<TrackInfo> trackInfoList;
+    private ArrayList<TrackInfo> mediaPlayList;
+    private TextView mTitle;
+    private Button btnSave;
+    private final Context mContext = this;
+    private String titleOriginIntent;
     private HondaSharePreference storage;
     private MediaPlayer mediaPlayer;
     private boolean isNeedKeepSrc = false;
@@ -63,18 +72,12 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
         btnBass = (Button) findViewById(R.id.id_bass);
         btnJazz = (Button) findViewById(R.id.id_jazz);
         btnPop = (Button) findViewById(R.id.id_pop);
-        //btnSave = (Button) findViewById(R.id.btn_save);
-        //btnCancel = (Button) findViewById(R.id.btn_cancel);
         btnGhita.setOnClickListener(mOnclick);
         btnBass.setOnClickListener(mOnclick);
         btnJazz.setOnClickListener(mOnclick);
         btnPop.setOnClickListener(mOnclick);
-        //btnSave.setOnClickListener(mOnclick);
-        //btnCancel.setOnClickListener(mOnclick);
-
         trackInfoList = TrackUtil.getRawToMix(getApplicationContext());
         mediaPlayList = new ArrayList<TrackInfo>();
-        //titleOriginIntent = getArrangeMusicIntent();
         super.setAIInterface(this);
     }
 
@@ -99,7 +102,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
     }
 
     /**
-     *
+     * Listener for control onClick event of all button in this screen
      * @param v
      */
     private View.OnClickListener mOnclick = new View.OnClickListener() {
@@ -125,7 +128,6 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
                     btnPop.setSelected(!btnPop.isSelected());
                     break;
                 case R.id.btn_save:
-                    //btnSave.setTextColor(ContextCompat.getColor(mContext, R.color.holo_blue_bright));
                     AIMixAudio.super.stopFromChild();
                     isNeedKeepSrc = false;
                     // Save audio after mixed
@@ -172,6 +174,12 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
         }
     };
 
+    /**
+     * Play mixing audio file
+     * These files is stored at raw folder of project
+     * @param ctx
+     * @param tag
+     */
     private void playAudio(Context ctx, String tag){
         TrackInfo trackInfo = getTrackByTag(tag);
         if(trackInfo != null){
@@ -201,7 +209,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
 
 
     /**
-     *
+     * Get mix audio by tag name
      * @param tag
      * @return
      */
@@ -224,6 +232,10 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
         mediaPlayer.reset();
     }
 
+    /**
+     * This function is store mixed audio file into current mediaList and save to Preference
+     * @param titleChanged
+     */
     private void synTrackListChanged(String titleChanged) {
         Bundle extras = getIntent().getExtras();
         int indexTrack = -1;
@@ -261,6 +273,9 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
 
     }
 
+    /**
+     * Release a media player when change screen
+     */
     private void releaseMediaPlayer() {
         // Release the media player
 
@@ -280,8 +295,6 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
         releaseMediaPlayer();
         AIMixAudio.super.stopUpdateSeekbar();
         stopService(new Intent(AIMixAudio.this, MediaPlayerService.class));
-        //ProgressDialogTask task = new ProgressDialogTask(mContext, false, R.string.popup_sharing);
-        //task.execute(0);
         ProgressDialogTask task1 = new ProgressDialogTask(AIMixAudio.this, false, R.string.popup_sharing);
         task1.execute(0);
 

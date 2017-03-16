@@ -8,7 +8,10 @@ import android.widget.Toast;
 
 import jp.co.honda.music.logger.Logger;
 
-
+/**
+ * @Author: Hoang Vu
+ * @Date: 2017/03/05
+ */
 public class ViewInitHelper
 {
 	public interface OnInitAction<T>

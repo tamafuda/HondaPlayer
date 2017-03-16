@@ -13,8 +13,10 @@ import java.util.Date;
 import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.service.AINotificationIntentService;
 
+
 /**
- * Created by v_hoang on 2/28/2017.
+ * @Author: Hoang Vu
+ * @Date: 2017/02/25
  */
 
 public class AIRecommendReceiver extends WakefulBroadcastReceiver {
@@ -90,9 +92,6 @@ public class AIRecommendReceiver extends WakefulBroadcastReceiver {
         if (serviceIntent != null) {
             // Start the service, keeping the device awake while it is launching.
             startWakefulService(context, serviceIntent);
-            //serviceIntent.setClass(context, MainActivity.class);
-            //serviceIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            //context.startActivity(serviceIntent);
         }
     }
 }

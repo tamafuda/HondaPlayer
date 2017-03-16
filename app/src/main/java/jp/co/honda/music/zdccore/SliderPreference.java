@@ -14,6 +14,11 @@ import android.widget.TextView;
 
 import jp.co.honda.music.player.R;
 
+
+/**
+ * @Author: Hoang Vu
+ * @Date: 2017/02/25
+ */
 public class SliderPreference extends Preference implements OnSeekBarChangeListener
 {
 	private SeekBar seekBar;

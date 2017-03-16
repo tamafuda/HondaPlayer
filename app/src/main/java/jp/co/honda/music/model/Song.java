@@ -4,7 +4,8 @@ import android.database.Cursor;
 import android.provider.MediaStore;
 
 /**
- *
+ * @Author: Hoang Vu
+ * @Date: 2017/02/28
  */
 
 public class Song {

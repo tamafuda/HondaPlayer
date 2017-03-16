@@ -41,6 +41,10 @@ import jp.co.honda.music.zdccore.HondaSharePreference;
 import static jp.co.honda.music.common.HondaConstants.PERMISSION_REQUEST_CODE;
 
 /**
+ * /**
+ * @Author: Hoang Vu
+ * @Date: 2017/02/25
+ *
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * create an instance of this fragment.

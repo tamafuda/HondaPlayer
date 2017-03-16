@@ -17,6 +17,10 @@ import jp.co.honda.music.zdccore.HondaSharePreference;
 import static android.R.id.list;
 import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
 
+/**
+ * @Author: Hoang Vu
+ * @Date: 2017/02/23
+ */
 public class PlayerUtils
 {
 

@@ -5,7 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
- * Created by v_hoang on 2/28/2017.
+ * @Author: Hoang Vu
+ * @Date: 2017/02/28
  */
 
 public class HondaSystemReceiver extends BroadcastReceiver {

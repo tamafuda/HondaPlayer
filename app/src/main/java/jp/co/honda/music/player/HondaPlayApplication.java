@@ -30,8 +30,6 @@ public class HondaPlayApplication extends Application {
                 // If new activity is created,force its orientation to portrait
                 log.d("onActivityCreated");
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-
             }
 
             @Override

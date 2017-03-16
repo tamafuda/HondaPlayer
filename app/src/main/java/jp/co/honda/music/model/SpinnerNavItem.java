@@ -1,5 +1,9 @@
 package jp.co.honda.music.model;
 
+/**
+ * @Author: Hoang Vu
+ * @Date: 2017/02/28
+ */
 public class SpinnerNavItem {
 
 	private String title;

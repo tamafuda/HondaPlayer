@@ -16,6 +16,10 @@ import jp.co.honda.music.model.SpinnerNavItem;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
+/**
+ * @Author: Hoang Vu
+ * @Date: 2017/03/05
+ */
 public class TitleNavigationAdapter extends BaseAdapter {
 
 	private ImageView imgIcon;

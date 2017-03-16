@@ -12,6 +12,10 @@ import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.util.PlayerUtils;
 
+/**
+ * @Author: Hoang Vu
+ * @Date: 2017/03/05
+ */
 public class NowPlayingSeekHelper implements OnTouchListener {
 
     private final static Logger log = new Logger(NowPlayingSeekHelper.class.getSimpleName(), true);

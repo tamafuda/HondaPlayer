@@ -10,6 +10,13 @@ import android.os.IBinder;
 import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.logger.Logger;
 
+/**
+ * @Author: Hoang Vu
+ * @Date:   2017/03/10
+ * Notification Service is used to send broadcast every 1 minutes
+ * that received at only InternetRadio screen
+ *
+ */
 public class DialogNotifyService extends Service {
 
     protected static final Logger log = new Logger(DialogNotifyService.class.getSimpleName(), true);
