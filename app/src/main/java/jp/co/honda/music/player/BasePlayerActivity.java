@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import jp.co.honda.music.common.HondaConstants;
@@ -25,6 +26,7 @@ import jp.co.honda.music.helper.NowPlayingSeekHelper;
 import jp.co.honda.music.helper.PlayerViewHelper;
 import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.Media;
+import jp.co.honda.music.model.TrackInfo;
 import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.util.PlayerUtils;
 import jp.co.honda.music.util.TrackUtil;
@@ -38,7 +40,7 @@ import jp.co.honda.music.zdccore.HondaSharePreference;
  * We implemented all control about media such as PLAY, PAUSE, NEXT, PREVIOUS
  *
  */
-public abstract class BasePlayerActivity extends AppCompatActivity {
+public abstract class BasePlayerActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
     // Logger
     protected final Logger log = new Logger(BasePlayerActivity.class.getSimpleName(), true);
     private ImageButton btnPrevious;
@@ -68,14 +70,20 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     private boolean mIsStopMusic;
     private int mOverrideCurPos = -1;
 
+    private ArrayList<TrackInfo> trackInfoList;
+    private MediaPlayer mediaPlayer;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         log.d("onCreate");
         storage = new HondaSharePreference(this);
+        trackInfoList = TrackUtil.getRawToMix(getApplicationContext());
         if(detectScreenID().equals(HondaConstants.DETECTED_SCREEN_CAPSUL)) {
             pause();
+            playAIMedia();
             return;
         }
         setContentView(getLayoutResourceId());
@@ -134,10 +142,10 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
                     previous();
                     break;
                 case R.id.btn_play:
-                    play();
                     if(detectScreenID().equals(HondaConstants.DETECTED_SCREEN_ARRANGE)) {
-                        mAIMixInterface.stopMedia();
+                        releaseMediaPlayer();
                     }
+                    play();
                     break;
                 case R.id.btn_pause:
                     pause();
@@ -557,6 +565,63 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
     public void stopUpdateSeekbar() {
         mHandler.removeCallbacks(mUpdatePositionRunnable);
         mHandler.removeCallbacksAndMessages(null);
+    }
+
+
+    private void playAIMedia() {
+        TrackInfo trackInfo = null;
+        if (trackInfoList.size() == 0) {
+            return;
+        }
+        for (TrackInfo t : trackInfoList) {
+            if (t.getId().equals("ai")){
+                trackInfo = t;
+            }
+        }
+        if (trackInfo != null) {
+            mediaPlayer = trackInfo.getMp();
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+                trackInfo.setPosition(mediaPlayer.getCurrentPosition());
+                trackInfo.setPause(true);
+            } else {
+                if (trackInfo.isPause()) {
+                    mediaPlayer.start();
+                    mediaPlayer.seekTo(trackInfo.getPosition());
+                } else {
+                    try {
+                        mediaPlayer.setDataSource(getBaseContext(), trackInfo.getSong());
+                        mediaPlayer.setOnCompletionListener(this);
+                        trackInfo.setPause(false);
+                        mediaPlayer.prepare();
+                        mediaPlayer.start();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Release all of playing media file
+     */
+    public void releaseMediaPlayer() {
+        // Release the media player
+        for (TrackInfo t : trackInfoList) {
+            if (t.getMp() != null) {
+                log.d("Mix Audio mediaplayer release !");
+                t.getMp().reset();
+                t.getMp().release();
+                t.setMp(null);
+            }
+        }
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mediaPlayer) {
+        log.d("onCompletion");
+        mediaPlayer.reset();
     }
 
 }

@@ -2,7 +2,6 @@ package jp.co.honda.music.player;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -15,15 +14,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.dialog.ProgressDialogTask;
 import jp.co.honda.music.logger.Logger;
-import jp.co.honda.music.model.TrackInfo;
-import jp.co.honda.music.util.TrackUtil;
-import jp.co.honda.music.zdccore.AIMixInterface;
 
 /**
  * @Author: Hoang Vu
@@ -31,7 +24,7 @@ import jp.co.honda.music.zdccore.AIMixInterface;
  * Arrange screen , download music, navigation
  *
  */
-public class RadarMusicActivity extends BasePlayerActivity implements MediaPlayer.OnCompletionListener, AIMixInterface {
+public class RadarMusicActivity extends BasePlayerActivity{
 
     // Logger
     protected final Logger log = new Logger(RadarMusicActivity.class.getSimpleName(), true);
@@ -49,8 +42,6 @@ public class RadarMusicActivity extends BasePlayerActivity implements MediaPlaye
     private GestureDetector gestureDetector;
     private int receiveDetectSrc = 0;
     private boolean detectFling = false;
-    private ArrayList<TrackInfo> trackInfoList;
-    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +52,6 @@ public class RadarMusicActivity extends BasePlayerActivity implements MediaPlaye
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         }
-        trackInfoList = TrackUtil.getRawToMix(getApplicationContext());
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -104,7 +94,6 @@ public class RadarMusicActivity extends BasePlayerActivity implements MediaPlaye
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 if (e1.getX() - e2.getX() < 50) {
-                    releaseMediaPlayer();
                     //Toast.makeText(getBaseContext(), "SwipLeft", Toast.LENGTH_SHORT).show();
                     Intent iPlay = new Intent(getBaseContext(), HomeBaseFragment.class);
                     iPlay.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -151,8 +140,6 @@ public class RadarMusicActivity extends BasePlayerActivity implements MediaPlaye
                 return super.onDoubleTap(e);
             }
         });
-
-        playAIMedia();
 
     }
 
@@ -235,81 +222,10 @@ public class RadarMusicActivity extends BasePlayerActivity implements MediaPlaye
 
     @Override
     public void onBackPressed() {
-        releaseMediaPlayer();
+        super.releaseMediaPlayer();
         Intent iPlay = new Intent(getBaseContext(), HomeBaseFragment.class);
         iPlay.putExtra(HondaConstants.DETECTED_SCREEN_CAPSUL, true);
         startActivity(iPlay);
         finish();
-    }
-
-    private void playAIMedia() {
-        TrackInfo trackInfo = null;
-        if (trackInfoList.size() == 0) {
-            return;
-        }
-        for (TrackInfo t : trackInfoList) {
-            if (t.getId().equals("ai")){
-                trackInfo = t;
-            }
-        }
-        if (trackInfo != null) {
-            mediaPlayer = trackInfo.getMp();
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.pause();
-                trackInfo.setPosition(mediaPlayer.getCurrentPosition());
-                trackInfo.setPause(true);
-            } else {
-                if (trackInfo.isPause()) {
-                    mediaPlayer.start();
-                    mediaPlayer.seekTo(trackInfo.getPosition());
-                } else {
-                    try {
-                        mediaPlayer.setDataSource(context, trackInfo.getSong());
-                        mediaPlayer.setOnCompletionListener(this);
-                        trackInfo.setPause(false);
-                        mediaPlayer.prepare();
-                        mediaPlayer.start();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Release all of playing media file
-     */
-    private void releaseMediaPlayer() {
-        // Release the media player
-        for (TrackInfo t : trackInfoList) {
-            if (t.getMp() != null) {
-                log.d("Mix Audio mediaplayer release !");
-                t.getMp().reset();
-                t.getMp().release();
-                t.setMp(null);
-            }
-        }
-    }
-
-    @Override
-    public void onCompletion(MediaPlayer mediaPlayer) {
-        log.d("onCompletion");
-        mediaPlayer.reset();
-    }
-
-    @Override
-    public void shareMedia() {
-
-    }
-
-    @Override
-    public void saveMedia() {
-
-    }
-
-    @Override
-    public void stopMedia() {
-        log.d("Fucking!");
     }
 }

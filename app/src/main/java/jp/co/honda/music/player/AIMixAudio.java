@@ -214,7 +214,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        releaseMediaPlayer();
+        releaseListMediaPlayer();
         super.stopUpdateSeekbar();
         Intent iController = new Intent(getBaseContext(), RadarMusicActivity.class);
         startActivity(iController);
@@ -236,7 +236,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
     /**
      * Release a media player when change screen
      */
-    private void releaseMediaPlayer() {
+    private void releaseListMediaPlayer() {
         // Release the media player
 
         for (TrackInfo t : mediaPlayList) {
@@ -252,7 +252,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
     @Override
     public void shareMedia() {
         log.d("Share media");
-        releaseMediaPlayer();
+        releaseListMediaPlayer();
         AIMixAudio.super.stopUpdateSeekbar();
         stopService(new Intent(AIMixAudio.this, MediaPlayerService.class));
         ProgressDialogTask task1 = new ProgressDialogTask(AIMixAudio.this, false, R.string.popup_sharing);
@@ -280,7 +280,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
                             arrangeMusic = musicChangeName.getHint().toString();
                         }
                         PlayerUtils.addOneMediaArrange(getBaseContext(),arrangeMusic);
-                        releaseMediaPlayer();
+                        releaseListMediaPlayer();
                         stopService(new Intent(AIMixAudio.this, MediaPlayerService.class));
                         Intent iController = new Intent(getBaseContext(), RadarMusicActivity.class);
                         startActivity(iController);
@@ -295,11 +295,6 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
                 });
         AlertDialog alertDialogAndroid = alertDialogBuilder.create();
         alertDialogAndroid.show();
-
-    }
-
-    @Override
-    public void stopMedia() {
 
     }
 }
