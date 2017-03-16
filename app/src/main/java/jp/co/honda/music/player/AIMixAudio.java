@@ -297,4 +297,9 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
         alertDialogAndroid.show();
 
     }
+
+    @Override
+    public void stopMedia() {
+
+    }
 }

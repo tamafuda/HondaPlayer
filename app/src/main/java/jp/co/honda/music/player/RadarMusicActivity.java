@@ -23,6 +23,7 @@ import jp.co.honda.music.dialog.ProgressDialogTask;
 import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.TrackInfo;
 import jp.co.honda.music.util.TrackUtil;
+import jp.co.honda.music.zdccore.AIMixInterface;
 
 /**
  * @Author: Hoang Vu
@@ -30,7 +31,7 @@ import jp.co.honda.music.util.TrackUtil;
  * Arrange screen , download music, navigation
  *
  */
-public class RadarMusicActivity extends BasePlayerActivity implements MediaPlayer.OnCompletionListener {
+public class RadarMusicActivity extends BasePlayerActivity implements MediaPlayer.OnCompletionListener, AIMixInterface {
 
     // Logger
     protected final Logger log = new Logger(RadarMusicActivity.class.getSimpleName(), true);
@@ -47,8 +48,9 @@ public class RadarMusicActivity extends BasePlayerActivity implements MediaPlaye
     private Context context;
     private GestureDetector gestureDetector;
     private int receiveDetectSrc = 0;
-    boolean detectFling = false;
+    private boolean detectFling = false;
     private ArrayList<TrackInfo> trackInfoList;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,9 +183,9 @@ public class RadarMusicActivity extends BasePlayerActivity implements MediaPlaye
             int resoureId = 0;
             switch (id) {
                 case R.id.ai_recommend:
-                    releaseMediaPlayer();
+                    //releaseMediaPlayer();
                     Intent iPlay = new Intent(getBaseContext(), AIMixAudio.class);
-                    iPlay.putExtra("MainActivity", true);
+                    iPlay.putExtra("AIMusicPlaying", true);
                     startActivity(iPlay);
                     //overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
                     //overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
@@ -242,7 +244,6 @@ public class RadarMusicActivity extends BasePlayerActivity implements MediaPlaye
 
     private void playAIMedia() {
         TrackInfo trackInfo = null;
-        MediaPlayer mediaPlayer;
         if (trackInfoList.size() == 0) {
             return;
         }
@@ -295,5 +296,20 @@ public class RadarMusicActivity extends BasePlayerActivity implements MediaPlaye
     public void onCompletion(MediaPlayer mediaPlayer) {
         log.d("onCompletion");
         mediaPlayer.reset();
+    }
+
+    @Override
+    public void shareMedia() {
+
+    }
+
+    @Override
+    public void saveMedia() {
+
+    }
+
+    @Override
+    public void stopMedia() {
+        log.d("Fucking!");
     }
 }

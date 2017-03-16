@@ -9,4 +9,5 @@ package jp.co.honda.music.zdccore;
 public interface AIMixInterface {
     public void shareMedia();
     public void saveMedia();
+    public void stopMedia();
 }

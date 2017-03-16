@@ -135,6 +135,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity {
                     break;
                 case R.id.btn_play:
                     play();
+                    if(detectScreenID().equals(HondaConstants.DETECTED_SCREEN_ARRANGE)) {
+                        mAIMixInterface.stopMedia();
+                    }
                     break;
                 case R.id.btn_pause:
                     pause();
