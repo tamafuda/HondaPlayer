@@ -28,6 +28,65 @@ public final class TrackUtil {
 
     protected static final Logger log = new Logger(TrackUtil.class.getSimpleName(), true);
 
+    public static ArrayList<Media> synTrackListDatabaseWithAlbum(Context context) {
+        HondaSharePreference storage = new HondaSharePreference(context);
+        ArrayList<Media> mediaList = new ArrayList<Media>();
+        //query external audio
+        ContentResolver musicResolver = context.getContentResolver();
+        Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        //String selection = MediaStore.Audio.Media.IS_MUSIC + "!= 0";
+        String selection = MediaStore.Audio.Media.DATA
+                + " LIKE '/storage/emulated/0/Music/%' AND " + MediaStore.Audio.Media.IS_MUSIC + "!= 0";
+        String sortOrder = MediaStore.Audio.Media.TITLE + " ASC";
+        String[] projection = {
+                MediaStore.Audio.Media._ID,
+                MediaStore.Audio.Media.DATA,
+                MediaStore.Audio.Media.TITLE,
+                MediaStore.Audio.Media.ARTIST,
+                MediaStore.Audio.Media.ALBUM,
+                MediaStore.Audio.Media.ALBUM_ID,
+                MediaStore.Audio.Media.DURATION
+        };
+
+        Cursor musicCursor = musicResolver.query(musicUri, projection, selection, null, sortOrder);
+        while((musicCursor != null && musicCursor.moveToNext())) {
+            long trackID = musicCursor.getLong(0);
+            String dataTrack = musicCursor.getString(1);
+            String trackTitle = musicCursor.getString(2);
+            String trackArtist = musicCursor.getString(3);
+            String trackAlbum = musicCursor.getString(4);
+            Long albumId = musicCursor.getLong(5);
+            long trackDuration = musicCursor.getLong(6);
+            log.d("AlbumID Value : " + String.valueOf(albumId));
+            Uri sArtworkUri = Uri
+                    .parse("content://media/external/audio/albumart");
+            String albumArtUri = ContentUris.withAppendedId(sArtworkUri,albumId).toString();
+            albumArtUri = getAlbumArt(context,albumId);
+            log.d("Album Art URI Value : " + albumArtUri);
+            mediaList.add(new Media(trackID, dataTrack, trackTitle, trackArtist, trackAlbum, trackDuration,albumArtUri));
+
+        }
+        musicCursor.close();
+        storage.storeTrackList(mediaList);
+        return mediaList;
+    }
+
+    private static String getAlbumArt(Context c, long albumID) {
+        String path = "";
+        Cursor cursor = c.getContentResolver().query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
+                new String[] {MediaStore.Audio.Albums._ID, MediaStore.Audio.Albums.ALBUM_ART},
+                MediaStore.Audio.Albums._ID+ "=?",
+                new String[] {String.valueOf(albumID)},
+                null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART));
+            // do whatever you need to do
+        }
+        cursor.close();
+        return path;
+    }
+
     public static ArrayList<Media> synTrackListDatabase(Context context) {
         HondaSharePreference storage = new HondaSharePreference(context);
         ArrayList<Media> mediaList = new ArrayList<Media>();
