@@ -154,6 +154,7 @@ public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickLis
         if(detectFragment.equals(HondaConstants.DETECT_FRAGMENT_NETRADIO)) {
             viewHolder.trackTitle.setText(media.getTitle());
             viewHolder.image.setVisibility(View.VISIBLE);
+            //Picasso.with(context).load(new File(media.getAlbumArtUri())).into(viewHolder.image);
             viewHolder.image.setImageBitmap(BitmapUtils.decodeBitmapHonda(context,media.getAlbumArtUri()));
         }else{
             viewHolder.trackTitle.setText(mTitle);
