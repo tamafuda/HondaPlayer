@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import jp.co.honda.music.common.HondaConstants;
 import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.Media;
-import jp.co.honda.music.player.MusicPlayActivity;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.zdccore.HondaSharePreference;
@@ -33,8 +32,7 @@ import jp.co.honda.music.zdccore.HondaSharePreference;
 public class RadioRecyclerViewAdapter extends RecyclerView.Adapter<RadioRecyclerViewAdapter.RadioViewHolder>
         implements View.OnClickListener, View.OnAttachStateChangeListener{
 
-
-    protected final Logger log = new Logger(MusicPlayActivity.class.getSimpleName(), true);
+    protected final Logger log = new Logger(RadioRecyclerViewAdapter.class.getSimpleName(), true);
     private ArrayList<Media> mRadioList;
     private Context mContext;
     private SparseBooleanArray sparseBooleanArray;

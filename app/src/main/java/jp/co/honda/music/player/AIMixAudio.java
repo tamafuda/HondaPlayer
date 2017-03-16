@@ -127,46 +127,6 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
                     tag = btnPop.getTag().toString();
                     btnPop.setSelected(!btnPop.isSelected());
                     break;
-                case R.id.btn_save:
-                    AIMixAudio.super.stopFromChild();
-                    isNeedKeepSrc = false;
-                    // Save audio after mixed
-                    LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-                    View view = layoutInflater.inflate(R.layout.input_dialog_mix,null);
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
-                    alertDialogBuilder.setView(view);
-
-                    final EditText musicChangeName = (EditText) view.findViewById(R.id.input_dialog_edittext);
-                    musicChangeName.setHint("アレンジ");
-                    alertDialogBuilder.setCancelable(false)
-                                      .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                          @Override
-                                          public void onClick(DialogInterface dialogInterface, int i) {
-                                              String arrangeMusic = musicChangeName.getText().toString();
-                                              if(arrangeMusic.isEmpty()) {
-                                                  arrangeMusic = musicChangeName.getHint().toString();
-                                              }
-                                              PlayerUtils.addOneMediaArrange(getBaseContext(),arrangeMusic);
-                                              Intent iController = new Intent(getBaseContext(), RadarMusicActivity.class);
-                                              startActivity(iController);
-                                              finish();
-                                          }
-                                      })
-                                      .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                          @Override
-                                          public void onClick(DialogInterface dialogInterface, int i) {
-                                                dialogInterface.dismiss();
-                                          }
-                                      });
-                    AlertDialog alertDialogAndroid = alertDialogBuilder.create();
-                    alertDialogAndroid.show();
-                    break;
-                case R.id.btn_cancel:
-                    Intent iController = new Intent(getBaseContext(), MusicPlayActivity.class);
-                    startActivity(iController);
-                    finish();
-                    break;
-                // even more buttons here
             }
             if(!tag.isEmpty()) {
                 playAudio(getApplicationContext(), tag);

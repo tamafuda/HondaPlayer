@@ -10,7 +10,7 @@
         android:layout_height="25dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/share"
+        android:src="@drawable/art_fm_am"
         android:layout_marginRight="5dp"
         />
     
