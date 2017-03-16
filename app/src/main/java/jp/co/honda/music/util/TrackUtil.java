@@ -29,7 +29,7 @@ public final class TrackUtil {
 
     protected static final Logger log = new Logger(TrackUtil.class.getSimpleName(), true);
 
-    public static ArrayList<Media> synTrackListDatabaseWithAlbum(Context context) {
+    public static ArrayList<Media> synTrackListDatabase(Context context) {
         HondaSharePreference storage = new HondaSharePreference(context);
         ArrayList<Media> mediaList = new ArrayList<Media>();
         //query external audio
@@ -93,7 +93,7 @@ public final class TrackUtil {
      * @param context
      * @return ArrayList
      */
-    public static ArrayList<Media> synTrackListDatabase(Context context) {
+    public static ArrayList<Media> synTrackListDatabasebak(Context context) {
         HondaSharePreference storage = new HondaSharePreference(context);
         ArrayList<Media> mediaList = new ArrayList<Media>();
         //query external audio

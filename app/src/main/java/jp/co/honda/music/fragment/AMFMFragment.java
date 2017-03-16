@@ -322,7 +322,11 @@ public class AMFMFragment extends Fragment implements View.OnClickListener, Adap
     public void updateArtAlbum(int pos) {
         Media m = mediaList.get(pos);
         ((HomeBaseFragment)getActivity()).playMusicInList(pos);
-        albumArt.setImageBitmap(BitmapUtils.decodeBitmapHonda(getActivity(),m.getAlbumArtUri()));
+        //BitmapUtils.decodeSampledBitmapFromFile(m.getAlbumArtUri(),30,30);
+        //albumArt.setImageBitmap(BitmapUtils.decodeBitmapHonda(getActivity(),m.getAlbumArtUri()));
+        //albumArt.setImageBitmap(BitmapUtils.decodeSampledBitmapFromFile(m.getAlbumArtUri(),30,30));
+        //albumArt.setImageBitmap(BitmapFactory.decodeFile(m.getAlbumArtUri()));
+        albumArt.setImageBitmap(BitmapUtils.decodeBitmapFromFile(getActivity(),m.getAlbumArtUri()));
         if(m.getAlbum() != null && !m.getAlbum().isEmpty()){
             mPlaylist1.setText(m.getAlbum());
         }else{

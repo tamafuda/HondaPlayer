@@ -3,6 +3,7 @@ package jp.co.honda.music.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -13,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 import java.util.ArrayList;
 
 import jp.co.honda.music.common.HondaConstants;
@@ -22,7 +26,6 @@ import jp.co.honda.music.model.Media;
 import jp.co.honda.music.player.HomeBaseFragment;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.service.MediaPlayerService;
-import jp.co.honda.music.util.BitmapUtils;
 import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
@@ -154,8 +157,14 @@ public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickLis
         if(detectFragment.equals(HondaConstants.DETECT_FRAGMENT_NETRADIO)) {
             viewHolder.trackTitle.setText(media.getTitle());
             viewHolder.image.setVisibility(View.VISIBLE);
-            //Picasso.with(context).load(new File(media.getAlbumArtUri())).into(viewHolder.image);
-            viewHolder.image.setImageBitmap(BitmapUtils.decodeBitmapHonda(context,media.getAlbumArtUri()));
+            if(media.getAlbumArtUri() == null) {
+                viewHolder.image.setImageDrawable(context.getDrawable(R.drawable.img_cover));
+            }else{
+                Uri uri = Uri.fromFile(new File(media.getAlbumArtUri()));
+                Picasso.with(context).load(uri).into(viewHolder.image);
+            }
+
+            //viewHolder.image.setImageBitmap(BitmapUtils.decodeBitmapHonda(context,media.getAlbumArtUri()));
         }else{
             viewHolder.trackTitle.setText(mTitle);
             viewHolder.image.setVisibility(View.GONE);

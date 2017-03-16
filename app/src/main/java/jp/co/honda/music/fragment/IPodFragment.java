@@ -146,8 +146,8 @@ public class IPodFragment extends Fragment implements View.OnClickListener,Adapt
         }else{
             mPlaylist2.setText("Unknown");
         }
-
-        mArtAlbum.setImageBitmap(BitmapUtils.decodeBitmapHonda(getActivity(),m.getAlbumArtUri()));
+        mArtAlbum.setImageBitmap(BitmapUtils.decodeBitmapFromFile(getActivity(),m.getAlbumArtUri()));
+        //mArtAlbum.setImageBitmap(BitmapUtils.decodeBitmapHonda(getActivity(),m.getAlbumArtUri()));
     }
 
     @Override

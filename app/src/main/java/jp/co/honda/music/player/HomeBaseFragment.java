@@ -165,8 +165,8 @@ public class HomeBaseFragment extends BasePlayerActivity implements View.OnClick
 
     @Override
     protected int getLayoutResourceId() {
-        //setContentView(R.layout.activity_test_fragment);
-        return R.layout.activity_test_fragment;
+        //setContentView(R.layout.activity_base_fragment);
+        return R.layout.activity_base_fragment;
     }
 
     @Override

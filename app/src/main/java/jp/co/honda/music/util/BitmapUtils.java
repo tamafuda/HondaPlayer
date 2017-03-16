@@ -199,4 +199,14 @@ public class BitmapUtils
         }
         return bitmap;
     }
+
+	public static Bitmap decodeBitmapFromFile(Context context, String uri) {
+		Bitmap bitmap = null;
+		if(uri != null) {
+			bitmap = BitmapFactory.decodeFile(uri);
+		}else{
+			bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.dark_default_album_artwork);
+		}
+		return bitmap;
+	}
 }
