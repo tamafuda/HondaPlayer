@@ -1,13 +1,21 @@
 package jp.co.honda.music.util;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.widget.ImageView;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+
+import jp.co.honda.music.player.R;
+
+import static android.graphics.BitmapFactory.decodeResource;
 
 public class BitmapUtils
 {
@@ -50,14 +58,14 @@ public class BitmapUtils
 		// First decode with inJustDecodeBounds=true to check dimensions
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
-		BitmapFactory.decodeResource(res, resId, options);
+		decodeResource(res, resId, options);
 
 		// Calculate inSampleSize
 		options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 
 		// Decode bitmap with inSampleSize set
 		options.inJustDecodeBounds = false;
-		return BitmapFactory.decodeResource(res, resId, options);
+		return decodeResource(res, resId, options);
 	}
 
 	public static Bitmap decodeSampledBitmapFromFile(String path,
@@ -168,4 +176,23 @@ public class BitmapUtils
 		}
 		return newBm;
 	}
+
+	public static Bitmap decodeBitmapHonda(Context context, String uri) {
+        Bitmap bitmap = null;
+        if(uri != null) {
+            Uri artAlbumID = Uri.parse(uri);
+            try{
+                bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(),artAlbumID);
+            }catch (FileNotFoundException e) {
+                e.printStackTrace();
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.dark_default_album_artwork);
+            }catch (IOException e) {
+                e.printStackTrace();
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.dark_default_album_artwork);
+            }
+        }else{
+            bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.dark_default_album_artwork);
+        }
+        return bitmap;
+    }
 }

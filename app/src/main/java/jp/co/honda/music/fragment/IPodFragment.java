@@ -22,6 +22,7 @@ import jp.co.honda.music.logger.Logger;
 import jp.co.honda.music.model.Media;
 import jp.co.honda.music.player.HomeBaseFragment;
 import jp.co.honda.music.player.R;
+import jp.co.honda.music.util.BitmapUtils;
 import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
 
@@ -142,14 +143,8 @@ public class IPodFragment extends Fragment implements View.OnClickListener,Adapt
         }else{
             mPlaylist2.setText("Unknown");
         }
-        if(pos%2 == 0){
-            mArtAlbum.setImageResource(R.drawable.img_cover);
-        }else{
-            mArtAlbum.setImageResource(R.drawable.dark_default_album_artwork);
-        }
 
-
-
+        mArtAlbum.setImageBitmap(BitmapUtils.decodeBitmapHonda(getActivity(),m.getAlbumArtUri()));
     }
 
     @Override

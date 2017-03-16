@@ -22,6 +22,7 @@ import jp.co.honda.music.model.Media;
 import jp.co.honda.music.player.HomeBaseFragment;
 import jp.co.honda.music.player.R;
 import jp.co.honda.music.service.MediaPlayerService;
+import jp.co.honda.music.util.BitmapUtils;
 import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.AdapterInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
@@ -153,13 +154,7 @@ public class RadioAdapter extends ArrayAdapter<Media> implements View.OnClickLis
         if(detectFragment.equals(HondaConstants.DETECT_FRAGMENT_NETRADIO)) {
             viewHolder.trackTitle.setText(media.getTitle());
             viewHolder.image.setVisibility(View.VISIBLE);
-            if(position%3 == 0){
-                viewHolder.image.setImageResource(R.drawable.hikaru1);
-            }else if(position%3 == 1){
-                viewHolder.image.setImageResource(R.drawable.img_cover);
-            }else if (position%3 == 2) {
-                viewHolder.image.setImageResource(R.drawable.radio);
-            }
+            viewHolder.image.setImageBitmap(BitmapUtils.decodeBitmapHonda(context,media.getAlbumArtUri()));
         }else{
             viewHolder.trackTitle.setText(mTitle);
             viewHolder.image.setVisibility(View.GONE);
