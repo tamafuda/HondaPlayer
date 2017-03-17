@@ -98,10 +98,7 @@ public class AMFMFragment extends Fragment implements View.OnClickListener, Adap
             mediaList = new ArrayList<Media>();
         }
 
-        trackAdapter = new RadioAdapter(getActivity(), getActivity(), R.layout.radio
-                , mediaList, HondaConstants.DETECT_FRAGMENT_FMAM, trackListView, this);
-        //trackAdapter.notifyDataSetChanged();
-        trackListView.setAdapter(trackAdapter);
+
         mPlaylist1 = (TextView) v.findViewById(R.id.id_playlist_fmam_1);
         mPlaylist2 = (TextView) v.findViewById(R.id.id_playlist_fmam_2);
         mPlaylist1.setOnClickListener(this);
@@ -120,7 +117,13 @@ public class AMFMFragment extends Fragment implements View.OnClickListener, Adap
         mBtnChanelDown.setOnClickListener(this);
         mBtnChanelUp.setOnClickListener(this);
         listChanel = initView();
-
+        if(mediaList == null || mediaList.size() == 0) {
+            return v;
+        }
+        trackAdapter = new RadioAdapter(getActivity(), getActivity(), R.layout.radio
+                , mediaList, HondaConstants.DETECT_FRAGMENT_FMAM, trackListView, this);
+        //trackAdapter.notifyDataSetChanged();
+        trackListView.setAdapter(trackAdapter);
 
         // Auto show popup notification
         //showAINofity();

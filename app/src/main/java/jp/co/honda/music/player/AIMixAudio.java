@@ -25,6 +25,7 @@ import jp.co.honda.music.model.Media;
 import jp.co.honda.music.model.TrackInfo;
 import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.util.PlayerUtils;
+import jp.co.honda.music.util.SystemUtils;
 import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.AIMixInterface;
 import jp.co.honda.music.zdccore.AdapterInterface;
@@ -144,6 +145,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
         TrackInfo trackInfo = getTrackByTag(tag);
         if(trackInfo != null){
             mediaPlayer = trackInfo.getMp();
+            mediaPlayer.setVolume(SystemUtils.getVolumn(50),SystemUtils.getVolumn(50));
             if(mediaPlayer.isPlaying()){
                 mediaPlayer.pause();
                 trackInfo.setPosition(mediaPlayer.getCurrentPosition());

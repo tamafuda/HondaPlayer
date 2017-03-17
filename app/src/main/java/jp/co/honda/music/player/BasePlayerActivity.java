@@ -29,6 +29,7 @@ import jp.co.honda.music.model.Media;
 import jp.co.honda.music.model.TrackInfo;
 import jp.co.honda.music.service.MediaPlayerService;
 import jp.co.honda.music.util.PlayerUtils;
+import jp.co.honda.music.util.SystemUtils;
 import jp.co.honda.music.util.TrackUtil;
 import jp.co.honda.music.zdccore.AIMixInterface;
 import jp.co.honda.music.zdccore.HondaSharePreference;
@@ -115,6 +116,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity implements Me
     protected void initSeekbar() {
         if(storage.loadTrackIndex() == -1) {
             storage.storeTrackIndex(0);
+        }
+        if(mediaList == null || mediaList.size() == 0) {
+            return;
         }
         Media t = mediaList.get(storage.loadTrackIndex());
         int duration = Integer.parseInt(String.valueOf(t.getDuration()));
@@ -580,6 +584,7 @@ public abstract class BasePlayerActivity extends AppCompatActivity implements Me
         }
         if (trackInfo != null) {
             mediaPlayer = trackInfo.getMp();
+            mediaPlayer.setVolume(SystemUtils.getVolumn(100),SystemUtils.getVolumn(100));
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.pause();
                 trackInfo.setPosition(mediaPlayer.getCurrentPosition());

@@ -56,6 +56,8 @@ public final class HondaConstants {
     public static final String DETECT_FRAGMENT_NETRADIO = "jp.co.honda.music.fragment.InternetRadioFragment";
     public static final String DETECT_FRAGMENT_BLUETOOTH = "jp.co.honda.music.fragment.BluetoothFragment";
 
+    public static final int MAX_VOLUME = 100;
+
 
 
 }

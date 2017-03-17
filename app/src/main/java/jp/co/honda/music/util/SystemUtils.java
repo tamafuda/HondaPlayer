@@ -5,6 +5,10 @@ import android.os.Build;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import jp.co.honda.music.common.HondaConstants;
+
+import static android.media.ToneGenerator.MAX_VOLUME;
+
 /**
  * @Author: Hoang Vu
  * @Date: 2017/02/25
@@ -38,5 +42,10 @@ public class SystemUtils {
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
         String dateTimeNotify = sdf.format(dt);
         return dateTimeNotify;
+    }
+
+    public static float getVolumn(int soundVolume) {
+        final float volume = (float) (1 - (Math.log(HondaConstants.MAX_VOLUME - soundVolume) / Math.log(MAX_VOLUME)));
+        return volume;
     }
 }
