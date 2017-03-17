@@ -274,6 +274,9 @@ public abstract class BasePlayerActivity extends AppCompatActivity implements Me
      * Play media method
      */
     public void play() {
+        if(detectScreenID().equals(HondaConstants.DETECTED_SCREEN_ARRANGE)) {
+            releaseMediaPlayer();
+        }
         if(mediaList ==  null || mediaList.size() == 0){
             mediaList = storage.loadTrackList();
             if (mediaList == null || mediaList.size() == 0) {

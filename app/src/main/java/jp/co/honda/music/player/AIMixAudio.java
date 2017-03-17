@@ -145,7 +145,16 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
         TrackInfo trackInfo = getTrackByTag(tag);
         if(trackInfo != null){
             mediaPlayer = trackInfo.getMp();
-            mediaPlayer.setVolume(SystemUtils.getVolumn(50),SystemUtils.getVolumn(50));
+            if(tag.equals("pop")) {
+                mediaPlayer.setVolume(SystemUtils.getVolumn(70),SystemUtils.getVolumn(70));
+            }else if(tag.equals("bass")){
+                mediaPlayer.setVolume(SystemUtils.getVolumn(50),SystemUtils.getVolumn(50));
+            }else if(tag.equals("jazz")){
+                mediaPlayer.setVolume(SystemUtils.getVolumn(80),SystemUtils.getVolumn(80));
+            }else if(tag.equals("ghita")){
+                mediaPlayer.setVolume(SystemUtils.getVolumn(70),SystemUtils.getVolumn(70));
+            }
+
             if(mediaPlayer.isPlaying()){
                 mediaPlayer.pause();
                 trackInfo.setPosition(mediaPlayer.getCurrentPosition());
@@ -160,6 +169,7 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
                         mediaPlayer.setOnCompletionListener(this);
                         trackInfo.setPause(false);
                         mediaPlayer.prepare();
+                        mediaPlayer.setLooping(true);
                         mediaPlayer.start();
                     }catch (IOException e) {
                         e.printStackTrace();
@@ -191,7 +201,15 @@ public class AIMixAudio extends BasePlayerActivity implements MediaPlayer.OnComp
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
         Log.d(this.getClass().getName(), "Debug");
-        mediaPlayer.reset();
+        //mediaPlayer.reset();
+        /*try{
+            mediaPlayer.setOnCompletionListener(this);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
     }
 
     /**

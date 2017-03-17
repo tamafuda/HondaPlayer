@@ -47,7 +47,7 @@
             android:layout_marginEnd="20dp"
             android:background="@drawable/bg_button_mix"
             android:tag="bass"
-            android:text="ベース"
+            android:text="ドラム"
             android:textColor="@color/color_text_white" />
     </RelativeLayout>
 
@@ -67,7 +67,7 @@
             android:layout_marginStart="20dp"
             android:background="@drawable/bg_button_mix"
             android:tag="jazz"
-            android:text="ジャズ"
+            android:text="ピアノ"
             android:textColor="@color/color_text_white" />
 
         <Button
@@ -78,7 +78,7 @@
             android:layout_marginEnd="20dp"
             android:background="@drawable/bg_button_mix"
             android:tag="pop"
-            android:text="ポップ"
+            android:text="シンセ"
             android:textColor="@color/color_text_white" />
     </RelativeLayout>
 
