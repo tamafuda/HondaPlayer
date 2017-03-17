@@ -232,8 +232,8 @@ public abstract class BasePlayerActivity extends AppCompatActivity implements Me
     protected void onDestroy() {
         log.d("BasePlayerActivity onDestroy");
         super.onDestroy();
-        storage.clearCachedTrackPlayList();
         if(mIsStopMusic) {
+            storage.clearCachedTrackPlayList();
             if (storage.loadMPLServiceStatus() && serviceConnection != null) {
                 log.d("onDestroy - Unbind service ");
                 mHandler.removeCallbacks(mUpdatePositionRunnable);

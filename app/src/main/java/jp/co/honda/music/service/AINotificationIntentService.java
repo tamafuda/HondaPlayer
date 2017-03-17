@@ -65,7 +65,7 @@ public class AINotificationIntentService extends IntentService {
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         builder.setContentTitle("運手がお疲れみたい！")
-                .setAutoCancel(false)
+                .setAutoCancel(true)
                 .setSound(uri)
                 .setContentText("音楽アレンジでお盛り上がろう!");
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
